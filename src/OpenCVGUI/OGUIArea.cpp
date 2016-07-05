@@ -32,6 +32,11 @@ OGUIArea::OGUIArea(OGUIWindow* window)
     r= 28;
     g= 30;
     b= 34;
+     /*
+    r= rand()%255;
+    g= rand()%255;
+    b= rand()%255;
+     */
 }
 
 } /* End of namespace OpenCVGUI */

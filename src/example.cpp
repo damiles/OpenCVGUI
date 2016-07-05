@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <vector>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp> 
 #include "OGUIWindow.h"
@@ -26,7 +27,11 @@ int main( int argc, const char* argv[] )
     OGUILayout layout1(&window, 1);
     window.addArea(&layout);
     window.addArea(&layout1);
-    
+    std::vector<float> sizes;
+    sizes.push_back(0.3);
+    sizes.push_back(0.7);
+    window.getMainLayout()->setLayoutSizes(sizes);
+
     OGUILayout layout2(&window, 1);
     OGUILayout layout3(&window, 1);
     layout1.addArea(&layout2);

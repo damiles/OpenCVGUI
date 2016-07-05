@@ -36,9 +36,10 @@ class OGUIWindow {
     void setCursor(int cursor_type);
     void drawCursor();
     int actual_cursor_type;
+    int mouse_left_state;
     GLFWcursor* cursor_hresize;
     GLFWcursor* cursor_vresize;
-    
+    OGUILayout* getMainLayout();
  private:
 
     /**

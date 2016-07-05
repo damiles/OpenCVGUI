@@ -76,6 +76,7 @@ int OGUIWindow::init()
     
     cursor_hresize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
     cursor_vresize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+    glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
     
     return 1;
 }
@@ -97,6 +98,7 @@ void OGUIWindow::window_thread_func()
 	{
 		
         glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
+        mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
         
         actual_cursor_type=0;
         draw();
@@ -148,6 +150,10 @@ void OGUIWindow::drawCursor()
     else if(actual_cursor_type==2)
         glfwSetCursor(glfw_window, cursor_vresize);
     
+}
+
+OGUILayout* OGUIWindow::getMainLayout(){
+    return mainLayout;
 }
 
 } /* End of namespace OpenCVGUI */

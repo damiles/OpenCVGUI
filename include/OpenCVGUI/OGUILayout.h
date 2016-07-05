@@ -16,10 +16,11 @@ class OGUILayout : public OGUIArea {
     void draw(int x, int y, int width, int height);
     OGUILayout(OGUIWindow* window, int orientation);
     void addArea(OGUIArea* area);
+    void setLayoutSizes(std::vector<float> sizes);
 
  private:
     int orientation;
-    
+    std::vector<float> area_sizes;
  public:
 
     /**
