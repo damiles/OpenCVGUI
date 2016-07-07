@@ -73,9 +73,11 @@ int OGUIWindow::init()
         fprintf(stderr, "Error: can not init nanovg");
         return 0;
     }
+    nvgCreateFont(vg, "sans-bold", "../resources/Roboto-Bold.ttf");
     
     cursor_hresize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
     cursor_vresize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+    cursor_hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
     glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
     
     return 1;
@@ -99,7 +101,8 @@ void OGUIWindow::window_thread_func()
 		
         glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
         mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
-        
+        mouse_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+
         actual_cursor_type=0;
         draw();
 		drawCursor();
@@ -149,6 +152,8 @@ void OGUIWindow::drawCursor()
         glfwSetCursor(glfw_window, cursor_hresize);
     else if(actual_cursor_type==2)
         glfwSetCursor(glfw_window, cursor_vresize);
+    else if(actual_cursor_type==3)
+        glfwSetCursor(glfw_window, cursor_hand);
     
 }
 

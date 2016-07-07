@@ -15,9 +15,10 @@ class OGUIFormArea : public OGUIArea {
 
  public:
 
-    virtual void draw();
+    virtual void draw(int x, int y, int width, int height);
 
     OGUIFormArea(OGUIWindow* window);
+    void addWidget(OGUIWidget* widget);
 
  public:
 

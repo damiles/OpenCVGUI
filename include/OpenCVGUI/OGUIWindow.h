@@ -32,6 +32,7 @@ class OGUIWindow {
     NVGcontext* vg;
     void addArea(OGUIArea* area);
     double mouse_x, mouse_y;
+    int mouse_state;
     
     void setCursor(int cursor_type);
     void drawCursor();
@@ -39,6 +40,7 @@ class OGUIWindow {
     int mouse_left_state;
     GLFWcursor* cursor_hresize;
     GLFWcursor* cursor_vresize;
+    GLFWcursor* cursor_hand;
     OGUILayout* getMainLayout();
  private:
 

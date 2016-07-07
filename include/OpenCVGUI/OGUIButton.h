@@ -10,9 +10,12 @@ class OGUIButton : public OGUIWidget {
 
  public:
 
-    virtual void draw();
+    virtual void draw(int x, int y, int width, int height);
+    OGUIButton(const char* title);
 
-    OGUIButton();
+private:
+    const char* title;
+    int actual_press_status;
 };
 
 } /* End of namespace OpenCVGUI */

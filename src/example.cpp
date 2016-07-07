@@ -5,6 +5,10 @@
 #include <opencv2/highgui/highgui.hpp> 
 #include "OGUIWindow.h"
 #include "OGUILayout.h"
+#include "OGUIFormArea.h"
+#include "OGUIImageArea.h"
+#include "OGUIWidget.h"
+#include "OGUIButton.h"
 
 using namespace OpenCVGUI;
 using namespace cv;
@@ -23,19 +27,26 @@ int main( int argc, const char* argv[] )
 		return -1;
     }
 
-    OGUILayout layout(&window, 1);
+    OGUIFormArea formArea(&window);
     OGUILayout layout1(&window, 1);
-    window.addArea(&layout);
+    window.addArea(&formArea);
     window.addArea(&layout1);
+
+    OGUIButton button("Hello");
+    formArea.addWidget(&button);
+
+    OGUIButton button1("Buddy");
+    formArea.addWidget(&button1);
+
     std::vector<float> sizes;
     sizes.push_back(0.3);
     sizes.push_back(0.7);
     window.getMainLayout()->setLayoutSizes(sizes);
 
-    OGUILayout layout2(&window, 1);
-    OGUILayout layout3(&window, 1);
-    layout1.addArea(&layout2);
-    layout1.addArea(&layout3);
+    OGUIImageArea imageArea1(&window);
+    OGUIImageArea imageArea2(&window);
+    layout1.addArea(&imageArea1);
+    layout1.addArea(&imageArea2);
     
 //	namedWindow("frame");
 	/*char c;

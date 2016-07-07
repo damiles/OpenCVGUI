@@ -10,7 +10,7 @@ class OGUIImageArea : public OGUIArea {
 
  public:
 
-    virtual void draw();
+    virtual void draw(int x, int y, int width, int height);
 
     OGUIImageArea(OGUIWindow* window);
 };

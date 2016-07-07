@@ -17,50 +17,51 @@ void OGUILayout::draw(int x, int y, int width, int height)
     if(areas.size()==0)    
         return;
     
-    NVGcontext* vg= (window->vg);
+    //NVGcontext* vg= (window->vg);
 
     // Draw the areas 
-    for(int i=0; i<areas.size(); i++){
-        int ax,ay,aw,ah;
+    for(int i=0; i<areas.size(); i++) {
+        int ax, ay, aw, ah;
         // Draw basic line for separate each area
-        nvgBeginPath(vg);
-        if(orientation){ // 1 row layout
-            float h= this->area_sizes.at(i)*height;
-            float y0=0;
-            if(i>0)
-                y0= this->area_sizes.at(i-1)*height;
+        //nvgBeginPath(vg);
 
-            nvgRect(vg, x, y+y0, width,1);
-            ax= x;
-            ay= y + y0 + 1;
-            aw= width;
-            ah= h - 1;
+        if (orientation) { // 1 row layout
+            float h = this->area_sizes.at(i) * height;
+            float y0 = 0;
+            if (i > 0)
+                y0 = this->area_sizes.at(i - 1) * height;
 
-            if(window->mouse_y<ay+2 && window->mouse_y>ay-2)
+            //nvgRect(vg, x, y+y0, width,1);
+            ax = x;
+            ay = y + y0 + 1;
+            aw = width;
+            ah = h - 1;
+
+            if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2)
                 window->setCursor(2);
 
-        }else{ // column layout
-            float w= this->area_sizes.at(i)*width;
-            float x0=0;
-            if(i>0)
-                x0= this->area_sizes.at(i-1)*width;
+        } else { // column layout
+            float w = this->area_sizes.at(i) * width;
+            float x0 = 0;
+            if (i > 0)
+                x0 = this->area_sizes.at(i - 1) * width;
 
-            nvgRect(vg,   x+x0 ,y,  1, height);
-            ax=x + x0 + 1;
-            ay=y;
-            aw= w-1;
-            ah= height;
+            //nvgRect(vg,   x+x0 ,y,  1, height);
+            ax = x + x0 + 1;
+            ay = y;
+            aw = w - 1;
+            ah = height;
 
-            if(window->mouse_x<ax+2 && window->mouse_x>ax-2)
+            if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2)
                 window->setCursor(1);
 
         }
 
-
+        /*
         if(i>0){
             nvgFillColor(vg, nvgRGBA(50,50,50,192));
             nvgFill(vg);
-        }
+        }*/
         areas.at(i)->draw(ax,ay,aw,ah);
     }
 }
