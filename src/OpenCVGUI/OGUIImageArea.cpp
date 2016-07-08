@@ -1,3 +1,4 @@
+#include <opencv2/imgproc/types_c.h>
 #include "OGUIImageArea.h"
 #include "OGUIWindow.h"
 
@@ -15,9 +16,10 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     this->y=y;
     this->width= width;
     this->height= height;
-
-    OGUIArea::draw(x,y,width,height);
     NVGcontext* vg= (window->vg);
+
+    nvgScissor(vg, x, y, width, height);
+    OGUIArea::draw(x,y,width,height);
 
     for(int i=0; i<width-2; i+=40){
         for(int j=0; j<height-2; j+=20){
@@ -39,7 +41,36 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
         }
     }
 
+    if(image!=-1){
+        int imgw, imgh;
+        nvgImageSize(vg, image, &imgw, &imgh);
+        NVGpaint imgPaint = nvgImagePattern(vg, x+((width/2)-(imgw/2)), y, imgw, imgh, 0, image, 1);
+        nvgBeginPath(vg);
+        nvgRect(vg, x+((width/2)-(imgw/2)),y, imgw,imgh);
+        nvgFillPaint(vg, imgPaint);
+        nvgFill(vg);
+    }
+
+    nvgResetScissor(vg);
 }
 
+    void OGUIImageArea::setImage(Mat  img){
+        NVGcontext* ctx= (window->vg);
+        int w,h;
+
+        w= img.cols;
+        h= img.rows;
+        // convert img to RGBA
+
+        cvtColor(img, imgRGBA, CV_RGB2RGBA);
+        //imshow("test", imgRGBA);
+        data= imgRGBA.data;
+        if(image==-1){
+            image= nvgCreateImageRGBA(ctx, w, h, 0, data);
+            //image= nvgCreateImage(ctx, "../resources/image1.jpg", 0);
+        }else{
+            nvgUpdateImage(ctx, image, data);
+        }
+    }
 
 } /* End of namespace OpenCVGUI */

@@ -13,11 +13,21 @@
 using namespace OpenCVGUI;
 using namespace cv;
 
+void hello_btn_click(){
+    cout << "HELLO clicked" << endl;
+}
+
+int quit=0;
+
+void exit_btn_click(){
+    quit=1;
+}
+
 int main( int argc, const char* argv[] )
 {
     srand (time(NULL));
 	OpenCVGUI::init();
-	OGUIWindow window(640, 480, "Wellcome to OpenCVGUI 1");
+	OGUIWindow window(1024, 768, "Wellcome to OpenCVGUI 1");
 	std::cout << "Wellcome to OpenCVGUI" << std::endl;
 
 	Mat frame;
@@ -33,9 +43,11 @@ int main( int argc, const char* argv[] )
     window.addArea(&layout1);
 
     OGUIButton button("Hello");
+    button.setCallBack(hello_btn_click);
     formArea.addWidget(&button);
 
-    OGUIButton button1("Buddy");
+    OGUIButton button1("Exit");
+    button1.setCallBack(exit_btn_click);
     formArea.addWidget(&button1);
 
     std::vector<float> sizes;
@@ -57,13 +69,20 @@ int main( int argc, const char* argv[] )
 		//c = (char)waitKey(10);
 	     //   if (c == 27) break;
 	}*/
-    
+
+    camera >> frame;
+    imageArea1.setImage(frame);
+
     while(true){
         camera >> frame;
+        imageArea1.setImage(frame);
+        cvWaitKey(10);
+        if(quit==1)
+            break;
     }
-    
+
 //	destroyWindow("frame");
-	glfwTerminate();
+
 
 	return 1;
 }

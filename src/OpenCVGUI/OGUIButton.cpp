@@ -24,7 +24,8 @@ namespace OpenCVGUI {
                 actual_press_status = GLFW_PRESS;
             }else if(area->window->mouse_state == GLFW_RELEASE && actual_press_status == GLFW_PRESS){
                 actual_press_status = GLFW_RELEASE;
-                cout << "WIN" << title << endl;
+                if(btn_click_callback!=NULL)
+                    btn_click_callback();
             }
         }else {
             nvgFillColor(vg, nvgRGBA(60, 60, 60, 255));
@@ -47,6 +48,10 @@ namespace OpenCVGUI {
         nvgFillColor(vg, nvgRGBA(255,255,255,160));
         nvgText(vg, x+width*0.5f-tw*0.5f,y+height*0.5f,title, NULL);
 
+    }
+
+    void OGUIButton::setCallBack(std::function<void()> func) {
+        btn_click_callback= func;
     }
 
     OGUIButton::OGUIButton(const char* title)

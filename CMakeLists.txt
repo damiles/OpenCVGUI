@@ -60,6 +60,7 @@ include_directories(
 	
 file(GLOB OGUI_SRC_LIB
 	"src/OpenCVGUI/*.cpp"
+	"include/OpenCVGUI/*.h"
 )
 
 # Set library type

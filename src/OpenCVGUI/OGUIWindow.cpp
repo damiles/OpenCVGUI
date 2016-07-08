@@ -44,7 +44,9 @@ OGUIWindow::~OGUIWindow()
 {
 	is_thread_running= false;
 	if(window_thread->joinable()) window_thread->join();
-	glfwDestroyWindow(glfw_window);
+    nvgDeleteGL3(vg);
+    glfwDestroyWindow(glfw_window);
+    glfwTerminate();
 }
 
 int OGUIWindow::init()
@@ -108,8 +110,7 @@ void OGUIWindow::window_thread_func()
 		drawCursor();
         
 		glfwPollEvents();
-        
-        std::this_thread::sleep_for(std::chrono::milliseconds(15));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(15));
         
 	}
 }
@@ -124,7 +125,7 @@ void OGUIWindow::draw()
     
     glViewport(0, 0, width, height);
     glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
     nvgBeginFrame(vg, width, height, ratio);
 
@@ -134,6 +135,7 @@ void OGUIWindow::draw()
     mainLayout->draw(0,0,width, height);
     
     nvgEndFrame(vg);
+
     // Swap buffers
     glfwSwapBuffers(glfw_window);
 }
