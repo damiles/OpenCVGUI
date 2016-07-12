@@ -22,6 +22,7 @@ private:
     int image=-1;
     Mat imgRGBA;
     unsigned char* data;
+    float image_x, image_y, image_scale, image_width, image_height;
 };
 
 } /* End of namespace OpenCVGUI */

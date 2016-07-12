@@ -26,9 +26,10 @@ void exit_btn_click(){
 int main( int argc, const char* argv[] )
 {
     srand (time(NULL));
+
+
 	OpenCVGUI::init();
 	OGUIWindow window(1024, 768, "Wellcome to OpenCVGUI 1");
-	std::cout << "Wellcome to OpenCVGUI" << std::endl;
 
 	Mat frame;
 	VideoCapture camera(0);
@@ -60,22 +61,16 @@ int main( int argc, const char* argv[] )
     layout1.addArea(&imageArea1);
     layout1.addArea(&imageArea2);
     
-//	namedWindow("frame");
-	/*char c;
-	for(;;)
-	{
-		camera >> frame;
-		//imshow("frame", frame);
-		//c = (char)waitKey(10);
-	     //   if (c == 27) break;
-	}*/
-
     camera >> frame;
     imageArea1.setImage(frame);
+
+    Mat img= imread("../resources/image1.jpg");
+    imageArea2.setImage(img);
 
     while(true){
         camera >> frame;
         imageArea1.setImage(frame);
+        window.update();
         cvWaitKey(10);
         if(quit==1)
             break;

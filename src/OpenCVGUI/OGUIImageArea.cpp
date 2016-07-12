@@ -7,6 +7,7 @@ namespace OpenCVGUI {
 
 OGUIImageArea::OGUIImageArea(OGUIWindow* window): OGUIArea(window)
 {
+    image_scale=1.0;
 }
 
 
@@ -42,11 +43,13 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     }
 
     if(image!=-1){
-        int imgw, imgh;
-        nvgImageSize(vg, image, &imgw, &imgh);
-        NVGpaint imgPaint = nvgImagePattern(vg, x+((width/2)-(imgw/2)), y, imgw, imgh, 0, image, 1);
+        float imgw= image_width*image_scale;
+        float imgh= image_height*image_scale;
+        image_x=x+((width/2)-(imgw/2));
+        image_y=y+((height/2)-(imgh/2));
+        NVGpaint imgPaint = nvgImagePattern(vg, image_x, image_y, imgw, imgh, 0, image, 1);
         nvgBeginPath(vg);
-        nvgRect(vg, x+((width/2)-(imgw/2)),y, imgw,imgh);
+        nvgRect(vg, image_x, image_y, imgw,imgh);
         nvgFillPaint(vg, imgPaint);
         nvgFill(vg);
     }
@@ -56,18 +59,15 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
 
     void OGUIImageArea::setImage(Mat  img){
         NVGcontext* ctx= (window->vg);
-        int w,h;
 
-        w= img.cols;
-        h= img.rows;
+        image_width= img.cols;
+        image_height= img.rows;
         // convert img to RGBA
 
-        cvtColor(img, imgRGBA, CV_RGB2RGBA);
-        //imshow("test", imgRGBA);
+        cvtColor(img, imgRGBA, CV_BGR2RGBA);
         data= imgRGBA.data;
         if(image==-1){
-            image= nvgCreateImageRGBA(ctx, w, h, 0, data);
-            //image= nvgCreateImage(ctx, "../resources/image1.jpg", 0);
+            image= nvgCreateImageRGBA(ctx, image_width, image_height, 0, data);
         }else{
             nvgUpdateImage(ctx, image, data);
         }
