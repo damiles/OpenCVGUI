@@ -35,16 +35,13 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->mainLayout= new OGUILayout(this, layoutOrientation);
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
-	// Start thread
-	window_thread= new thread(&OGUIWindow::window_thread_func, this);
 
+    init();
 }
 
 OGUIWindow::~OGUIWindow()
 {
-	is_thread_running= false;
-	if(window_thread->joinable()) window_thread->join();
-    nvgDeleteGL3(vg);
+	nvgDeleteGL3(vg);
     glfwDestroyWindow(glfw_window);
     glfwTerminate();
 }
@@ -90,29 +87,16 @@ void OGUIWindow::addArea(OGUIArea* area)
     mainLayout->addArea(area);
 }
 
-void OGUIWindow::window_thread_func()
-{
-    
-    if(!init())
-        return;
-    
-    std::cout << "Running thread of window " << title << std::endl;
-    
-	while(is_thread_running)
-	{
-		
-        glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
-        mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
-        mouse_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+void OGUIWindow::update(){
+    glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
+    mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+    mouse_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
 
-        actual_cursor_type=0;
-        draw();
-		drawCursor();
-        
-		glfwPollEvents();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(15));
-        
-	}
+    actual_cursor_type=0;
+    draw();
+    drawCursor();
+
+    glfwPollEvents();
 }
 
 void OGUIWindow::draw()

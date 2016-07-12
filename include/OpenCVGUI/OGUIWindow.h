@@ -24,6 +24,7 @@ class OGUIWindow {
     OGUIWindow(int width,int height,const char* title, int layoutOrientation=0);
     ~OGUIWindow();
     void draw();
+    void update();
 
  public:
     GLFWwindow* glfw_window;
@@ -42,6 +43,7 @@ class OGUIWindow {
     GLFWcursor* cursor_vresize;
     GLFWcursor* cursor_hand;
     OGUILayout* getMainLayout();
+
  private:
 
     /**
@@ -51,10 +53,6 @@ class OGUIWindow {
     int width, height;
     string title;
 
-    // Threads
-    thread* window_thread;
-    bool is_thread_running= true;
-    void window_thread_func();
 };
 
 } /* End of namespace OpenCVGUI */
