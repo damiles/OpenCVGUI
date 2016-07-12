@@ -20,6 +20,18 @@ option(OGUI_BUILD_SHARED  "Build OpenCVGUI as a shared library?" ON)
 #find OpenCV packages
 find_package(OpenCV REQUIRED)
 
+set(EXTRA_LIBS "")
+if (WIN32)
+  list(APPEND EXTRA_LIBS opengl32)
+elseif (APPLE)
+  find_library(cocoa_library Cocoa)
+  find_library(opengl_library OpenGL)
+  list(APPEND EXTRA_LIBS ${cocoa_library} ${opengl_library})
+elseif(CMAKE_SYSTEM MATCHES "Linux")
+  list(APPEND EXTRA_LIBS GL)
+endif()
+
+
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
     include_directories(${GLEW_INCLUDE_DIRS})
@@ -45,12 +57,13 @@ set(
     3rdparty/nanovg/src/stb_image.h 
     3rdparty/nanovg/src/stb_truetype.h 
 )
-ADD_LIBRARY( nanovg SHARED ${NANOVG_SRC} )
+ADD_LIBRARY( nanovg STATIC ${NANOVG_SRC} )
 
 set(
 	OGUI_INCLUDE_DIRS
 	include/OpenCVGUI/
     3rdparty/nanovg/src/
+	3rdparty/glfw/include/
 )
 # include required files
 include_directories(
@@ -86,7 +99,8 @@ target_include_directories(opencvgui PUBLIC
 target_include_directories(opencvgui PRIVATE
                            "${OGUI_SRC_LIB}")
 
+TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
 
 # Compile a sample project
 ADD_EXECUTABLE(example src/example.cpp )
-TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw GL GLU ${GLEW_LIBRARIES} nanovg)
+TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
