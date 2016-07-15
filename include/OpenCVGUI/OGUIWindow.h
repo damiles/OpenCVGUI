@@ -26,7 +26,6 @@ class OGUIWindow {
     void draw();
     void update();
 
- public:
     GLFWwindow* glfw_window;
     static bool isInitGlfw;
     int init();
@@ -43,7 +42,7 @@ class OGUIWindow {
     GLFWcursor* cursor_vresize;
     GLFWcursor* cursor_hand;
     OGUILayout* getMainLayout();
-
+    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
  private:
 
     /**

@@ -11,11 +11,11 @@ class OGUIWidget {
 
  public:
 
-    virtual void draw(int x, int y, int widht, int height);
+    virtual void draw(int x, int y, int widht);
     OGUIFormArea *area;
-
+    int height;
 private:
-    int x, y, width, height;
+    int x, y, width;
 };
 
 } /* End of namespace OpenCVGUI */

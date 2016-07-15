@@ -37,6 +37,19 @@ void OGUIArea::draw(int x, int y, int width, int height)
     nvgFill(vg);
 }
 
+bool OGUIArea::isMouseIn()
+{
+    if(window->mouse_x>x && window->mouse_x<x+width && window->mouse_y>y && window->mouse_y<y+height)
+        return true;
+    else
+        return false;
+}
+
+void OGUIArea::updateScrollStatus(double xoffset,double yoffset)
+{
+    return;
+}
+
 OGUIArea::OGUIArea(OGUIWindow* window)
 {
     this->layout= NULL;

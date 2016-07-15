@@ -99,7 +99,7 @@ target_include_directories(opencvgui PUBLIC
 target_include_directories(opencvgui PRIVATE
                            "${OGUI_SRC_LIB}")
 
-TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
+# TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
 
 # Compile a sample project
 ADD_EXECUTABLE(example src/example.cpp )

@@ -10,6 +10,11 @@ OGUIImageArea::OGUIImageArea(OGUIWindow* window): OGUIArea(window)
     image_scale=1.0;
 }
 
+void OGUIImageArea::updateScrollStatus(double xoffset,double yoffset)
+{
+    if(isMouseIn())
+        image_scale+= (yoffset/20);
+}
 
 void OGUIImageArea::draw(int x, int y, int width, int height)
 {

@@ -15,6 +15,7 @@ class OGUIImageArea : public OGUIArea {
  public:
 
     virtual void draw(int x, int y, int width, int height);
+    virtual void updateScrollStatus(double xoffset,double yoffset);
     OGUIImageArea(OGUIWindow* window);
     void setImage(Mat  img);
 

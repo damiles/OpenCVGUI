@@ -55,7 +55,7 @@ int OGUIWindow::init()
         glfwTerminate();
         return 0;
 	}
-
+    glfwSetWindowUserPointer(glfw_window, this);
 	glfwMakeContextCurrent(glfw_window);
     glfwSwapInterval(0);
     
@@ -72,14 +72,21 @@ int OGUIWindow::init()
         fprintf(stderr, "Error: can not init nanovg");
         return 0;
     }
-    nvgCreateFont(vg, "sans-bold", "../resources/Roboto-Bold.ttf");
+    nvgCreateFont(vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
     
     cursor_hresize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
     cursor_vresize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
     cursor_hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
     glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
-    
+
+    glfwSetScrollCallback(glfw_window, OGUIWindow::scroll_callback);
+
     return 1;
+}
+
+void OGUIWindow::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+    oguiwindow->mainLayout->updateScrollStatus(xoffset, yoffset);
 }
 
 void OGUIWindow::addArea(OGUIArea* area)

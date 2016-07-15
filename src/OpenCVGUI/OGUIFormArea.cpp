@@ -20,10 +20,11 @@ namespace OpenCVGUI {
 
         int xw= x+10;
         int yw= y+10;
-        int yoffset=30;
+
         for(int i=0; i<widgets.size(); i++){
             OGUIWidget* widget= widgets.at(i);
-            widget->draw(xw,yw+i*yoffset, width-20, yoffset-2);
+            widget->draw(xw,yw, width-20);
+            yw+= widget->height+10;
         }
     }
 

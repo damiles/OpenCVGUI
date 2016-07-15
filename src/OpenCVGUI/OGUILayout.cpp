@@ -4,6 +4,11 @@
 namespace OpenCVGUI {
 
 
+void OGUILayout::updateScrollStatus(double xoffset,double yoffset){
+    for(int i=0; i<areas.size(); i++) {
+        areas.at(i)->updateScrollStatus(xoffset, yoffset);
+    }
+}
 
 
 void OGUILayout::draw(int x, int y, int width, int height)

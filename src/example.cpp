@@ -9,6 +9,7 @@
 #include "OGUIImageArea.h"
 #include "OGUIWidget.h"
 #include "OGUIButton.h"
+#include "OGUISlider.h"
 
 using namespace OpenCVGUI;
 using namespace cv;
@@ -20,6 +21,7 @@ void hello_btn_click(){
 int quit=0;
 
 void exit_btn_click(){
+    cout << "Bye" << endl;
     quit=1;
 }
 
@@ -32,11 +34,11 @@ int main( int argc, const char* argv[] )
 	OGUIWindow window(1024, 768, "Wellcome to OpenCVGUI 1");
 
 	Mat frame;
-	VideoCapture camera(0);
-	if(!camera.isOpened()){
-        cout << "Error, no camera found" << endl;
-		return -1;
-    }
+//	VideoCapture camera(0);
+//	if(!camera.isOpened()){
+//        cout << "Error, no camera found" << endl;
+//		return -1;
+//    }
 
     OGUIFormArea formArea(&window);
     OGUILayout layout1(&window, 1);
@@ -46,6 +48,9 @@ int main( int argc, const char* argv[] )
     OGUIButton button("Hello");
     button.setCallBack(hello_btn_click);
     formArea.addWidget(&button);
+
+    OGUISlider slider("Threshold", 0, 255, 125);
+    formArea.addWidget(&slider);
 
     OGUIButton button1("Exit");
     button1.setCallBack(exit_btn_click);
@@ -61,15 +66,16 @@ int main( int argc, const char* argv[] )
     layout1.addArea(&imageArea1);
     layout1.addArea(&imageArea2);
     
-    camera >> frame;
+//    camera >> frame;
+    frame= imread("../resources/icon1.png");
     imageArea1.setImage(frame);
 
     Mat img= imread("../resources/image1.jpg");
     imageArea2.setImage(img);
 
     while(true){
-        camera >> frame;
-        imageArea1.setImage(frame);
+//        camera >> frame;
+//        imageArea1.setImage(frame);
         window.update();
         cvWaitKey(10);
         if(quit==1)

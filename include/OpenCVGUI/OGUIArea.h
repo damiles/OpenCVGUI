@@ -15,6 +15,8 @@ class OGUIArea {
     OGUIArea(OGUIWindow* window);
     
     virtual void draw(int x, int y, int width, int height);
+    virtual void updateScrollStatus(double xoffset,double yoffset);
+    bool isMouseIn();
     int x, y, width, height;
     int r,g,b;
     std::string title;

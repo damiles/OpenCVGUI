@@ -11,7 +11,7 @@ class OGUIButton : public OGUIWidget {
 
  public:
 
-    virtual void draw(int x, int y, int width, int height);
+    virtual void draw(int x, int y, int width);
     OGUIButton(const char* title);
     void setCallBack(std::function<void()> func);
 private:
