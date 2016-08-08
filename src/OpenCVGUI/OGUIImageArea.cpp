@@ -27,7 +27,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     nvgScissor(vg, x, y, width, height);
     OGUIArea::draw(x,y,width,height);
 
-    for(int i=0; i<width-2; i+=40){
+    /*for(int i=0; i<width-2; i+=40){
         for(int j=0; j<height-2; j+=20){
             nvgBeginPath(vg);
             int offset=20;
@@ -45,7 +45,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
             nvgFillColor(vg, nvgRGBA(50,50,50,100));
             nvgFill(vg);
         }
-    }
+    }*/
 
     if(image!=-1){
         float imgw= image_width*image_scale;

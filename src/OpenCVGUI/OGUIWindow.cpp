@@ -2,7 +2,12 @@
 #include "OGUIArea.h"
 #include "OGUILayout.h"
 
+#ifdef OGUI_GL3
 #define NANOVG_GL3_IMPLEMENTATION
+#else
+#define NANOVG_GL2_IMPLEMENTATION
+#endif
+
 #include "nanovg_gl.h"
 
 void errorcb(int error, const char* desc)
@@ -14,15 +19,27 @@ namespace OpenCVGUI {
 
     int init(){
       if(!glfwInit()){
-        printf("Failed init GLFW");
-        return 0;
-    }
+            printf("Failed init GLFW");
+            return 0;
+        }
     
-    // GLEW generates GL error because it calls glGetString(GL_EXTENSIONS), we'll consume it here.
-	glGetError();
-    glfwSetErrorCallback(errorcb);
-    
-  } ;
+        glfwSetErrorCallback(errorcb);
+
+    #ifndef _WIN32 // don't require this on win32, and works with more cards
+        #ifdef OGUI_GL3
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        #else
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        #endif
+    #endif
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
+
+        
+      } ;
     
 bool OGUIWindow::isInitGlfw= false;
 
@@ -31,17 +48,23 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->width= width;
 	this->height= height;
 	this->title.append(title);
+
+    init();
     
     this->mainLayout= new OGUILayout(this, layoutOrientation);
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
-
-    init();
+    
 }
 
 OGUIWindow::~OGUIWindow()
 {
-	nvgDeleteGL3(vg);
+#ifdef OGUI_GL3
+    nvgDeleteGL3(vg);
+#else
+    nvgDeleteGL2(vg);
+#endif
+	
     glfwDestroyWindow(glfw_window);
     glfwTerminate();
 }
@@ -55,6 +78,9 @@ int OGUIWindow::init()
         glfwTerminate();
         return 0;
 	}
+    
+    initGraph(&fps, GRAPH_RENDER_FPS, "Frame Time");
+
     glfwSetWindowUserPointer(glfw_window, this);
 	glfwMakeContextCurrent(glfw_window);
     glfwSwapInterval(0);
@@ -66,12 +92,22 @@ int OGUIWindow::init()
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
         return 0;
     }
-    
+    // GLEW generates GL error because it calls glGetString(GL_EXTENSIONS), we'll consume it here.
+    glGetError();
+
+#ifdef OGUI_GL3
     vg = nvgCreateGL3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
+#else
+    vg = nvgCreateGL2(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
+#endif    
+    
+
     if(vg==NULL){
         fprintf(stderr, "Error: can not init nanovg");
         return 0;
     }
+
+    nvgCreateFont(vg, "sans", "../resources/Roboto-Regular.ttf");
     nvgCreateFont(vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
     
     cursor_hresize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
@@ -80,6 +116,9 @@ int OGUIWindow::init()
     glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
     glfwSetScrollCallback(glfw_window, OGUIWindow::scroll_callback);
+
+    glfwSetTime(0);
+    prevt = glfwGetTime();
 
     return 1;
 }
@@ -95,6 +134,13 @@ void OGUIWindow::addArea(OGUIArea* area)
 }
 
 void OGUIWindow::update(){
+    double t, dt;
+    t = glfwGetTime();
+    dt = t - prevt;
+    prevt = t;
+    updateGraph(&fps, dt);
+
+
     glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
     mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
     mouse_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
@@ -125,6 +171,9 @@ void OGUIWindow::draw()
     // Draw the areas 
     mainLayout->draw(0,0,width, height);
     
+
+    renderGraph(vg, width-205,height-40, &fps);
+
     nvgEndFrame(vg);
 
     // Swap buffers

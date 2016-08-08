@@ -34,11 +34,11 @@ int main( int argc, const char* argv[] )
 	OGUIWindow window(1024, 768, "Wellcome to OpenCVGUI 1");
 
 	Mat frame;
-//	VideoCapture camera(0);
-//	if(!camera.isOpened()){
-//        cout << "Error, no camera found" << endl;
-//		return -1;
-//    }
+	VideoCapture camera(0);
+	if(!camera.isOpened()){
+        cout << "Error, no camera found" << endl;
+		return -1;
+    }
 
     OGUIFormArea formArea(&window);
     OGUILayout layout1(&window, 1);
@@ -66,18 +66,18 @@ int main( int argc, const char* argv[] )
     layout1.addArea(&imageArea1);
     layout1.addArea(&imageArea2);
     
-//    camera >> frame;
-    frame= imread("../resources/icon1.png");
+    camera >> frame;
+    //frame= imread("../resources/icon1.png");
     imageArea1.setImage(frame);
 
     Mat img= imread("../resources/image1.jpg");
     imageArea2.setImage(img);
 
     while(true){
-//        camera >> frame;
-//        imageArea1.setImage(frame);
+        //camera >> frame;
+        //imageArea1.setImage(frame);
         window.update();
-        cvWaitKey(10);
+        //cvWaitKey(10);
         if(quit==1)
             break;
     }

@@ -6,8 +6,12 @@
 #include <thread>
 #include <iostream>
 #include <GL/glew.h>
+#ifdef __APPLE__
+#   define GLFW_INCLUDE_GLCOREARB
+#endif
 #include <GLFW/glfw3.h>
 #include "nanovg.h"
+#include "perf.h"
 
 
 using namespace std;
@@ -51,6 +55,9 @@ class OGUIWindow {
     OGUILayout* mainLayout;
     int width, height;
     string title;
+
+    PerfGraph fps;
+    double prevt = 0;
 
 };
 

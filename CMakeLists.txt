@@ -16,6 +16,11 @@ set(OGUI_VERSION_FULL "${OGUI_VERSION}.${OGUI_VERSION_PATCH}${OGUI_VERSION_EXTRA
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 option(OGUI_BUILD_SHARED  "Build OpenCVGUI as a shared library?" ON)
+option(OGUI_GL3  "Build OpenCVGUI with OpenGL 3 support?" ON)
+
+if(OGUI_GL3)
+  add_definitions(-DOGUI_GL3)
+endif()
 
 #find OpenCV packages
 find_package(OpenCV REQUIRED)
@@ -24,9 +29,23 @@ set(EXTRA_LIBS "")
 if (WIN32)
   list(APPEND EXTRA_LIBS opengl32)
 elseif (APPLE)
-  find_library(cocoa_library Cocoa)
   find_library(opengl_library OpenGL)
-  list(APPEND EXTRA_LIBS ${cocoa_library} ${opengl_library})
+  # Set up library and include paths
+  find_library(COCOA_FRAMEWORK Cocoa)
+  find_library(IOKIT_FRAMEWORK IOKit)
+  find_library(CORE_FOUNDATION_FRAMEWORK CoreFoundation)
+  find_library(CORE_VIDEO_FRAMEWORK CoreVideo)
+  mark_as_advanced(COCOA_FRAMEWORK
+                   IOKIT_FRAMEWORK
+                   CORE_FOUNDATION_FRAMEWORK
+                   CORE_VIDEO_FRAMEWORK)
+  list(APPEND EXTRA_LIBS "${COCOA_FRAMEWORK}"
+                             "${IOKIT_FRAMEWORK}"
+                             "${CORE_FOUNDATION_FRAMEWORK}"
+                             "${CORE_VIDEO_FRAMEWORK}"
+                              ${opengl_library})
+
+
 elseif(CMAKE_SYSTEM MATCHES "Linux")
   list(APPEND EXTRA_LIBS GL)
 endif()
@@ -73,6 +92,7 @@ include_directories(
 	
 file(GLOB OGUI_SRC_LIB
 	"src/OpenCVGUI/*.cpp"
+  "src/OpenCVGUI/*.c"
 	"include/OpenCVGUI/*.h"
 )
 
