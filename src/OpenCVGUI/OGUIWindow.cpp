@@ -109,10 +109,15 @@ int OGUIWindow::init()
 
     nvgCreateFont(vg, "sans", "../resources/Roboto-Regular.ttf");
     nvgCreateFont(vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
-    
-    cursor_hresize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
-    cursor_vresize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
-    cursor_hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+
+    // Load all cursors
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_ARROW_CURSOR));
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR));
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR));
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_HAND_CURSOR));
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_IBEAM_CURSOR));
+    mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR));
+
     glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
     glfwSetScrollCallback(glfw_window, OGUIWindow::scroll_callback);
@@ -188,14 +193,8 @@ void OGUIWindow::setCursor(int cursor_type)
 
 void OGUIWindow::drawCursor()
 {
-    if(actual_cursor_type==0)
-        glfwSetCursor(glfw_window, NULL);
-    else if(actual_cursor_type==1)
-        glfwSetCursor(glfw_window, cursor_hresize);
-    else if(actual_cursor_type==2)
-        glfwSetCursor(glfw_window, cursor_vresize);
-    else if(actual_cursor_type==3)
-        glfwSetCursor(glfw_window, cursor_hand);
+    glfwSetCursor(glfw_window, mouse_cursors_.at(actual_cursor_type));
+
     
 }
 

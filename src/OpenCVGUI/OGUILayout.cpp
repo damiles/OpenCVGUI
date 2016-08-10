@@ -43,7 +43,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
             ah = h - 1;
 
             if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2)
-                window->setCursor(2);
+                window->setCursor(VRESIZE_CURSOR);
 
         } else { // column layout
             float w = this->area_sizes.at(i) * width;
@@ -58,7 +58,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
             ah = height;
 
             if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2)
-                window->setCursor(1);
+                window->setCursor(HRESIZE_CURSOR);
 
         }
 

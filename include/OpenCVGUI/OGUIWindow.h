@@ -20,6 +20,15 @@ namespace OpenCVGUI {
     int init();
     class OGUILayout;
     class OGUIArea;
+
+    enum MouseCursor {
+        DEFAULT_CURSOR,
+        HRESIZE_CURSOR,
+        VRESIZE_CURSOR,
+        HAND_CURSOR,
+        TEXT_CURSOR,
+        CROSS_CURSOR,
+    };
     
 class OGUIWindow {
 
@@ -42,9 +51,10 @@ class OGUIWindow {
     void drawCursor();
     int actual_cursor_type;
     int mouse_left_state;
-    GLFWcursor* cursor_hresize;
-    GLFWcursor* cursor_vresize;
-    GLFWcursor* cursor_hand;
+
+    // save pointers to all loaded mouse cursors
+    std::vector<GLFWcursor*> mouse_cursors_;
+
     OGUILayout* getMainLayout();
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
  private:

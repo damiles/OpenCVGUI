@@ -24,7 +24,7 @@ namespace OpenCVGUI {
 //            nvgFillPaint(vg, bg);
             nvgFillColor(vg, nvgRGBA(50,53,58,255));
 
-            area->window->setCursor(3);
+            area->window->setCursor(HAND_CURSOR);
             if (area->window->mouse_state == GLFW_PRESS && actual_press_status != GLFW_PRESS){
                 actual_press_status = GLFW_PRESS;
             }else if(area->window->mouse_state == GLFW_RELEASE && actual_press_status == GLFW_PRESS){
@@ -36,7 +36,7 @@ namespace OpenCVGUI {
             nvgFillColor(vg, nvgRGBA(50,53,58,180));
 //            NVGpaint bg = nvgLinearGradient(vg, x, y, x,y+height, nvgRGBA(255,255,255,32), nvgRGBA(0,0,0,32));
 //            nvgFillPaint(vg, bg);
-            area->window->setCursor(0);
+            area->window->setCursor(DEFAULT_CURSOR);
         }
         nvgFill(vg);
 
