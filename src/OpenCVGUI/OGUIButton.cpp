@@ -12,7 +12,7 @@ namespace OpenCVGUI {
         NVGcontext* vg= (area->window->vg);
         // Draw box square
         nvgBeginPath(vg);
-        nvgRoundedRect(vg, x,y+1, width,height, 2);
+        nvgRoundedRect(vg, x+1,y+1, width-2,height-2, 3);
         
         if(area->window->mouse_x > x &&
                 area->window->mouse_x < x+width &&
@@ -20,9 +20,9 @@ namespace OpenCVGUI {
                 area->window->mouse_y < y + height
                 ) {
 
-            NVGpaint bg = nvgBoxGradient(vg, x, y, width,height, 2,2, nvgRGBA(0,0,0,32), nvgRGBA(0,0,0,128));
-            nvgFillPaint(vg, bg);
-            //nvgFillColor(vg, nvgRGBA(255,255,255, 30));
+//            NVGpaint bg = nvgLinearGradient(vg, x, y, x,y+height, nvgRGBA(255,255,255,24), nvgRGBA(0,0,0,24));
+//            nvgFillPaint(vg, bg);
+            nvgFillColor(vg, nvgRGBA(50,53,58,255));
 
             area->window->setCursor(3);
             if (area->window->mouse_state == GLFW_PRESS && actual_press_status != GLFW_PRESS){
@@ -33,23 +33,26 @@ namespace OpenCVGUI {
                     btn_click_callback();
             }
         }else {
-            //nvgFillColor(vg, nvgRGBA(255,255,255, 20));
-            NVGpaint bg = nvgBoxGradient(vg, x, y, width,height, 2,2, nvgRGBA(255,255,255,5), nvgRGBA(0,0,0,128));
-            nvgFillPaint(vg, bg);
+            nvgFillColor(vg, nvgRGBA(50,53,58,180));
+//            NVGpaint bg = nvgLinearGradient(vg, x, y, x,y+height, nvgRGBA(255,255,255,32), nvgRGBA(0,0,0,32));
+//            nvgFillPaint(vg, bg);
             area->window->setCursor(0);
         }
         nvgFill(vg);
 
-
+        nvgBeginPath(vg);
+        nvgRoundedRect(vg, x+0.5f,y+0.5f, width-1,height-1, 3.5);
+        nvgStrokeColor(vg, nvgRGBA(0,0,0,48));
+        nvgStroke(vg);
 
         // Draw text
         nvgFontSize(vg, 20.0f);
-        nvgFontFace(vg, "sans-bold");
+        nvgFontFace(vg, "sans");
         float tw = nvgTextBounds(vg, 0,0, title, NULL, NULL);
         nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);
         nvgFillColor(vg, nvgRGBA(0,0,0,255));
         nvgText(vg, x+width*0.5f-tw*0.5f,y+height*0.5f-1,title, NULL);
-        nvgFillColor(vg, nvgRGBA(255,255,255,255));
+        nvgFillColor(vg, nvgRGBA(255,255,255,180));
         nvgText(vg, x+width*0.5f-tw*0.5f,y+height*0.5f,title, NULL);
 
     }
