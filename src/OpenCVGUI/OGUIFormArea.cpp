@@ -24,7 +24,7 @@ namespace OpenCVGUI {
         for(int i=0; i<widgets.size(); i++){
             OGUIWidget* widget= widgets.at(i);
             widget->draw(xw,yw, width-20);
-            yw+= widget->height+10;
+            yw+= widget->height+5;
         }
     }
 
