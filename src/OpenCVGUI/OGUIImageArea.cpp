@@ -27,7 +27,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     nvgScissor(vg, x, y, width, height);
     OGUIArea::draw(x,y,width,height);
 
-    /*for(int i=0; i<width-2; i+=40){
+    for(int i=0; i<width-2; i+=40){
         for(int j=0; j<height-2; j+=20){
             nvgBeginPath(vg);
             int offset=20;
@@ -45,7 +45,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
             nvgFillColor(vg, nvgRGBA(50,50,50,100));
             nvgFill(vg);
         }
-    }*/
+    }
 
     if(image!=-1){
         float imgw= image_width*image_scale;
@@ -62,15 +62,19 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     nvgResetScissor(vg);
 }
 
-    void OGUIImageArea::setImage(Mat  img){
-        NVGcontext* ctx= (window->vg);
+    void OGUIImageArea::setImage(Mat  img) {
+        NVGcontext *ctx = (window->vg);
 
-        image_width= img.cols;
-        image_height= img.rows;
+        image_width = img.cols;
+        image_height = img.rows;
         // convert img to RGBA
+        if (img.channels() == 3){
+            cvtColor(img, imgRGBA, CV_BGR2RGBA);
+            data = imgRGBA.data;
+        }else if(img.channels()==4)
+            data = img.data;
 
-        cvtColor(img, imgRGBA, CV_BGR2RGBA);
-        data= imgRGBA.data;
+
         if(image==-1){
             image= nvgCreateImageRGBA(ctx, image_width, image_height, 0, data);
         }else{
