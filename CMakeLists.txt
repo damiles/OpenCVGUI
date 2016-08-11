@@ -92,7 +92,7 @@ include_directories(
 	
 file(GLOB OGUI_SRC_LIB
 	"src/OpenCVGUI/*.cpp"
-  "src/OpenCVGUI/*.c"
+    "src/OpenCVGUI/*.c"
 	"include/OpenCVGUI/*.h"
 )
 
@@ -122,5 +122,15 @@ target_include_directories(opencvgui PRIVATE
 # TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
 
 # Compile a sample project
+set(EXTRA_LIBS_EXE "")
+if(UNIX)
+    find_package(X11)
+    if(X11_FOUND)
+        add_definitions(-DX11)
+        include_directories(${X11_INCLUDE_DIR})
+        list(APPEND EXTRA_LIBS "${X11_LIBRARIES}")
+    endif()
+endif()
+
 ADD_EXECUTABLE(example src/example.cpp )
-TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
+TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS} nanovg)
