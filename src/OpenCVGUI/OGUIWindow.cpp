@@ -1,6 +1,7 @@
 #include "OGUIWindow.h"
 #include "OGUIArea.h"
 #include "OGUILayout.h"
+#include "OGUIWidget.h"
 
 #ifdef OGUI_GL3
 #define NANOVG_GL3_IMPLEMENTATION
@@ -54,6 +55,7 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->mainLayout= new OGUILayout(this, layoutOrientation);
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
+    this->key_focus_widget_= NULL;
     
 }
 
@@ -121,6 +123,8 @@ int OGUIWindow::init()
     glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
     glfwSetScrollCallback(glfw_window, OGUIWindow::scroll_callback);
+    glfwSetCharCallback(glfw_window, OGUIWindow::charCallback);
+    glfwSetKeyCallback(glfw_window, OGUIWindow::keyCallback);
 
     glfwSetTime(0);
     prevt = glfwGetTime();
@@ -131,6 +135,24 @@ int OGUIWindow::init()
 void OGUIWindow::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
     OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
     oguiwindow->mainLayout->updateScrollStatus(xoffset, yoffset);
+}
+
+void OGUIWindow::charCallback(GLFWwindow* window, unsigned int key)
+{
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+    OGUIWidget* widget= oguiwindow->getKeyFocusWidget();
+    if(widget!=NULL){
+        widget->characterCallback(key);
+    }
+}
+
+void OGUIWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+    OGUIWidget* widget= oguiwindow->getKeyFocusWidget();
+    if(widget!=NULL){
+        widget->keyCallback(key, scancode, action, mods);
+    }
 }
 
 void OGUIWindow::addArea(OGUIArea* area)
@@ -194,12 +216,20 @@ void OGUIWindow::setCursor(int cursor_type)
 void OGUIWindow::drawCursor()
 {
     glfwSetCursor(glfw_window, mouse_cursors_.at(actual_cursor_type));
-
-    
 }
 
 OGUILayout* OGUIWindow::getMainLayout(){
     return mainLayout;
+}
+
+OGUIWidget* OGUIWindow::getKeyFocusWidget()
+{
+    return key_focus_widget_;
+}
+
+void OGUIWindow::setKeyFocus(OGUIWidget* widget)
+{
+    key_focus_widget_=widget;
 }
 
 } /* End of namespace OpenCVGUI */

@@ -20,6 +20,7 @@ namespace OpenCVGUI {
     int init();
     class OGUILayout;
     class OGUIArea;
+    class OGUIWidget;
 
     enum MouseCursor {
         DEFAULT_CURSOR,
@@ -54,10 +55,14 @@ class OGUIWindow {
 
     // save pointers to all loaded mouse cursors
     std::vector<GLFWcursor*> mouse_cursors_;
-
     OGUILayout* getMainLayout();
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
- private:
+
+    void setKeyFocus(OGUIWidget* widget);
+    static void charCallback(GLFWwindow* window, unsigned int key);
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    OGUIWidget* getKeyFocusWidget();
+private:
 
     /**
      * @element-type OGUIArea
@@ -65,6 +70,7 @@ class OGUIWindow {
     OGUILayout* mainLayout;
     int width, height;
     string title;
+    OGUIWidget* key_focus_widget_;
 
     PerfGraph fps;
     double prevt = 0;
