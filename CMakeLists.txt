@@ -27,7 +27,7 @@ find_package(OpenCV REQUIRED)
 
 set(EXTRA_LIBS "")
 if (WIN32)
-  list(APPEND EXTRA_LIBS opengl32)
+  list(APPEND EXTRA_LIBS gdi32 winmm user32 glu32 opengl32 kernel32)
 elseif (APPLE)
   find_library(opengl_library OpenGL)
   # Set up library and include paths
