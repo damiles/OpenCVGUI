@@ -80,13 +80,18 @@ ADD_LIBRARY( nanovg STATIC ${NANOVG_SRC} )
 
 set(
 	OGUI_INCLUDE_DIRS
-	include/OpenCVGUI/
-    3rdparty/nanovg/src/
-	3rdparty/glfw/include/
+	include/OpenCVGUI
+)
+
+set(
+        EXTRA_INCLUDES
+        3rdparty/nanovg/src/
+        3rdparty/glfw/include/
 )
 # include required files
 include_directories(
 	${OGUI_INCLUDE_DIRS}
+    ${EXTRA_INCLUDES}
 	${OpenCV_INCLUDE_DIRS}
 )
 	
@@ -116,8 +121,10 @@ set_target_properties(opencvgui PROPERTIES
 target_include_directories(opencvgui PUBLIC
 			${OGUI_INCLUDE_DIRS}
                            )
-target_include_directories(opencvgui PRIVATE
-                           "${OGUI_SRC_LIB}")
+
+#target_include_directories(opencvgui PRIVATE
+#target_include_directories(opencvgui PRIVATE
+#                           "${OGUI_SRC_LIB}")
 
 # TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
 
@@ -128,9 +135,19 @@ if(UNIX)
     if(X11_FOUND)
         add_definitions(-DX11)
         include_directories(${X11_INCLUDE_DIR})
-        list(APPEND EXTRA_LIBS "${X11_LIBRARIES}")
+        list(APPEND EXTRA_LIBS_EXE "${X11_LIBRARIES}")
     endif()
 endif()
 
 ADD_EXECUTABLE(example src/example.cpp )
-TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS} nanovg)
+TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE} nanovg)
+
+
+# INSTALLATION
+install(TARGETS opencvgui
+        DESTINATION lib)
+
+install(DIRECTORY ${OGUI_INCLUDE_DIRS}
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h")
+

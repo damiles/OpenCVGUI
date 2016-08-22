@@ -14,7 +14,7 @@ namespace OpenCVGUI {
     class OGUIRadioButtons : public OGUIWidget {
     public:
         virtual void draw(int x, int y, int width);
-        OGUIRadioButtons(const char *title, std::vector<std::string> options);
+        OGUIRadioButtons(const char *title, std::vector<std::string> options, int default_selected=0);
         void setCallBack(std::function<void(int)> func);
 
     private:

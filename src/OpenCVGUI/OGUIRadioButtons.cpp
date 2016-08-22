@@ -10,12 +10,12 @@ using namespace std;
 
 namespace OpenCVGUI {
 
-    OGUIRadioButtons::OGUIRadioButtons(const char *title, vector <string> options)
+    OGUIRadioButtons::OGUIRadioButtons(const char *title, vector <string> options, int default_selected)
     {
         title_= title;
         options_= options;
         height= 20 + options_.size()*20;
-        selected_=0;
+        selected_= default_selected;
     }
 
     void OGUIRadioButtons::draw(int x, int y, int width)

@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp> 
+#include <opencv2/highgui/highgui.hpp>
+#include <chrono>
 #include "OGUIWindow.h"
 #include "OGUILayout.h"
 #include "OGUIFormArea.h"
@@ -20,7 +21,10 @@
 using namespace OpenCVGUI;
 using namespace cv;
 
-VideoCapture camera;
+VideoCapture camera0, camera1;
+int face_camera, device_camera;
+int count_frame;
+string id_session;
 
 void hello_btn_click(){
     cout << "HELLO clicked" << endl;
@@ -34,17 +38,26 @@ void exit_btn_click(){
 }
 
 void on_change_camera(int option){
-    camera.open(option);
+//    face_camera.open(option);
+    face_camera= option;
+}
+
+void on_change_device_camera(int option){
+//    device_camera.open(option);
+    device_camera=option;
 }
 
 int main( int argc, const char* argv[] )
 {
     srand (time(NULL));
-
+    id_session= "123456";
+    count_frame=0;
+    face_camera=0;
+    device_camera=1;
 	OpenCVGUI::init();
 	OGUIWindow window(1024, 768, "Wellcome to OpenCVGUI 1");
 
-	Mat frame;
+	Mat face_frame, device_frame;
 
 
     OGUIFormArea formArea(&window);
@@ -55,19 +68,11 @@ int main( int argc, const char* argv[] )
 //    OGUISlider slider("Threshold", 0, 255, 125);
 //    formArea.addWidget(&slider);
 
-    OGUITextInput textInputId("Id");
-    formArea.addWidget(&textInputId);
-
-    OGUITextInput textInputName("Name");
-    formArea.addWidget(&textInputName);
-
-    OGUITextInput textInputEmail("Email");
-    formArea.addWidget(&textInputEmail);
 
     vector<string> cameras;
     int num_cameras=0;
     for(num_cameras=0; num_cameras<10; num_cameras++){
-        if(!camera.open(num_cameras)) {
+        if(!camera0.open(num_cameras)) {
             break;
         }else{
             stringstream ss;
@@ -76,17 +81,29 @@ int main( int argc, const char* argv[] )
         }
     }
 
-    if(num_cameras==0){
-        cout << "Error, no cameras found" << endl;
+    if(num_cameras<2){
+        cout << "Error, no enough cameras found" << endl;
 		return -1;
     }
 
     // Initialize with first camera
-    camera.open(0);
+    camera0.open(0);
+    camera1.open(1);
 
-    OGUIRadioButtons camera_list("Cameras", cameras);
+    OGUIRadioButtons camera_list("Select Face Camera", cameras);
     camera_list.setCallBack(on_change_camera);
     formArea.addWidget(&camera_list);
+
+    OGUIRadioButtons camera_device_list("Select Device Camera", cameras, 1);
+    camera_device_list.setCallBack(on_change_device_camera);
+    formArea.addWidget(&camera_device_list);
+
+    OGUIButton buttonNewId("New Session");
+    buttonNewId.setCallBack(hello_btn_click);
+    formArea.addWidget(&buttonNewId);
+
+    OGUITextInput textInputId("Id");
+    formArea.addWidget(&textInputId);
 
     OGUIButton button("Start Record");
     button.setCallBack(hello_btn_click);
@@ -110,9 +127,9 @@ int main( int argc, const char* argv[] )
     layout1.addArea(&imageArea1);
     layout1.addArea(&imageArea2);
     
-    camera >> frame;
+    camera0 >> face_frame;
 //    frame= imread("../resources/icon1.png");
-    imageArea1.setImage(frame);
+    imageArea1.setImage(face_frame);
 
 #ifdef X11
     // make screen shot
@@ -139,13 +156,48 @@ int main( int argc, const char* argv[] )
 #else
     Mat img= imread("../resources/image1.jpg");
 #endif
-    imageArea2.setImage(img);
+    camera1 >> device_frame;
+    imageArea2.setImage(device_frame);
 
 
     int count=0;
+    // Start clock
+    std::chrono::high_resolution_clock::time_point t= std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> mseconds;
     while(true){
-        camera >> frame;
-        imageArea1.setImage(frame);
+        std::chrono::high_resolution_clock::time_point tnow= std::chrono::high_resolution_clock::now();
+//        mseconds= ((double)t)/((double)CLOCKS_PER_SEC);
+        std::chrono::duration<double> mseconds = std::chrono::duration_cast<std::chrono::duration<double>>(tnow - t);
+        cout << " Time " << mseconds.count() << "sec " <<  endl;
+
+        if(face_camera==0)
+            camera0 >> face_frame;
+        else
+            camera1 >> face_frame;
+
+        if(device_camera==0)
+            camera0 >> device_frame;
+        else
+            camera1 >> device_frame;
+
+        // If is 200ms save frames
+        if(mseconds.count()>=0.2){
+            cout << "CAPTURED FRAME " << count_frame <<  " at " << mseconds.count() << "sec " <<  endl;
+            stringstream output_face_file;
+            output_face_file << "./" << id_session << "/frame_" << count_frame << ".jpg" << endl;
+
+            stringstream output_device_file;
+            output_device_file << "./" << id_session << "/device_" << count_frame << ".jpg" << endl;
+
+            imwrite(output_face_file.str(), face_frame);
+            imwrite(output_device_file.str(), device_frame);
+
+            t= tnow;
+            count_frame++;
+
+        }
+        imageArea1.setImage(face_frame);
+        imageArea2.setImage(device_frame);
 
 //        if(count%15==0) {
 //            XImage *image = XGetImage(display, root, 0, 0, width, height, AllPlanes, ZPixmap);
