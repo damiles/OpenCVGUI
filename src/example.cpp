@@ -17,17 +17,60 @@
 #include <X11/Xlib.h>
 #endif
 
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <sys/stat.h>
+#endif
+
 
 using namespace OpenCVGUI;
 using namespace cv;
 
 VideoCapture camera0, camera1;
+bool start_capturing=false;
 int face_camera, device_camera;
 int count_frame;
 string id_session;
+stringstream output_dir;
+OGUITextInput *textInputId;
 
-void hello_btn_click(){
-    cout << "HELLO clicked" << endl;
+void stop_btn_click() {
+    start_capturing= false;
+    count_frame=0;
+}
+
+void start_btn_click(){
+    cout << "Start clicked" << endl;
+    // Create new ID session
+    time_t t = time(0);   // get time now
+    struct tm * now = localtime( & t );
+    stringstream id;
+    std::chrono::milliseconds ms=std::chrono::duration_cast< std::chrono::milliseconds >(std::chrono::system_clock::now().time_since_epoch());
+//    id << (now->tm_year + 1900)
+//        << (now->tm_mon + 1)
+//        << now->tm_mday
+//        << now->tm_hour
+//        << now->tm_min
+//        << now->tm_sec
+//        << ms.count();
+    id << ms.count();
+    id_session= id.str();
+    textInputId->value= id_session;
+    output_dir.str("");
+    output_dir << "./" << id_session;
+    cout << output_dir.str() << endl;
+    // Create folders to save data
+#ifdef _WIN32
+    //create directory with windows commands
+            CreateDirectory(output_dir_str().c_str(), NULL);
+#else
+    // create directory for unix based os
+    mkdir(output_dir.str().c_str(), 0777);
+#endif
+
+    // Start capturing flag
+    start_capturing= true;
 }
 
 int quit=0;
@@ -98,19 +141,17 @@ int main( int argc, const char* argv[] )
     camera_device_list.setCallBack(on_change_device_camera);
     formArea.addWidget(&camera_device_list);
 
-    OGUIButton buttonNewId("New Session");
-    buttonNewId.setCallBack(hello_btn_click);
-    formArea.addWidget(&buttonNewId);
 
-    OGUITextInput textInputId("Id");
-    formArea.addWidget(&textInputId);
+
+    textInputId=  new OGUITextInput("Id");
+    formArea.addWidget(textInputId);
 
     OGUIButton button("Start Record");
-    button.setCallBack(hello_btn_click);
+    button.setCallBack(start_btn_click);
     formArea.addWidget(&button);
 
     OGUIButton buttonStop("Stop Record");
-    buttonStop.setCallBack(hello_btn_click);
+    buttonStop.setCallBack(stop_btn_click);
     formArea.addWidget(&buttonStop);
 
     OGUIButton button1("Exit");
@@ -166,9 +207,9 @@ int main( int argc, const char* argv[] )
     std::chrono::duration<double> mseconds;
     while(true){
         std::chrono::high_resolution_clock::time_point tnow= std::chrono::high_resolution_clock::now();
-//        mseconds= ((double)t)/((double)CLOCKS_PER_SEC);
+
         std::chrono::duration<double> mseconds = std::chrono::duration_cast<std::chrono::duration<double>>(tnow - t);
-        cout << " Time " << mseconds.count() << "sec " <<  endl;
+//        cout << " Time " << mseconds.count() << "sec " <<  endl;
 
         if(face_camera==0)
             camera0 >> face_frame;
@@ -181,16 +222,17 @@ int main( int argc, const char* argv[] )
             camera1 >> device_frame;
 
         // If is 200ms save frames
-        if(mseconds.count()>=0.2){
+        if(mseconds.count()>=0.2 && start_capturing){
             cout << "CAPTURED FRAME " << count_frame <<  " at " << mseconds.count() << "sec " <<  endl;
             stringstream output_face_file;
-            output_face_file << "./" << id_session << "/frame_" << count_frame << ".jpg" << endl;
+            output_face_file << "./" << id_session << "/frame_" << count_frame << ".jpg";
+
 
             stringstream output_device_file;
-            output_device_file << "./" << id_session << "/device_" << count_frame << ".jpg" << endl;
+            output_device_file << "./" << id_session << "/device_" << count_frame << ".jpg";
 
-            imwrite(output_face_file.str(), face_frame);
-            imwrite(output_device_file.str(), device_frame);
+            imwrite(output_face_file.str().c_str(), face_frame);
+            imwrite(output_device_file.str().c_str(), device_frame);
 
             t= tnow;
             count_frame++;
