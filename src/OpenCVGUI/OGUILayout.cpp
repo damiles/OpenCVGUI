@@ -44,6 +44,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
             if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2) {
                 window->setCursor(VRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
+                    id_area_pressed= i;
                     is_pressed= true;
                 }
             }
@@ -71,13 +72,14 @@ void OGUILayout::draw(int x, int y, int width, int height)
                 window->setCursor(HRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
                     is_pressed= true;
+                    id_area_pressed=i;
                 }
             }
             if(is_pressed) {
-                float diff= this->area_sizes.at(i) - ((float) window->mouse_y / (float) height);
-                this->area_sizes.at(i) = (float) window->mouse_x / (float) width;
-                float num_other_areas= areas.size() - i;
-                for(int j=i+1; j<areas.size(); j++){
+                float diff= this->area_sizes.at(id_area_pressed) - ((float) window->mouse_x / (float) width);
+                this->area_sizes.at(id_area_pressed) = (float) window->mouse_x / (float) width;
+                float num_other_areas= areas.size() - id_area_pressed;
+                for(int j=id_area_pressed+1; j<areas.size(); j++){
                     this->area_sizes.at(j)= this->area_sizes.at(j)-(diff/num_other_areas);
                 }
             }
