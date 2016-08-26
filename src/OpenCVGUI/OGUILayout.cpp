@@ -24,7 +24,9 @@ void OGUILayout::draw(int x, int y, int width, int height)
     
     //NVGcontext* vg= (window->vg);
 
-    // Draw the areas 
+    // Draw the areas
+    float x0=0;
+    float y0=0;
     for(int i=0; i<areas.size(); i++) {
         int ax, ay, aw, ah;
         // Draw basic line for separate each area
@@ -32,9 +34,6 @@ void OGUILayout::draw(int x, int y, int width, int height)
 
         if (orientation) { // 1 row layout
             float h = this->area_sizes.at(i) * height;
-            float y0 = 0;
-            if (i > 0)
-                y0 = this->area_sizes.at(i - 1) * height;
 
             //nvgRect(vg, x, y+y0, width,1);
             ax = x;
@@ -42,14 +41,25 @@ void OGUILayout::draw(int x, int y, int width, int height)
             aw = width;
             ah = h - 1;
 
-            if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2)
+            if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2) {
                 window->setCursor(VRESIZE_CURSOR);
+                if (window->mouse_state == GLFW_PRESS){
+                    is_pressed= true;
+                }
+            }
+            if(is_pressed) {
+                float diff= this->area_sizes.at(i) - ((float) window->mouse_y / (float) height);
+                this->area_sizes.at(i) = (float) window->mouse_y / (float) height;
+                float num_other_areas= areas.size() - i;
+                for(int j=i+1; j<areas.size(); j++){
+                    this->area_sizes.at(j)= this->area_sizes.at(j)-(diff/num_other_areas);
+                }
+            }
+
+            y0+=h;
 
         } else { // column layout
             float w = this->area_sizes.at(i) * width;
-            float x0 = 0;
-            if (i > 0)
-                x0 = this->area_sizes.at(i - 1) * width;
 
             //nvgRect(vg,   x+x0 ,y,  1, height);
             ax = x + x0 + 1;
@@ -57,9 +67,24 @@ void OGUILayout::draw(int x, int y, int width, int height)
             aw = w - 1;
             ah = height;
 
-            if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2)
+            if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2) {
                 window->setCursor(HRESIZE_CURSOR);
-
+                if (window->mouse_state == GLFW_PRESS){
+                    is_pressed= true;
+                }
+            }
+            if(is_pressed) {
+                float diff= this->area_sizes.at(i) - ((float) window->mouse_y / (float) height);
+                this->area_sizes.at(i) = (float) window->mouse_x / (float) width;
+                float num_other_areas= areas.size() - i;
+                for(int j=i+1; j<areas.size(); j++){
+                    this->area_sizes.at(j)= this->area_sizes.at(j)-(diff/num_other_areas);
+                }
+            }
+            x0+=w;
+        }
+        if (window->mouse_state == GLFW_RELEASE){
+            is_pressed= false;
         }
 
         /*

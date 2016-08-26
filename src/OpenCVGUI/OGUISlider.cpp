@@ -63,8 +63,10 @@ void OGUISlider::draw(int x, int y, int w)
 
         if (area->window->mouse_state == GLFW_PRESS){
             actual_press_status = GLFW_PRESS;
-            if(btn_click_callback!=NULL)
-                btn_click_callback();
+            value= (min+(area->window->mouse_x - x)/w)*(max-min);
+            if(btn_click_callback!=NULL) {
+                btn_click_callback(value);
+            }
         }else if(area->window->mouse_state == GLFW_RELEASE && actual_press_status == GLFW_PRESS){
             actual_press_status = GLFW_RELEASE;
         }
@@ -75,7 +77,7 @@ void OGUISlider::draw(int x, int y, int w)
     y=y-20;
 }
 
-void OGUISlider::setCallBack(std::function<void()> func) {
+void OGUISlider::setCallBack(std::function<void(double)> func) {
     btn_click_callback= func;
 }
 

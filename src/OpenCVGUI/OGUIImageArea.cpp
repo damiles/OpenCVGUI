@@ -68,11 +68,21 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
         image_width = img.cols;
         image_height = img.rows;
         // convert img to RGBA
-        if (img.channels() == 3){
-            cvtColor(img, imgRGBA, CV_BGR2RGBA);
-            data = imgRGBA.data;
-        }else if(img.channels()==4)
-            data = img.data;
+        switch (img.channels())
+        {
+            case 1:
+                cvtColor(img, imgRGBA, CV_GRAY2RGBA);
+                data = imgRGBA.data;
+                break;
+            case 3:
+                cvtColor(img, imgRGBA, CV_BGR2RGBA);
+                data = imgRGBA.data;
+                break;
+            case 4:
+                data = img.data;
+                break;
+        }
+
 
 
         if(image==-1){

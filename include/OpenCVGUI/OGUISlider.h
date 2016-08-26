@@ -13,13 +13,13 @@ class OGUISlider : public OGUIWidget {
     virtual void draw(int x, int y, int width);
 
     OGUISlider(const char* title,double min,double max, double value);
-    void setCallBack(std::function<void()> func);
+    void setCallBack(std::function<void(double)> func);
 
 private:
     double min, max, value;
     const char* title;
     int actual_press_status;
-    std::function<void()> btn_click_callback;
+    std::function<void(double)> btn_click_callback;
 };
 
 } /* End of namespace OpenCVGUI */

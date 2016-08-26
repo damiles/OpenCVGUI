@@ -21,6 +21,7 @@ class OGUILayout : public OGUIArea {
 
  private:
     int orientation;
+    bool is_pressed=false;
     std::vector<float> area_sizes;
  public:
 
