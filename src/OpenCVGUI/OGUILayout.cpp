@@ -60,29 +60,36 @@ void OGUILayout::draw(int x, int y, int width, int height)
             y0+=h;
 
         } else { // column layout
-            float w = this->area_sizes.at(i) * width;
 
-            //nvgRect(vg,   x+x0 ,y,  1, height);
             ax = x + x0 + 1;
             ay = y;
-            aw = w - 1;
-            ah = height;
 
             if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2) {
                 window->setCursor(HRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
                     is_pressed= true;
-                    id_area_pressed=i;
+                    id_area_pressed=i-1;
                 }
             }
             if(is_pressed) {
-                float diff= this->area_sizes.at(id_area_pressed) - ((float) window->mouse_x / (float) width);
-                this->area_sizes.at(id_area_pressed) = (float) window->mouse_x / (float) width;
+
+                float new_size= ((float) window->mouse_x / (float) width)- (areas.at(id_area_pressed)->x/(float)width);
+                float diff= this->area_sizes.at(id_area_pressed) - new_size;
+
+                // Calculate the new area size...
+                this->area_sizes.at(id_area_pressed) = new_size;
+
                 float num_other_areas= areas.size() - id_area_pressed;
                 for(int j=id_area_pressed+1; j<areas.size(); j++){
-                    this->area_sizes.at(j)= this->area_sizes.at(j)-(diff/num_other_areas);
+                    this->area_sizes.at(j)= this->area_sizes.at(j)+(diff/num_other_areas);
                 }
             }
+
+            float w = this->area_sizes.at(i) * width;
+
+            aw = w - 1;
+            ah = height;
+
             x0+=w;
         }
         if (window->mouse_state == GLFW_RELEASE){
