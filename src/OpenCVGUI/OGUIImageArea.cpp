@@ -1,6 +1,7 @@
 #include <opencv2/imgproc/types_c.h>
 #include "OGUIImageArea.h"
 #include "OGUIWindow.h"
+#include "nanovg.h"
 
 namespace OpenCVGUI {
 
@@ -22,7 +23,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
     this->y=y;
     this->width= width;
     this->height= height;
-    NVGcontext* vg= (window->vg);
+    NVGcontext* vg= (NVGcontext*)(window->vg);
 
     nvgScissor(vg, x, y, width, height);
     OGUIArea::draw(x,y,width,height);
@@ -63,7 +64,7 @@ void OGUIImageArea::draw(int x, int y, int width, int height)
 }
 
     void OGUIImageArea::setImage(Mat  img) {
-        NVGcontext *ctx = (window->vg);
+        NVGcontext *ctx = (NVGcontext*)(window->vg);
 
         image_width = img.cols;
         image_height = img.rows;

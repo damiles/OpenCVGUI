@@ -3,6 +3,13 @@
 #include "OGUILayout.h"
 #include "OGUIWidget.h"
 
+#include <GL/glew.h>
+#ifdef __APPLE__
+#   define GLFW_INCLUDE_GLCOREARB
+#endif
+#include <GLFW/glfw3.h>
+#include "nanovg.h"
+
 #ifdef OGUI_GL3
 #define NANOVG_GL3_IMPLEMENTATION
 #else
@@ -62,12 +69,12 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
 OGUIWindow::~OGUIWindow()
 {
 #ifdef OGUI_GL3
-    nvgDeleteGL3(vg);
+    nvgDeleteGL3((NVGcontext*)vg);
 #else
     nvgDeleteGL2(vg);
 #endif
 	
-    glfwDestroyWindow(glfw_window);
+    glfwDestroyWindow((GLFWwindow*)glfw_window);
     glfwTerminate();
 }
 
@@ -80,11 +87,11 @@ int OGUIWindow::init()
         glfwTerminate();
         return 0;
 	}
-    
+
     initGraph(&fps, GRAPH_RENDER_FPS, "Frame Time");
 
-    glfwSetWindowUserPointer(glfw_window, this);
-	glfwMakeContextCurrent(glfw_window);
+    glfwSetWindowUserPointer((GLFWwindow*)glfw_window, this);
+	glfwMakeContextCurrent((GLFWwindow*)glfw_window);
     glfwSwapInterval(0);
     
     // Init GLew
@@ -109,8 +116,8 @@ int OGUIWindow::init()
         return 0;
     }
 
-    nvgCreateFont(vg, "sans", "../resources/Roboto-Regular.ttf");
-    nvgCreateFont(vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
+    nvgCreateFont((NVGcontext*)vg, "sans", "../resources/Roboto-Regular.ttf");
+    nvgCreateFont((NVGcontext*)vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
 
     // Load all cursors
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_ARROW_CURSOR));
@@ -120,11 +127,11 @@ int OGUIWindow::init()
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_IBEAM_CURSOR));
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_CROSSHAIR_CURSOR));
 
-    glfwSetInputMode(glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
+    glfwSetInputMode((GLFWwindow*)glfw_window, GLFW_STICKY_MOUSE_BUTTONS, 1);
 
-    glfwSetScrollCallback(glfw_window, OGUIWindow::scroll_callback);
-    glfwSetCharCallback(glfw_window, OGUIWindow::charCallback);
-    glfwSetKeyCallback(glfw_window, OGUIWindow::keyCallback);
+    glfwSetScrollCallback((GLFWwindow*)glfw_window, (void (*)(GLFWwindow*, double, double))OGUIWindow::scroll_callback);
+    glfwSetCharCallback((GLFWwindow*)glfw_window, (void (*)(GLFWwindow*, unsigned int))OGUIWindow::charCallback);
+    glfwSetKeyCallback((GLFWwindow*)glfw_window, (void (*)(GLFWwindow*,  int, int, int, int))OGUIWindow::keyCallback);
 
     glfwSetTime(0);
     prevt = glfwGetTime();
@@ -132,23 +139,23 @@ int OGUIWindow::init()
     return 1;
 }
 
-void OGUIWindow::scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
-    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+void OGUIWindow::scroll_callback(void* window, double xoffset, double yoffset){
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer((GLFWwindow*)window);
     oguiwindow->mainLayout->updateScrollStatus(xoffset, yoffset);
 }
 
-void OGUIWindow::charCallback(GLFWwindow* window, unsigned int key)
+void OGUIWindow::charCallback(void* window, unsigned int key)
 {
-    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer((GLFWwindow*)window);
     OGUIWidget* widget= oguiwindow->getKeyFocusWidget();
     if(widget!=NULL){
         widget->characterCallback(key);
     }
 }
 
-void OGUIWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void OGUIWindow::keyCallback(void* window, int key, int scancode, int action, int mods)
 {
-    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer(window);
+    OGUIWindow* oguiwindow= (OGUIWindow*)glfwGetWindowUserPointer((GLFWwindow*)window);
     OGUIWidget* widget= oguiwindow->getKeyFocusWidget();
     if(widget!=NULL){
         widget->keyCallback(key, scancode, action, mods);
@@ -168,9 +175,9 @@ void OGUIWindow::update(){
     updateGraph(&fps, dt);
 
 
-    glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
-    mouse_left_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
-    mouse_state = glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+    glfwGetCursorPos((GLFWwindow*)glfw_window, &mouse_x, &mouse_y);
+    mouse_left_state = glfwGetMouseButton((GLFWwindow*)glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+    mouse_state = glfwGetMouseButton((GLFWwindow*)glfw_window, GLFW_MOUSE_BUTTON_LEFT);
 
     actual_cursor_type=0;
     draw();
@@ -184,14 +191,14 @@ void OGUIWindow::draw()
     float ratio;
     
     // Get size and clean buffer
-    glfwGetFramebufferSize(glfw_window, &width, &height);
+    glfwGetFramebufferSize((GLFWwindow*)glfw_window, &width, &height);
     ratio = width / (float) height;
     
     glViewport(0, 0, width, height);
     glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
-    nvgBeginFrame(vg, width, height, ratio);
+    nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
 
     // Draw all my own data
     
@@ -201,10 +208,10 @@ void OGUIWindow::draw()
 
     renderGraph(vg, width-205,height-40, &fps);
 
-    nvgEndFrame(vg);
+    nvgEndFrame((NVGcontext*)vg);
 
     // Swap buffers
-    glfwSwapBuffers(glfw_window);
+    glfwSwapBuffers((GLFWwindow*)glfw_window);
 }
 
 void OGUIWindow::setCursor(int cursor_type)
@@ -215,7 +222,7 @@ void OGUIWindow::setCursor(int cursor_type)
 
 void OGUIWindow::drawCursor()
 {
-    glfwSetCursor(glfw_window, mouse_cursors_.at(actual_cursor_type));
+    glfwSetCursor((GLFWwindow*)glfw_window, (GLFWcursor*)mouse_cursors_.at(actual_cursor_type));
 }
 
 OGUILayout* OGUIWindow::getMainLayout(){

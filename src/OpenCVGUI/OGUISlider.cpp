@@ -3,6 +3,13 @@
 #include "OGUIWindow.h"
 #include <sstream>
 
+#include <GL/glew.h>
+#ifdef __APPLE__
+#   define GLFW_INCLUDE_GLCOREARB
+#endif
+#include <GLFW/glfw3.h>
+#include "nanovg.h"
+
 namespace OpenCVGUI {
 
 
@@ -12,7 +19,7 @@ void OGUISlider::draw(int x, int y, int w)
 {
     OGUIWidget::draw(x, y, w);
     OGUIArea* area= (OGUIArea*)(this->area);
-    NVGcontext* vg= (area->window->vg);
+    NVGcontext* vg= (NVGcontext*)(area->window->vg);
 
     NVGpaint bg, knob;
 

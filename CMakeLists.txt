@@ -76,7 +76,7 @@ set(
     3rdparty/nanovg/src/stb_image.h 
     3rdparty/nanovg/src/stb_truetype.h 
 )
-ADD_LIBRARY( nanovg STATIC ${NANOVG_SRC} )
+# ADD_LIBRARY( nanovg STATIC ${NANOVG_SRC} )
 
 set(
 	OGUI_INCLUDE_DIRS
@@ -109,7 +109,7 @@ else()
 endif()
 
 # Create library
-ADD_LIBRARY( opencvgui ${OGUI_LIBRARY_TYPE} ${OGUI_SRC_LIB} )
+ADD_LIBRARY( opencvgui ${OGUI_LIBRARY_TYPE} ${OGUI_SRC_LIB} ${NANOVG_SRC})
 	
 set_target_properties(opencvgui PROPERTIES
                       OUTPUT_NAME "OpenCVGUI"
@@ -126,7 +126,7 @@ target_include_directories(opencvgui PUBLIC
 #target_include_directories(opencvgui PRIVATE
 #                           "${OGUI_SRC_LIB}")
 
-# TARGET_LINK_LIBRARIES(opencvgui ${OpenCV_LIBS} glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} nanovg)
+# TARGET_LINK_LIBRARIES(opencvgui glfw nanovg)
 
 # Compile a sample project
 set(EXTRA_LIBS_EXE "")
@@ -140,7 +140,7 @@ if(UNIX)
 endif()
 
 ADD_EXECUTABLE(example src/example.cpp )
-TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE} nanovg)
+TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
 
 # INSTALLATION
@@ -151,3 +151,22 @@ install(DIRECTORY ${OGUI_INCLUDE_DIRS}
         DESTINATION include
         FILES_MATCHING PATTERN "*.h")
 
+
+
+# Package config
+set(INCLUDE_INSTALL_DIR include/ )
+set(LIB_INSTALL_DIR lib/ )
+include(CMakePackageConfigHelpers)
+configure_package_config_file(OpenCVGUIConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/OpenCVGUIConfig.cmake
+        INSTALL_DESTINATION ${LIB_INSTALL_DIR}/OpenCVGUI/cmake
+        PATH_VARS INCLUDE_INSTALL_DIR)
+
+write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/OpenCVGUIConfigVersion.cmake
+        VERSION 1.2.3
+        COMPATIBILITY SameMajorVersion )
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/OpenCVGUIConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/OpenCVGUIConfigVersion.cmake
+        DESTINATION ${LIB_INSTALL_DIR}/OpenCVGUI/cmake )

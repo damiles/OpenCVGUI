@@ -1,8 +1,6 @@
 #ifndef PERF_H
 #define PERF_H
 
-#include "nanovg.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -24,7 +22,7 @@ typedef struct PerfGraph PerfGraph;
 
 void initGraph(PerfGraph* fps, int style, const char* name);
 void updateGraph(PerfGraph* fps, float frameTime);
-void renderGraph(NVGcontext* vg, float x, float y, PerfGraph* fps);
+void renderGraph(void* vg, float x, float y, PerfGraph* fps);
 float getGraphAverage(PerfGraph* fps);
 
 #define GPU_QUERY_COUNT 5

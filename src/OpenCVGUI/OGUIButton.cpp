@@ -3,13 +3,20 @@
 #include "OGUIArea.h"
 #include "OGUIWindow.h"
 
+#include <GL/glew.h>
+#ifdef __APPLE__
+#   define GLFW_INCLUDE_GLCOREARB
+#endif
+#include <GLFW/glfw3.h>
+#include "nanovg.h"
+
 namespace OpenCVGUI {
 
     void OGUIButton::draw(int x, int y, int width)
     {
         OGUIWidget::draw(x, y, width);
         OGUIArea* area= (OGUIArea*)(this->area);
-        NVGcontext* vg= (area->window->vg);
+        NVGcontext* vg= (NVGcontext*)(area->window->vg);
         // Draw box square
         nvgBeginPath(vg);
         nvgRoundedRect(vg, x+1,y+1, width-2,height-2, 3);

@@ -1,6 +1,13 @@
 #include "OGUILayout.h"
 #include "OGUIWindow.h"
 
+#include <GL/glew.h>
+#ifdef __APPLE__
+#   define GLFW_INCLUDE_GLCOREARB
+#endif
+#include <GLFW/glfw3.h>
+#include "nanovg.h"
+
 namespace OpenCVGUI {
 
 

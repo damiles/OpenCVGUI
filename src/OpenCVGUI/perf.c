@@ -96,7 +96,7 @@ float getGraphAverage(PerfGraph* fps)
 	return avg / (float)GRAPH_HISTORY_COUNT;
 }
 
-void renderGraph(NVGcontext* vg, float x, float y, PerfGraph* fps)
+void renderGraph(void* vg, float x, float y, PerfGraph* fps)
 {
 	int i;
 	float avg, w, h;

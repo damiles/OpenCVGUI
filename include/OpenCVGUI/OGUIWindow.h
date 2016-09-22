@@ -5,12 +5,6 @@
 #include <vector>
 #include <thread>
 #include <iostream>
-#include <GL/glew.h>
-#ifdef __APPLE__
-#   define GLFW_INCLUDE_GLCOREARB
-#endif
-#include <GLFW/glfw3.h>
-#include "nanovg.h"
 #include "perf.h"
 
 
@@ -40,10 +34,10 @@ class OGUIWindow {
     void draw();
     void update();
 
-    GLFWwindow* glfw_window;
+    void* glfw_window;//GLFWwindow
     static bool isInitGlfw;
     int init();
-    NVGcontext* vg;
+    void* vg;//NVGcontext
     void addArea(OGUIArea* area);
     double mouse_x, mouse_y;
     int mouse_state;
@@ -54,13 +48,13 @@ class OGUIWindow {
     int mouse_left_state;
 
     // save pointers to all loaded mouse cursors
-    std::vector<GLFWcursor*> mouse_cursors_;
+    std::vector<void*> mouse_cursors_;//GLFWcursor
     OGUILayout* getMainLayout();
-    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+    static void scroll_callback(void* window, double xoffset, double yoffset);//GLFWwindow
 
     void setKeyFocus(OGUIWidget* widget);
-    static void charCallback(GLFWwindow* window, unsigned int key);
-    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void charCallback(void* window, unsigned int key);//GLFWwindow
+    static void keyCallback(void* window, int key, int scancode, int action, int mods);//GLFWwindow
     OGUIWidget* getKeyFocusWidget();
 private:
 

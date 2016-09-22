@@ -2,6 +2,7 @@
 #include "OGUIWindow.h"
 #include <stdlib.h> 
 #include <time.h> 
+#include "nanovg.h"
 
 namespace OpenCVGUI {
 
@@ -15,7 +16,7 @@ void OGUIArea::draw(int x, int y, int width, int height)
     this->width=width;
     this->height=height;
     
-    NVGcontext* vg= (window->vg);
+    NVGcontext* vg= (NVGcontext*)(window->vg);
     // Window
 	nvgBeginPath(vg);
 	nvgRect(vg, x,y, width,height);
