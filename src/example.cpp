@@ -3,6 +3,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <chrono>
+
+#include "OGUI.h"
 #include "OGUIWindow.h"
 #include "OGUILayout.h"
 #include "OGUIFormArea.h"
@@ -13,7 +15,7 @@
 #include "OGUITextInput.h"
 #include "OGUIRadioButtons.h"
 
-#include <thread>
+
 
 
 using namespace OpenCVGUI;
@@ -29,20 +31,17 @@ Mat frame;
 
 void on_change_slider_threshold(double value){
     threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
+    imageArea2->setImage(output);
 }
 
-int quit=0;
-
-void exit_btn_click(){
-    cout << "Bye" << endl;
-    quit=1;
+void hello_btn_click(){
+    cout << "HELLO OGUI" << endl;
 }
 
-void app_run() {
-    while(true) {
+void cv_process() {
+    while(app_is_running) {
         cap >> frame;
-        if(quit==1)
-            break;
+        imageArea3->setImage(frame);
     }
 }
 
@@ -51,7 +50,8 @@ int main( int argc, const char* argv[] )
     srand (time(NULL));
 	OpenCVGUI::init();
 
-    window= new OGUIWindow(1024, 768, "Wellcome to OpenCVGUI");
+    window= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI");
+    //OGUIWindow* window1= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI 2");
 
 	OGUIFormArea formArea(window);
     OGUILayout layout1(window, 1);
@@ -72,13 +72,13 @@ int main( int argc, const char* argv[] )
     slider.setCallBack(on_change_slider_threshold);
     formArea.addWidget(&slider);
 
-    OGUIButton button1("Exit");
-    button1.setCallBack(exit_btn_click);
+    OGUIButton button1("Hello");
+    button1.setCallBack(hello_btn_click);
     formArea.addWidget(&button1);
 
-    imageArea1= new OGUIImageArea(window);
-    imageArea2= new OGUIImageArea(window);
-    imageArea3= new OGUIImageArea(window);
+    imageArea1= new OGUIImageArea(window, "Input image");
+    imageArea2= new OGUIImageArea(window,"Threshold");
+    imageArea3= new OGUIImageArea(window, "Camera");
     layout1.addArea(imageArea1);
     layout1.addArea(imageArea2);
     layout2.addArea(imageArea3);
@@ -89,7 +89,7 @@ int main( int argc, const char* argv[] )
     imageArea2->setImage(output);
 
     //imageArea3.setImage(gray);
-    cap.open("http://127.0.0.1:8081/");
+    cap.open(0);
     if(cap.isOpened()){
         cap >> frame;
         imageArea3->setImage(frame);
@@ -97,20 +97,7 @@ int main( int argc, const char* argv[] )
         imageArea3->setImage(gray);
     }
 
-    std::thread t1(app_run);
-
-    while(true){
-        imageArea2->setImage(output);
-        if(cap.isOpened()){
-            imageArea3->setImage(frame);
-        }
-        window->update();
-        //cvWaitKey(10);
-        if(quit==1)
-            break;
-    }
-
-    t1.join();
+    OpenCVGUI::app_run(cv_process);
 
 	return 1;
 }

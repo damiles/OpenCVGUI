@@ -167,23 +167,31 @@ void OGUIWindow::addArea(OGUIArea* area)
     mainLayout->addArea(area);
 }
 
-void OGUIWindow::update(){
-    double t, dt;
-    t = glfwGetTime();
-    dt = t - prevt;
-    prevt = t;
-    updateGraph(&fps, dt);
+bool OGUIWindow::update(){
+    glfwMakeContextCurrent((GLFWwindow *)glfw_window);
+    if(!glfwWindowShouldClose((GLFWwindow *)glfw_window)) {
+
+        double t, dt;
+        t = glfwGetTime();
+        dt = t - prevt;
+        prevt = t;
+        updateGraph(&fps, dt);
 
 
-    glfwGetCursorPos((GLFWwindow*)glfw_window, &mouse_x, &mouse_y);
-    mouse_left_state = glfwGetMouseButton((GLFWwindow*)glfw_window, GLFW_MOUSE_BUTTON_LEFT);
-    mouse_state = glfwGetMouseButton((GLFWwindow*)glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+        glfwGetCursorPos((GLFWwindow *) glfw_window, &mouse_x, &mouse_y);
+        mouse_left_state = glfwGetMouseButton((GLFWwindow *) glfw_window, GLFW_MOUSE_BUTTON_LEFT);
+        mouse_state = glfwGetMouseButton((GLFWwindow *) glfw_window, GLFW_MOUSE_BUTTON_LEFT);
 
-    actual_cursor_type=0;
-    draw();
-    drawCursor();
+        actual_cursor_type = 0;
+        draw();
+        drawCursor();
 
-    glfwPollEvents();
+        glfwPollEvents();
+
+        return true;
+    }else{
+        return false;
+    }
 }
 
 void OGUIWindow::draw()

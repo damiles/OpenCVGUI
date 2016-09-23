@@ -16,14 +16,19 @@ class OGUIImageArea : public OGUIArea {
 
     virtual void draw(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
-    OGUIImageArea(OGUIWindow* window);
+    OGUIImageArea(OGUIWindow* window, string title="");
     void setImage(Mat  img);
 
 private:
     int image=-1;
-    Mat imgRGBA;
+    Mat _img, imgRGBA;
     unsigned char* data;
     float image_x, image_y, image_scale, image_width, image_height;
+    bool has_to_update;
+    string _title;
+
+    void updateImage();
+
 };
 
 } /* End of namespace OpenCVGUI */

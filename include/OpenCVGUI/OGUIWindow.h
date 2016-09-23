@@ -32,7 +32,7 @@ class OGUIWindow {
     OGUIWindow(int width,int height,const char* title, int layoutOrientation=0);
     ~OGUIWindow();
     void draw();
-    void update();
+    bool update(); // Return false if window is closed
 
     void* glfw_window;//GLFWwindow
     static bool isInitGlfw;
