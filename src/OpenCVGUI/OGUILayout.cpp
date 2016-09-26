@@ -40,29 +40,35 @@ void OGUILayout::draw(int x, int y, int width, int height)
         //nvgBeginPath(vg);
 
         if (orientation) { // 1 row layout
-            float h = this->area_sizes.at(i) * height;
-
             //nvgRect(vg, x, y+y0, width,1);
             ax = x;
             ay = y + y0 + 1;
-            aw = width;
-            ah = h - 1;
+
 
             if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2) {
                 window->setCursor(VRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
-                    id_area_pressed= i;
+                    id_area_pressed= i-1;
                     is_pressed= true;
                 }
             }
             if(is_pressed) {
-                float diff= this->area_sizes.at(i) - ((float) window->mouse_y / (float) height);
-                this->area_sizes.at(i) = (float) window->mouse_y / (float) height;
-                float num_other_areas= areas.size() - i;
-                for(int j=i+1; j<areas.size(); j++){
-                    this->area_sizes.at(j)= this->area_sizes.at(j)-(diff/num_other_areas);
+                float new_size= ((float) window->mouse_y / (float) height)- (areas.at(id_area_pressed)->y/(float)height);
+                float diff= this->area_sizes.at(id_area_pressed) - new_size;
+
+                // Calculate the new area size...
+                this->area_sizes.at(id_area_pressed) = new_size;
+
+                float num_other_areas= areas.size() - id_area_pressed - 1;
+                for(int j=id_area_pressed+1; j<areas.size(); j++){
+                    this->area_sizes.at(j)= this->area_sizes.at(j)+(diff/num_other_areas);
                 }
             }
+
+            float h = this->area_sizes.at(i) * height;
+
+            aw = width;
+            ah = h - 1;
 
             y0+=h;
 
@@ -86,7 +92,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
                 // Calculate the new area size...
                 this->area_sizes.at(id_area_pressed) = new_size;
 
-                float num_other_areas= areas.size() - id_area_pressed;
+                float num_other_areas= areas.size() - id_area_pressed - 1;
                 for(int j=id_area_pressed+1; j<areas.size(); j++){
                     this->area_sizes.at(j)= this->area_sizes.at(j)+(diff/num_other_areas);
                 }
