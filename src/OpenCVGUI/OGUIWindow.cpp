@@ -118,6 +118,7 @@ int OGUIWindow::init()
 
     nvgCreateFont((NVGcontext*)vg, "sans", "../resources/Roboto-Regular.ttf");
     nvgCreateFont((NVGcontext*)vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
+    nvgCreateFont((NVGcontext*)vg, "icons", "../resources/fonts/fontawesome-webfont.ttf");
 
     // Load all cursors
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_ARROW_CURSOR));

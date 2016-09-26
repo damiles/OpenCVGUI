@@ -29,6 +29,8 @@ private:
 
     void updateImage();
 
+
+
 };
 
 } /* End of namespace OpenCVGUI */

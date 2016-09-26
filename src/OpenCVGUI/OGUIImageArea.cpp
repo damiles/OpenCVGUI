@@ -96,6 +96,11 @@ namespace OpenCVGUI {
     void OGUIImageArea::setImage(Mat  img) {
 
         img.copyTo(_img);
+
+        // Reinit image if don't have same size
+        if(img.cols!= image_width || img.rows!= image_height)
+            image==-1;
+
         image_width = img.cols;
         image_height = img.rows;
         // convert img to RGBA
