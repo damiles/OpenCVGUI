@@ -31,7 +31,7 @@ Mat frame;
 
 void on_change_slider_threshold(double value){
     threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
-    imageArea2->setImage(output);
+    imageArea2->setImage(&output);
 }
 
 void hello_btn_click(){
@@ -41,7 +41,7 @@ void hello_btn_click(){
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
-        imageArea3->setImage(frame);
+        imageArea3->setImage(&frame);
     }
 }
 
@@ -83,18 +83,18 @@ int main( int argc, const char* argv[] )
     layout1.addArea(imageArea2);
     layout2.addArea(imageArea3);
     
-    imageArea1->setImage(src);
+    imageArea1->setImage(&src);
     cvtColor( src, gray, COLOR_RGB2GRAY );
     threshold( gray, output, 125, 255, CV_THRESH_BINARY);
-    imageArea2->setImage(output);
+    imageArea2->setImage(&output);
 
     //imageArea3.setImage(gray);
     cap.open(0);
     if(cap.isOpened()){
         cap >> frame;
-        imageArea3->setImage(frame);
+        imageArea3->setImage(&frame);
     }else{
-        imageArea3->setImage(gray);
+        imageArea3->setImage(&gray);
     }
 
     OpenCVGUI::windows.push_back(window);

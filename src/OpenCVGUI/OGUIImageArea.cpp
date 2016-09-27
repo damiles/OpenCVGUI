@@ -10,7 +10,7 @@ namespace OpenCVGUI {
     {
         image_scale=1.0;
         has_to_update= false;
-        _title= title;
+        this->title= title;
     }
 
     void OGUIImageArea::updateScrollStatus(double xoffset,double yoffset)
@@ -72,10 +72,10 @@ namespace OpenCVGUI {
             // Draw text
             nvgFontSize(vg, 16.0f);
             nvgFontFace(vg, "sans");
-            float tw = nvgTextBounds(vg, 0, 0, _title.c_str(), NULL, NULL);
+            float tw = nvgTextBounds(vg, 0, 0, title.c_str(), NULL, NULL);
             nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, _title.c_str(), NULL);
+            nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
         }
         nvgResetScissor(vg);
     }
@@ -93,18 +93,18 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUIImageArea::setImage(Mat  img) {
+    void OGUIImageArea::setImage(Mat *img) {
 
-        img.copyTo(_img);
+        img->copyTo(_img);
 
         // Reinit image if don't have same size
-        if(img.cols!= image_width || img.rows!= image_height)
+        if(img->cols!= image_width || img->rows!= image_height)
             image=-1;
 
-        image_width = img.cols;
-        image_height = img.rows;
+        image_width = img->cols;
+        image_height = img->rows;
         // convert img to RGBA
-        switch (img.channels())
+        switch (img->channels())
         {
             case 1:
                 cvtColor(_img, imgRGBA, CV_GRAY2RGBA);
