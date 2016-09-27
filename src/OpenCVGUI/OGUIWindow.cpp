@@ -71,7 +71,7 @@ OGUIWindow::~OGUIWindow()
 #ifdef OGUI_GL3
     nvgDeleteGL3((NVGcontext*)vg);
 #else
-    nvgDeleteGL2(vg);
+    nvgDeleteGL2((NVGcontext*)vg);
 #endif
 	
     glfwDestroyWindow((GLFWwindow*)glfw_window);
