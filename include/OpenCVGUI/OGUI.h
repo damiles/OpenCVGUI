@@ -15,7 +15,7 @@
 namespace OpenCVGUI {
     OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
     void app_run(std::function<void()> process_function);
-    bool app_is_running= true;
+    extern bool app_is_running;
     extern vector<OGUIWindow*> windows;
 
 }
