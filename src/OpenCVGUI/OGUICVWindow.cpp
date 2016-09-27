@@ -27,15 +27,9 @@ namespace OpenCVGUI {
     /// Show image into layouts
     void OGUICVWindow::imshow(string area_title, void *img) {
         /// Look for area
-        OGUIArea* area=NULL;
-        for(int i=0; i<areas_showing.size(); i++){
-            OGUIArea* tmp= areas_showing.at(i);
-            if(tmp->title.compare(area_title)==0){
-                area= tmp;
-                break;
-            }
-        }
+        OGUIArea* area=findAreaByTitle(area_title);
 
+        /// create or redraw
         if(area==NULL){
             // create new area and ad
             OGUIImageArea *ia= new OGUIImageArea(this, area_title);
@@ -50,6 +44,33 @@ namespace OpenCVGUI {
 
     void OGUICVWindow::addFormWidget(OGUIWidget *widget) {
         formArea->addWidget(widget);
+    }
+
+    void OGUICVWindow::plot3D(string area_title, void *data) {
+        /// Look for area
+        OGUIArea* area=findAreaByTitle(area_title);
+        /// create or redraw
+        if(area==NULL){
+            // create new area and ad
+            OGUI3D *ia= new OGUI3D(this, area_title);
+            layout.at(areas_showing.size()%2)->addArea(ia);
+            areas_showing.push_back((OGUIArea*)ia);
+        }else{
+            OGUI3D *ia= (OGUI3D*)area;
+
+        }
+    }
+
+    OGUIArea *OGUICVWindow::findAreaByTitle(string title) {
+        OGUIArea* area= NULL;
+        for(int i=0; i<areas_showing.size(); i++){
+            OGUIArea* tmp= areas_showing.at(i);
+            if(tmp->title.compare(title)==0){
+                area= tmp;
+                break;
+            }
+        }
+        return area;
     }
 
 

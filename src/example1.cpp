@@ -65,9 +65,7 @@ int main( int argc, const char* argv[] )
     threshold( gray, output, 125, 255, CV_THRESH_BINARY);
     window->imshow("threshold", &output);
 
-    Mat output2;
-    threshold( gray, output2, 190, 255, CV_THRESH_BINARY);
-    window->imshow("threshold 2", &output2);
+    window->plot3D("3D plot", NULL);
 
     cap.open(0);
     if(cap.isOpened()){
