@@ -50,7 +50,7 @@ int main( int argc, const char* argv[] )
     srand (time(NULL));
 	OpenCVGUI::init();
 
-    window= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI");
+    window= new OGUIWindow(1024, 768, "Wellcome to opencv GUI");
     //OGUIWindow* window1= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI 2");
 
 	OGUIFormArea formArea(window);
@@ -97,6 +97,7 @@ int main( int argc, const char* argv[] )
         imageArea3->setImage(gray);
     }
 
+    OpenCVGUI::windows.push_back(window);
     OpenCVGUI::app_run(cv_process);
 
 	return 1;

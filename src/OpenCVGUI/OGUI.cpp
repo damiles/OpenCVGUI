@@ -9,16 +9,11 @@ namespace OpenCVGUI{
 
     vector<OGUIWindow*> windows;
 
-    OGUIWindow* namedWindow(const char* title, int width,int height)
+    OGUICVWindow* namedWindow(const char* title, int width,int height)
     {
-        OGUIWindow* w= new OGUIWindow(width, height, title);
+        OGUICVWindow* w= new OGUICVWindow(width, height, title);
         windows.push_back(w);
         return w;
-    }
-
-    void imshow(const string title, cv::Mat img)
-    {
-
     }
 
     void app_run(std::function<void()> process_function)

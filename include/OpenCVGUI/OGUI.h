@@ -10,13 +10,13 @@
 #include <functional>
 
 #include <opencv2/core/core.hpp>
-#include "OGUIWindow.h"
+#include "OGUICVWindow.h"
 
 namespace OpenCVGUI {
-    OGUIWindow* namedWindow(const char* title, int width=1024, int height=768);
-    void imshow(const string title, cv::Mat img);
+    OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
     void app_run(std::function<void()> process_function);
     bool app_is_running= true;
+    extern vector<OGUIWindow*> windows;
 
 }
 #endif //OPENCVGUI_OGUI_H
