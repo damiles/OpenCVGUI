@@ -251,4 +251,8 @@ void OGUIWindow::setKeyFocus(OGUIWidget* widget)
     key_focus_widget_=widget;
 }
 
+int OGUIWindow::getWindowHeight() {
+    return height;
+}
+
 } /* End of namespace OpenCVGUI */

@@ -9,8 +9,10 @@ namespace OpenCVGUI {
 
 void OGUI3D::CreateVertexBuffer()
 {
-    Vector3f Vertices[1];
-    Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);
+    Vector3f Vertices[4];
+    Vertices[0] = Vector3f(-2.0f, -1.0f, 0.0f);
+    Vertices[1] = Vector3f(1.0f, -1.0f, 0.0f);
+    Vertices[2] = Vector3f(0.0f, 3.0f, 0.0f);
 
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -48,15 +50,18 @@ void OGUI3D::draw(int x, int y, int width, int height)
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
     // ToDo Enable GL3 version...
+    glViewport(x, window->getWindowHeight()-height-y, (GLsizei)(width), (GLsizei)(height));
 
-    glViewport(x, y, (GLsizei)(width), (GLsizei)(height));
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glDrawArrays(GL_POINTS, 0, 1);
+    glDrawArrays(GL_POINTS, 0, 3);
 
     glDisableVertexAttribArray(0);
 

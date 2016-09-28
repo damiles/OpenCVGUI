@@ -59,6 +59,8 @@ class OGUIWindow {
     static void charCallback(void* window, unsigned int key);//GLFWwindow
     static void keyCallback(void* window, int key, int scancode, int action, int mods);//GLFWwindow
     OGUIWidget* getKeyFocusWidget();
+
+    int getWindowHeight();
 private:
 
     /**
