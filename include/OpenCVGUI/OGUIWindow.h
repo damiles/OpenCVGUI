@@ -6,6 +6,7 @@
 #include <thread>
 #include <iostream>
 #include "perf.h"
+#include "OGUI3D.h"
 
 
 using namespace std;
@@ -28,6 +29,8 @@ namespace OpenCVGUI {
 class OGUIWindow {
 
  public:
+
+    OGUI3D* test;
 
     OGUIWindow(int width,int height,const char* title, int layoutOrientation=0);
     ~OGUIWindow();

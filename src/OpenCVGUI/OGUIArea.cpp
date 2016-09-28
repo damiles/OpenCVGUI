@@ -7,7 +7,9 @@
 namespace OpenCVGUI {
 
 
+void OGUIArea::draw3d(int x, int y, int width, int height){
 
+}
 
 void OGUIArea::draw(int x, int y, int width, int height)
 {

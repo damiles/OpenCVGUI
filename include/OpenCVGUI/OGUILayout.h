@@ -14,6 +14,7 @@ class OGUILayout : public OGUIArea {
  public:
 
     void draw(int x, int y, int width, int height);
+    void draw3d(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
     OGUILayout(OGUIWindow* window, int orientation);
     void addArea(OGUIArea* area);

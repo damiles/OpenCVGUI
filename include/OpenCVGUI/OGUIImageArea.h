@@ -1,7 +1,7 @@
 #ifndef OpenCVGUI_OGUIImageArea_h
 #define OpenCVGUI_OGUIImageArea_h
 
-#include <String>
+#include <string>
 #include "OGUIArea.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>

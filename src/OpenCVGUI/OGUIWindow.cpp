@@ -63,7 +63,7 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
     this->key_focus_widget_= NULL;
-    
+
 }
 
 OGUIWindow::~OGUIWindow()
@@ -218,6 +218,9 @@ void OGUIWindow::draw()
     renderGraph(vg, width-205,height-40, &fps);
 
     nvgEndFrame((NVGcontext*)vg);
+
+    // 3D draw
+    mainLayout->draw3d(0,0,width, height);
 
     // Swap buffers
     glfwSwapBuffers((GLFWwindow*)glfw_window);

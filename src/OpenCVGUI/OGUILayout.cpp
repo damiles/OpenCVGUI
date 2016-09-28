@@ -17,6 +17,34 @@ void OGUILayout::updateScrollStatus(double xoffset,double yoffset){
     }
 }
 
+void OGUILayout::draw3d(int x, int y, int width, int height)
+{
+    float x0=0;
+    float y0=0;
+    for(int i=0; i<areas.size(); i++) {
+        int ax, ay, aw, ah;
+        if (orientation) { // 1 row layout
+            ax = x;
+            ay = y + y0 + 1;
+            float h = this->area_sizes.at(i) * height;
+
+            aw = width;
+            ah = h - 1;
+
+            y0+=h;
+        }else{
+            ax = x + x0 + 1;
+            ay = y;
+            float w = this->area_sizes.at(i) * width;
+
+            aw = w - 1;
+            ah = height;
+
+            x0+=w;
+        }
+        areas.at(i)->draw3d(ax,ay,aw,ah);
+    }
+}
 
 void OGUILayout::draw(int x, int y, int width, int height)
 {
