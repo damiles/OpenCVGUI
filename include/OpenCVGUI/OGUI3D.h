@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include "OGUIArea.h"
 #include <string>
+// Include GLM
+#include <glm/glm.hpp>
 
 namespace OpenCVGUI {
 
@@ -84,7 +86,8 @@ class OGUI3D : public OGUIArea {
     OGUI3D(OGUIWindow* window, std::string title);
 
     // 3d functions
-    GLuint VBO;
+    GLuint vao, vbo, shaderProgram, MatrixID, position_attribute;
+    glm::mat4 MVP;
     void CreateVertexBuffer();
 };
 
