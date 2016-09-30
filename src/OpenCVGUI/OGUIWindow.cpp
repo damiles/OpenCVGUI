@@ -209,17 +209,17 @@ void OGUIWindow::draw()
     glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
-//    nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
-//
-//    // Draw all my own data
-//
-//    // Draw the areas
-//    mainLayout->draw(0,0,width, height);
-//
-//
-//    renderGraph(vg, width-205,height-40, &fps);
-//
-//    nvgEndFrame((NVGcontext*)vg);
+    nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
+
+    // Draw all my own data
+
+    // Draw the areas
+    mainLayout->draw(0,0,width, height);
+
+
+    renderGraph(vg, width-205,height-40, &fps);
+
+    nvgEndFrame((NVGcontext*)vg);
 
     // 3D draw
     mainLayout->draw3d(0,0,width, height);

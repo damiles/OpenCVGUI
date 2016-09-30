@@ -86,7 +86,7 @@ set(
         EXTRA_INCLUDES
         3rdparty/nanovg/src/
         3rdparty/glfw/include/
-        3rdparty/glm-0.9.7.1/
+        3rdparty/glm/
 )
 # include required files
 include_directories(

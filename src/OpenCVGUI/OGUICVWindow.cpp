@@ -52,7 +52,7 @@ namespace OpenCVGUI {
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUI3D *ia= new OGUI3D(this, area_title);
+            OGUI3D *ia= new OGUI3D(this, area_title, data);
             layout.at(areas_showing.size()%2)->addArea(ia);
             areas_showing.push_back((OGUIArea*)ia);
         }else{

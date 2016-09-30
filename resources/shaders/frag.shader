@@ -1,7 +1,8 @@
 #version 150
 
 out vec4 out_color;
+in float ypos;
 
 void main() {
-	out_color = vec4(1.0, 1.0, 1.0, 1.0);
+	gl_FragColor = vec4(cos(ypos), sin(ypos), ypos*ypos, 1.0);
 }
