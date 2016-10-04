@@ -67,7 +67,7 @@ int main( int argc, const char* argv[] )
 
     Mat data;
     Mat indata= imread("../resources/3d.png", CV_LOAD_IMAGE_GRAYSCALE);
-    window->imshow("3dindata", &indata);
+    //   window->imshow("3dindata", &indata);
 //    indata.convertTo(data, CV_32F, 1/255.0);
     gray.convertTo(data, CV_32F, 1/255.0);
     resize(data, data, Size(100,100));
