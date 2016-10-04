@@ -5,6 +5,7 @@
 #include <nanovg.h>
 #include "OGUIWindow.h"
 
+#include <GLFW/glfw3.h>
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -86,14 +87,69 @@ namespace OpenCVGUI {
 
 
 
+    OGUI3DCamera::OGUI3DCamera() {
+        radius=3;
+        phi= theta= 0.785398;
+        // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+        Projection = glm::perspective(glm::radians(45.0f), 4.0f/3.0f, 0.1f, 100.0f);
+        // Camera matrix
+        x= radius*cos(phi)*sin(theta);
+        y= radius*sin(phi)*sin(theta);
+        z= radius*cos(theta);
+
+        View       = glm::lookAt(
+                glm::vec3(x,y,z), // Camera is at (4,3,-3), in World Space
+                glm::vec3(0,0,0), // and looks at the origin
+                glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+        );
+        // Model matrix : an identity matrix (model will be at the origin)
+        Model      = glm::mat4(1.0f);
+        MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
+    }
+    glm::mat4 OGUI3DCamera::setRadius(float r) {
+        radius=r;
+        x= radius*cos(phi)*sin(theta);
+        y= radius*sin(phi)*sin(theta);
+        z= radius*cos(theta);
+
+        View       = glm::lookAt(
+                glm::vec3(x,y,z), // Camera is at (4,3,-3), in World Space
+                glm::vec3(0,0,0), // and looks at the origin
+                glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+        );
+        MVP= Projection * View * Model;
+        return MVP;
+    }
+    glm::mat4 OGUI3DCamera::mouseEvent(int dx, int dy) {
+        phi+= dy*(CV_PI/180.0f);
+        theta+= dx*(CV_PI/180.0f);
+        x= radius*cos(phi)*sin(theta);
+        y= radius*sin(phi)*sin(theta);
+        z= radius*cos(theta);
+
+        View       = glm::lookAt(
+                glm::vec3(x,y,z), // Camera is at (4,3,-3), in World Space
+                glm::vec3(0,0,0), // and looks at the origin
+                glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+        );
+        MVP= Projection * View * Model;
+        return MVP;
+    }
+    glm::mat4 OGUI3DCamera::getMVP() {
+        return MVP; // Remember, matrix multiplication is the other way around
+    }
+
+
+
+
     void OGUI3D::CreateVertexBuffer()
 {
     // Use a Vertex Array Object
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    // Create lines from Mat
-    dataLength= data.cols*data.rows*6*3;
+    // Create points from Mat
+    dataLength= data.cols*data.rows*3;
     GLfloat vertices_position[dataLength];
     int index=0;
     for(int x=0; x<data.cols; x++){
@@ -103,29 +159,7 @@ namespace OpenCVGUI {
             vertices_position[index+1]= data.at<float>(y,x);
             vertices_position[index+2]= y/(float)data.cols;
 
-            vertices_position[index+3]= (x+1)/(float)data.cols;
-            vertices_position[index+4]= data.at<float>(y+1,x+1);
-            vertices_position[index+5]= (y+1)/(float)data.cols;
-
-
-            vertices_position[index+6]= x/(float)data.cols;
-            vertices_position[index+7]= data.at<float>(y,x);
-            vertices_position[index+8]= y/(float)data.cols;
-
-            vertices_position[index+9]= (x+1)/(float)data.cols;
-            vertices_position[index+10]= data.at<float>(y,x+1);
-            vertices_position[index+11]= y/(float)data.cols;
-
-
-            vertices_position[index+12]= x/(float)data.cols;
-            vertices_position[index+13]= data.at<float>(y,x);
-            vertices_position[index+14]= y/(float)data.cols;
-
-            vertices_position[index+15]= x/(float)data.cols;
-            vertices_position[index+16]= data.at<float>(y+1,x);
-            vertices_position[index+17]= (y+1)/(float)data.cols;
-
-            index+=6*3;
+            index+=3;
         }
     }
 
@@ -137,42 +171,88 @@ namespace OpenCVGUI {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_position), vertices_position, GL_STATIC_DRAW);
 
+
+    // INDEX BUFFERS
+    dataLengthIBO= (data.cols-1)*(data.rows-1)*3*2;
+    unsigned int indexs[dataLengthIBO];
+    index=0;
+    for(int x=0; x<data.cols-1; x++){
+        for(int y=0; y<data.rows-1; y++){
+            int i=y*data.cols + x;
+            indexs[index]= i;
+            indexs[index+1]= i+1;
+            indexs[index+2]= i+data.cols;
+
+            indexs[index+3]= i+1;
+            indexs[index+4]= i+data.cols;
+            indexs[index+5]= i+data.cols+1;
+
+            index+=6;
+        }
+    }
+
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexs), indexs, GL_STATIC_DRAW);
+
+
+    // SHADER PROGRAM
+
    shaderProgram = create_program("shaders/vert.shader", "shaders/frag.shader");
 //
     // Get a handle for our "MVP" uniform
     MatrixID = glGetUniformLocation(shaderProgram, "MVP");
 
-    // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f/3.0f, 0.1f, 100.0f);
-    // Camera matrix
-    glm::mat4 View       = glm::lookAt(
-            glm::vec3(4,3,-3), // Camera is at (4,3,-3), in World Space
-            glm::vec3(0.5,0.5,0.5), // and looks at the origin
-            glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-    );
-    // Model matrix : an identity matrix (model will be at the origin)
-    glm::mat4 Model      = glm::mat4(1.0f);
-    // Our ModelViewProjection : multiplication of our 3 matrices
-    MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
+    MVP= camera.getMVP();
 
 
     // Get the location of the attributes that enters in the vertex shader
     position_attribute = glGetAttribLocation(shaderProgram, "position");
 
-    // Specify how the data for position can be accessed
+
+
+        // Specify how the data for position can be accessed
     glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 
 }
 
+    void OGUI3D::updateScrollStatus(double xoffset,double yoffset)
+    {
+        if(isMouseIn()) {
+            camera.setRadius(camera.radius + (yoffset / 2.));
+        }
+    }
+
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
-
+    glEnable(GL_DEPTH_TEST);
     glPointSize(2.f);
     // ToDo Enable GL3 version...
     glViewport(x, window->getWindowHeight()-height-y, (GLsizei)(width), (GLsizei)(height));
 
     glUseProgram(shaderProgram);
+
+    if(isMouseIn()) {
+        if (window->mouse_state == GLFW_PRESS){
+            int dy=0;
+            int dx=0;
+            if(lastMouseY!=-1) {
+                dy = window->mouse_y - lastMouseY;
+                dx = window->mouse_x - lastMouseX;
+                camera.mouseEvent(dx,dy);
+            }
+
+            lastMouseX= window->mouse_x;
+            lastMouseY= window->mouse_y;
+
+        }else{
+            lastMouseX= lastMouseY=-1;
+        }
+    }
+
+    MVP= camera.getMVP();
+
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
     // Get the location of the attributes that enters in the vertex shader
@@ -184,7 +264,10 @@ void OGUI3D::draw3d(int x, int y, int width, int height)
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     // Specify how the data for position can be accessed
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glDrawArrays(GL_LINES, 0, dataLength/3);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glDrawElements(GL_TRIANGLES, dataLengthIBO, GL_UNSIGNED_INT, 0);
+    //glDrawArrays(GL_POINTS, 0, dataLength/3);
 
     glDisableVertexAttribArray(0);
 
