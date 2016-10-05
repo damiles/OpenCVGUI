@@ -226,6 +226,11 @@ namespace OpenCVGUI {
 
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
+    if(!isBufferCreated)
+    {
+        CreateVertexBuffer();
+        isBufferCreated= true;
+    }
     glEnable(GL_DEPTH_TEST);
     glPointSize(2.f);
     // ToDo Enable GL3 version...
@@ -307,7 +312,7 @@ OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     this->title= title;
     ((Mat*)d)->copyTo(data);
 
-    CreateVertexBuffer();
+    isBufferCreated= false;
 }
 
 } /* End of namespace OpenCVGUI */

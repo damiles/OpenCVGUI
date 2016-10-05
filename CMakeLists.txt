@@ -154,7 +154,7 @@ install(DIRECTORY ${OGUI_INCLUDE_DIRS}
         DESTINATION include
         FILES_MATCHING PATTERN "*.h")
 
-
+install(DIRECTORY 3rdparty/glm/glm DESTINATION include)
 
 # Package config
 set(INCLUDE_INSTALL_DIR include/ )

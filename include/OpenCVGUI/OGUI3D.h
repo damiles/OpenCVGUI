@@ -47,6 +47,7 @@ class OGUI3D : public OGUIArea {
     OGUI3DCamera camera;
 
     int lastMouseX, lastMouseY;
+    bool isBufferCreated;
 };
 
 } /* End of namespace OpenCVGUI */
