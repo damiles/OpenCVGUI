@@ -11,6 +11,7 @@
 #include "OGUIImageArea.h"
 #include "OGUIWidget.h"
 #include "OGUI3D.h"
+#include "OGUIPlotArea.h"
 
 namespace OpenCVGUI {
 
@@ -22,6 +23,7 @@ public:
     OGUIArea* findAreaByTitle(string title);
     void addFormWidget(OGUIWidget* widget);
     void plot3D(string area_title, void* data);
+    void plot2D(string area_title, void* data);
 
     vector<OGUIArea*> areas_showing;
     vector<OGUILayout*> layout;

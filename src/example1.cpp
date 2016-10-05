@@ -73,6 +73,11 @@ int main( int argc, const char* argv[] )
     resize(data, data, Size(100,100));
     window->plot3D("3D plot", &data);
 
+
+    resize(data, data, Size(10,10));
+    data= data.reshape(0,1);
+    window->plot2D("2D plot", &data);
+
     cap.open(0);
     if(cap.isOpened()){
         cap >> frame;

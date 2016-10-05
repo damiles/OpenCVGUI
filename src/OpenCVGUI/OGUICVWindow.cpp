@@ -61,6 +61,20 @@ namespace OpenCVGUI {
         }
     }
 
+    void OGUICVWindow::plot2D(string area_title, void *data) {
+        /// Look for area
+        OGUIArea* area=findAreaByTitle(area_title);
+        /// create or redraw
+        if(area==NULL){
+            // create new area and ad
+            OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data);
+            layout.at(areas_showing.size()%2)->addArea(ia);
+            areas_showing.push_back((OGUIArea*)ia);
+        }else{
+            OGUIPlotArea *ia= (OGUIPlotArea*)area;
+        }
+    }
+
     OGUIArea *OGUICVWindow::findAreaByTitle(string title) {
         OGUIArea* area= NULL;
         for(int i=0; i<areas_showing.size(); i++){
