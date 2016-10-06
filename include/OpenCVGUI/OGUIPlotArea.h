@@ -17,7 +17,6 @@ class OGUIPlotArea : public OGUIArea {
     OGUIPlotArea(OGUIWindow* window, std::string title, void* data);
 
 private:
-    void drawAxis();
     void drawPlot();
     Mat data;
 };
