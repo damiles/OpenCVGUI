@@ -57,7 +57,7 @@ namespace OpenCVGUI {
             areas_showing.push_back((OGUIArea*)ia);
         }else{
             OGUI3D *ia= (OGUI3D*)area;
-
+            // ToDo replot new 3D
         }
     }
 
@@ -72,6 +72,7 @@ namespace OpenCVGUI {
             areas_showing.push_back((OGUIArea*)ia);
         }else{
             OGUIPlotArea *ia= (OGUIPlotArea*)area;
+            ia->replot(data);
         }
     }
 

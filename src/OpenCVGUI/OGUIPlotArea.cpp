@@ -41,6 +41,12 @@ namespace OpenCVGUI {
     {
         this->title= title;
         ((Mat*)d)->copyTo(data);
+        data= data.reshape(0,1);
+    }
+
+    void OGUIPlotArea::replot(void *d) {
+        ((Mat*)d)->copyTo(data);
+        data= data.reshape(0,1);
     }
 
     void OGUIPlotArea::drawPlot() {
