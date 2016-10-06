@@ -217,7 +217,7 @@ void OGUIWindow::draw()
     mainLayout->draw(0,0,width, height);
 
 
-    renderGraph(vg, width-205,height-40, &fps);
+    renderGraph(vg, 5,height-40, &fps);
 
     nvgEndFrame((NVGcontext*)vg);
 
