@@ -17,8 +17,11 @@ namespace OpenCVGUI {
 
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
-
-        drawPlot();
+        if(!data_lock) {
+            is_drawing= true;
+            drawPlot();
+            is_drawing= false;
+        }
 
         if(isMouseIn()) {
             nvgBeginPath(vg);
@@ -40,13 +43,21 @@ namespace OpenCVGUI {
     OGUIPlotArea::OGUIPlotArea(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     {
         this->title= title;
+        is_drawing= false;
+        data_lock= true;
         ((Mat*)d)->copyTo(data);
         data= data.reshape(0,1);
+        data_lock= false;
     }
 
     void OGUIPlotArea::replot(void *d) {
+        while(is_drawing){
+//            cout << "wait" << endl;
+        }
+        data_lock= true;
         ((Mat*)d)->copyTo(data);
         data= data.reshape(0,1);
+        data_lock= false;
     }
 
     void OGUIPlotArea::drawPlot() {

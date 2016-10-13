@@ -19,6 +19,7 @@ class OGUIPlotArea : public OGUIArea {
 private:
     void drawPlot();
     Mat data;
+    bool data_lock, is_drawing;
 };
 
 } /* End of namespace OpenCVGUI */
