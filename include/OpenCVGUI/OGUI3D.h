@@ -34,6 +34,7 @@ class OGUI3D : public OGUIArea {
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
+    void replot(void *data);
 
     OGUI3D(OGUIWindow* window, std::string title, void* data);
 

@@ -315,4 +315,10 @@ OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     isBufferCreated= false;
 }
 
+void OGUI3D::replot(void *d)
+{
+    ((Mat*)d)->copyTo(data);
+    isBufferCreated= false;
+}
+
 } /* End of namespace OpenCVGUI */
