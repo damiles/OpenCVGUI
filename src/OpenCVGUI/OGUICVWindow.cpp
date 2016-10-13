@@ -58,6 +58,7 @@ namespace OpenCVGUI {
         }else{
             OGUI3D *ia= (OGUI3D*)area;
             // ToDo replot new 3D
+            ia->replot(data);
         }
     }
 
