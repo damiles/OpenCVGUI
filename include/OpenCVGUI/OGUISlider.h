@@ -14,7 +14,7 @@ class OGUISlider : public OGUIWidget {
 
     OGUISlider(const char* title,double min,double max, double value);
     void setCallBack(std::function<void(double)> func);
-
+    void setValue(double v);
 private:
     double min, max, value;
     const char* title;

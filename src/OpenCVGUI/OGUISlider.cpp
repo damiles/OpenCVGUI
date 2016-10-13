@@ -13,7 +13,10 @@
 namespace OpenCVGUI {
 
 
-
+void OGUISlider::setValue(double v){
+    if(v<= max && v>=min)
+        value= v;
+}
 
 void OGUISlider::draw(int x, int y, int w)
 {
