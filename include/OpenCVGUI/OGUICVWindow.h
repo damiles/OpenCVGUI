@@ -23,7 +23,7 @@ public:
     OGUIArea* findAreaByTitle(string title);
     void addFormWidget(OGUIWidget* widget);
     void plot3D(string area_title, void* data);
-    void plot2D(string area_title, void* data);
+    void plot2D(string area_title, void* data, std::vector<string> labels, float xstep=1);
 
     vector<OGUIArea*> areas_showing;
     vector<OGUILayout*> layout;

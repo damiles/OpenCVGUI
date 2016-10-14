@@ -75,8 +75,8 @@ int main( int argc, const char* argv[] )
 
 
     resize(data, data, Size(10,10));
-    data= data.reshape(0,1);
-    window->plot2D("2D plot", &data);
+    //data= data.reshape(0,1);
+    window->plot2D("2D plot", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"});
 
     cap.open(0);
     if(cap.isOpened()){

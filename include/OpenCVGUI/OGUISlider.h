@@ -1,6 +1,7 @@
 #ifndef OpenCVGUI_OGUISlider_h
 #define OpenCVGUI_OGUISlider_h
 
+#include <vector>
 #include "OGUIWidget.h"
 #include <functional>
 
