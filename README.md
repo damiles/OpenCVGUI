@@ -95,3 +95,5 @@ int main( int argc, const char* argv[] )
 
 }    
 ```
+
+![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/basic_sample.png)
