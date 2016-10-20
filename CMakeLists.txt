@@ -145,6 +145,8 @@ TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW
 ADD_EXECUTABLE(example1 src/example1.cpp )
 TARGET_LINK_LIBRARIES(example1 ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
+ADD_EXECUTABLE(basic_sample src/basic_sample.cpp )
+TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
 # INSTALLATION
 install(TARGETS opencvgui

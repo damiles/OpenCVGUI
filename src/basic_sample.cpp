@@ -1,38 +1,7 @@
-# OpenCVGUI
-Do you like OpenCV Highui but it's not enough and don't want waste your time
-in a new UI SDK? **This is  your solution!**
-OpenCVGUI is a new graphical user inteface for OpenCV with different 
-widgets and tools to provide developers a new and more powerful 
-user interface with 3D and 2D plotting support, advanced forms, 
-with small dependencies and OpenGL based.
+//
+// Created by damiles on 20/10/16.
+//
 
-Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
-
-![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/screenshot.png)
-
-## Features
-
-* No complex sdk framework like others. 
-* It's like OpenCV Highui calls, simple and clean.
-* Computer vision in different Thread than UI
-* Image render
-* Forms
-* Input Text
-* Buttons
-* Radio buttons
-* Checkboxs
-* Sliders and progress bars
-* File Management (in progress)
-* 2D plot
-* 2D multiplot
-* 3D Plot
-
-![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/2dplot.png)
-![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/2dmultiplot.png)
-
-## Basic Example
-
-```c++
 #include "OGUI.h"
 #include "OGUISlider.h"
 #include <opencv2/core/core.hpp>
@@ -93,5 +62,4 @@ int main( int argc, const char* argv[] )
     // Start the Comptuer vision process
     OpenCVGUI::app_run(cv_process);
 
-}    
-```
+}
