@@ -30,6 +30,24 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 ![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/2dplot.png)
 ![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/2dmultiplot.png)
 
+## Short snippets
+
+Init the GUI
+```C++
+    OpenCVGUI::init();
+```
+
+Create a new window
+```C++
+    OGUICVWindow* window= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI Example 2");
+```
+
+Show image in window
+```C++
+    Mat image= imread("./lena.jpg");
+    window->imshow("image title key like highui imshow", &image);
+```
+
 ## Basic Example
 
 ```c++
