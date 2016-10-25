@@ -42,6 +42,13 @@ void cv_process() {
     }
 }
 
+void input_mouse_click(int mouse_x, int mouse_y)
+{
+    cout << mouse_x << ", " << mouse_y << endl;
+    circle(src, Point(mouse_x, mouse_y), 3, Scalar(0,255,0));
+    window->imshow("input", &src);
+}
+
 int main( int argc, const char* argv[] )
 {
     srand (time(NULL));
@@ -60,7 +67,7 @@ int main( int argc, const char* argv[] )
     window->addFormWidget(&button1);
 
     window->imshow("input", &src);
-    
+    window->setImShowMouseClickCallBack("input", input_mouse_click);
     cvtColor( src, gray, COLOR_RGB2GRAY );
     threshold( gray, output, 125, 255, CV_THRESH_BINARY);
     window->imshow("threshold", &output);

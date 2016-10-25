@@ -1,6 +1,7 @@
 #include <opencv2/imgproc/types_c.h>
 #include "OGUIImageArea.h"
 #include "OGUIWindow.h"
+#include <GLFW/glfw3.h>
 #include "nanovg.h"
 
 namespace OpenCVGUI {
@@ -11,6 +12,9 @@ namespace OpenCVGUI {
         image_scale=1.0;
         has_to_update= false;
         this->title= title;
+        _prev_mouse_status= GLFW_RELEASE;
+        last_mouse_x=-1;
+        last_mouse_y=-1;
     }
 
     void OGUIImageArea::updateScrollStatus(double xoffset,double yoffset)
@@ -51,11 +55,13 @@ namespace OpenCVGUI {
         }
 
         updateImage();
+        float imgw= 0;
+        float imgh= 0;
         if(image!=-1){
-            float imgw= image_width*image_scale;
-            float imgh= image_height*image_scale;
-            image_x=x+((width/2)-(imgw/2));
-            image_y=y+((height/2)-(imgh/2));
+            imgw= image_width*image_scale;
+            imgh= image_height*image_scale;
+            image_x=x+((width/2)-(imgw/2)) + dx;
+            image_y=y+((height/2)-(imgh/2)) + dy;
             NVGpaint imgPaint = nvgImagePattern(vg, image_x, image_y, imgw, imgh, 0, image, 1);
             nvgBeginPath(vg);
             nvgRect(vg, image_x, image_y, imgw,imgh);
@@ -76,6 +82,36 @@ namespace OpenCVGUI {
             nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
             nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
+
+            /// Click event test
+            if(this->window->mouse_state == GLFW_PRESS && this->window->key_pressed == GLFW_KEY_LEFT_CONTROL){
+
+                if(last_mouse_x==-1){
+                    last_mouse_x= this->window->mouse_x;
+                    last_mouse_y= this->window->mouse_y;
+                }
+
+                dx+= (this->window->mouse_x-last_mouse_x);
+                dy+= (this->window->mouse_y-last_mouse_y);
+
+                last_mouse_x= this->window->mouse_x;
+                last_mouse_y= this->window->mouse_y;
+
+            }else if (this->window->mouse_state == GLFW_PRESS && _prev_mouse_status == GLFW_RELEASE){
+                _prev_mouse_status = GLFW_PRESS;
+            }else if(this->window->mouse_state == GLFW_RELEASE && _prev_mouse_status == GLFW_PRESS){
+                _prev_mouse_status = GLFW_RELEASE;
+                if(btn_click_callback!=NULL) {
+                    int x_img_click= (this->window->mouse_x - image_x) * (1.0/image_scale);
+                    int y_img_click= (this->window->mouse_y - image_y) * (1.0/image_scale);
+                    btn_click_callback(x_img_click, y_img_click);
+                }
+            }
+
+            if(this->window->mouse_state == GLFW_RELEASE){
+                last_mouse_x= -1;
+                last_mouse_y= -1;
+            }
         }
         nvgResetScissor(vg);
     }
@@ -119,6 +155,10 @@ namespace OpenCVGUI {
                 break;
         }
         has_to_update= true;
+    }
+
+    void OGUIImageArea::setMouseClickCallBack(std::function<void(int, int)> func) {
+        btn_click_callback= func;
     }
 
 } /* End of namespace OpenCVGUI */

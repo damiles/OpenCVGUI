@@ -35,7 +35,7 @@ namespace OpenCVGUI {
 
     #ifndef _WIN32 // don't require this on win32, and works with more cards
         #ifdef OGUI_GL3
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -63,7 +63,7 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
     this->key_focus_widget_= NULL;
-
+    this->key_pressed= 0;
 }
 
 OGUIWindow::~OGUIWindow()
@@ -162,6 +162,13 @@ void OGUIWindow::keyCallback(void* window, int key, int scancode, int action, in
     OGUIWidget* widget= oguiwindow->getKeyFocusWidget();
     if(widget!=NULL){
         widget->keyCallback(key, scancode, action, mods);
+    }
+
+    // Set the actual press key
+    if( action == GLFW_PRESS || action == GLFW_REPEAT){
+        oguiwindow->key_pressed= key;
+    }else if( action == GLFW_RELEASE){
+        oguiwindow->key_pressed= 0;
     }
 }
 

@@ -89,5 +89,18 @@ namespace OpenCVGUI {
         return area;
     }
 
+    bool OGUICVWindow::setImShowMouseClickCallBack(string area_title, std::function<void(int, int)> func) {
+        /// Look for area
+        OGUIArea* area=findAreaByTitle(area_title);
+        /// create or redraw
+        if(area==NULL){
+            return false;
+        }else{
+            OGUIImageArea *ia= (OGUIImageArea*)area;
+            ia->setMouseClickCallBack(func);
+            return true;
+        }
+    }
+
 
 }

@@ -44,6 +44,7 @@ class OGUIWindow {
     void addArea(OGUIArea* area);
     double mouse_x, mouse_y;
     int mouse_state;
+    int key_pressed;
     
     void setCursor(int cursor_type);
     void drawCursor();

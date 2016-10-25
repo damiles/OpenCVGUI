@@ -18,9 +18,12 @@ namespace OpenCVGUI {
 class OGUICVWindow : public OGUIWindow{
 public:
     OGUICVWindow(int width,int height,const char* title, int layoutOrientation=0);
+
     void imshow(string area_title, void* img);
+    bool setImShowMouseClickCallBack(string area_title, std::function<void(int, int)> func);
 
     OGUIArea* findAreaByTitle(string title);
+
     void addFormWidget(OGUIWidget* widget);
     void plot3D(string area_title, void* data);
     void plot2D(string area_title, void* data, std::vector<string> labels, float xstep=1);

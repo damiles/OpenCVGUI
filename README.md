@@ -4,3 +4,16 @@ and more powerful user interface with 3D and 2D plotting support, advanced forms
 with OpenGL
 
 ![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/screenshot.png)
+
+# Dependencies
+* GLEW
+* xorg-dev 
+
+# Build
+1. git submodule update --init --recursive
+2. mkdir build
+3. cd build
+4. cmake ..
+5. make
+6. sudo make install
+
