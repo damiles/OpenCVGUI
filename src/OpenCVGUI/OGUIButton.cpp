@@ -75,4 +75,8 @@ namespace OpenCVGUI {
         actual_press_status= GLFW_RELEASE;
     }
 
+    void OGUIButton::changeTitle(const char *title) {
+        this->title= title;
+    }
+
 } /* End of namespace OpenCVGUI */

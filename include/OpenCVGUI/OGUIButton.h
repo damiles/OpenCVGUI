@@ -14,6 +14,7 @@ class OGUIButton : public OGUIWidget {
     virtual void draw(int x, int y, int width);
     OGUIButton(const char* title);
     void setCallBack(std::function<void()> func);
+    void changeTitle(const char* title);
 private:
     const char* title;
     int actual_press_status;
