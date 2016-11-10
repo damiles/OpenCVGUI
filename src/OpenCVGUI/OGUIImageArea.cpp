@@ -15,6 +15,7 @@ namespace OpenCVGUI {
         _prev_mouse_status= GLFW_RELEASE;
         last_mouse_x=-1;
         last_mouse_y=-1;
+        dx=0; dy=0;
     }
 
     void OGUIImageArea::updateScrollStatus(double xoffset,double yoffset)
