@@ -62,6 +62,9 @@ class OGUIWindow {
     OGUIWidget* getKeyFocusWidget();
 
     int getWindowHeight();
+    void updatePerfGraph();
+    void showPerfGraph(bool show);
+    void setExternal2DDraw(std::function<void(void* context)> func);
 private:
 
     /**
@@ -74,6 +77,9 @@ private:
 
     PerfGraph fps;
     double prevt = 0;
+    bool _show_graph= false;
+
+    std::function<void(void* context)> _external2dDraw;
 
 };
 

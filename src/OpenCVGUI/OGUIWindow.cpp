@@ -35,7 +35,7 @@ namespace OpenCVGUI {
 
     #ifndef _WIN32 // don't require this on win32, and works with more cards
         #ifdef OGUI_GL3
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -64,6 +64,7 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->actual_cursor_type=0;
     this->key_focus_widget_= NULL;
     this->key_pressed= 0;
+    this->_show_graph= false;
 }
 
 OGUIWindow::~OGUIWindow()
@@ -177,16 +178,23 @@ void OGUIWindow::addArea(OGUIArea* area)
     mainLayout->addArea(area);
 }
 
+void OGUIWindow::updatePerfGraph()
+{
+    double t, dt;
+    t = glfwGetTime();
+    dt = t - prevt;
+    prevt = t;
+    updateGraph(&fps, dt);
+}
+
+void OGUIWindow::showPerfGraph(bool show)
+{
+    _show_graph=show;
+}
+
 bool OGUIWindow::update(){
     glfwMakeContextCurrent((GLFWwindow *)glfw_window);
     if(!glfwWindowShouldClose((GLFWwindow *)glfw_window)) {
-
-        double t, dt;
-        t = glfwGetTime();
-        dt = t - prevt;
-        prevt = t;
-        updateGraph(&fps, dt);
-
 
         glfwGetCursorPos((GLFWwindow *) glfw_window, &mouse_x, &mouse_y);
         mouse_left_state = glfwGetMouseButton((GLFWwindow *) glfw_window, GLFW_MOUSE_BUTTON_LEFT);
@@ -218,13 +226,15 @@ void OGUIWindow::draw()
 
     nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
 
-    // Draw all my own data
-
     // Draw the areas
     mainLayout->draw(0,0,width, height);
 
+    if(_show_graph)
+        renderGraph(vg, 5,height-40, &fps);
 
-    renderGraph(vg, 5,height-40, &fps);
+    // Draw all my own data
+    if(_external2dDraw!=NULL)
+        _external2dDraw(vg);
 
     nvgEndFrame((NVGcontext*)vg);
 
@@ -233,6 +243,10 @@ void OGUIWindow::draw()
 
     // Swap buffers
     glfwSwapBuffers((GLFWwindow*)glfw_window);
+}
+
+void OGUIWindow::setExternal2DDraw(std::function<void(void* context)> func) {
+    _external2dDraw= func;
 }
 
 void OGUIWindow::setCursor(int cursor_type)
