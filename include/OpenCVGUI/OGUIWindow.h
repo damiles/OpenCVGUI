@@ -5,6 +5,7 @@
 #include <vector>
 #include <thread>
 #include <iostream>
+#include <unistd.h>
 #include "perf.h"
 #include "OGUI3D.h"
 
@@ -25,6 +26,13 @@ namespace OpenCVGUI {
         TEXT_CURSOR,
         CROSS_CURSOR,
     };
+
+    enum PopupTypes{
+        NO_POPUP,
+        POPUP_CONFIRM,
+        POPUP_ALERT,
+        POPUP_ERROR
+    };
     
 class OGUIWindow {
 
@@ -32,14 +40,14 @@ class OGUIWindow {
 
     OGUI3D* test;
 
-    OGUIWindow(int width,int height,const char* title, int layoutOrientation=0);
+    OGUIWindow(int width,int height,const char* title, int layoutOrientation=0, bool fullScreen= false);
     ~OGUIWindow();
     void draw();
     bool update(); // Return false if window is closed
 
     void* glfw_window;//GLFWwindow
     static bool isInitGlfw;
-    int init();
+    int init(bool fullScreen);
     void* vg;//NVGcontext
     void addArea(OGUIArea* area);
     double mouse_x, mouse_y;
@@ -62,9 +70,14 @@ class OGUIWindow {
     OGUIWidget* getKeyFocusWidget();
 
     int getWindowHeight();
+    int getWindowWidth();
     void updatePerfGraph();
     void showPerfGraph(bool show);
     void setExternal2DDraw(std::function<void(void* context)> func);
+
+    /// Popups
+    int popup(string title, string text, int type=2);
+
 private:
 
     /**
@@ -80,6 +93,13 @@ private:
     bool _show_graph= false;
 
     std::function<void(void* context)> _external2dDraw;
+
+    // Popups
+    void drawPopup();
+    int _popup_type=0; // 0 no popup visible, 1 confirm, 2 alert, 3 error
+    string _popup_text;
+    string _popup_title;
+    int _popup_result=0;
 
 };
 

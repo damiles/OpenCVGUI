@@ -158,6 +158,10 @@ install(DIRECTORY ${OGUI_INCLUDE_DIRS}
 
 install(DIRECTORY 3rdparty/glm/glm DESTINATION include)
 
+install(DIRECTORY 3rdparty/nanovg/src/
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.h")
+
 # Package config
 set(INCLUDE_INSTALL_DIR include/ )
 set(LIB_INSTALL_DIR lib/ )

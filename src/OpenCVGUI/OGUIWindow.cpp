@@ -2,6 +2,7 @@
 #include "OGUIArea.h"
 #include "OGUILayout.h"
 #include "OGUIWidget.h"
+#include "OGUIUtils.h"
 
 #include <GL/glew.h>
 #ifdef __APPLE__
@@ -51,13 +52,13 @@ namespace OpenCVGUI {
     
 bool OGUIWindow::isInitGlfw= false;
 
-OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrientation)
+OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrientation, bool fullScreen)
 {
     this->width= width;
 	this->height= height;
 	this->title.append(title);
 
-    init();
+    init(fullScreen);
     
     this->mainLayout= new OGUILayout(this, layoutOrientation);
     this->mainLayout->title="Main  Layout";
@@ -79,10 +80,16 @@ OGUIWindow::~OGUIWindow()
     glfwTerminate();
 }
 
-int OGUIWindow::init()
+int OGUIWindow::init(bool fullScreen)
 {
-    
-	this->glfw_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);	
+    if(fullScreen) {
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        width= mode->width;
+        height= mode->height;
+        this->glfw_window = glfwCreateWindow(mode->width, mode->height, title.c_str(), monitor, NULL);
+    }else
+	    this->glfw_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
     if (!glfw_window) {
         fprintf(stderr, "Error creating glfw window\n");
         glfwTerminate();
@@ -208,6 +215,7 @@ bool OGUIWindow::update(){
 
         return true;
     }else{
+        _popup_result= 0;
         return false;
     }
 }
@@ -235,6 +243,9 @@ void OGUIWindow::draw()
     // Draw all my own data
     if(_external2dDraw!=NULL)
         _external2dDraw(vg);
+
+    // Draw popups if there are one
+    drawPopup();
 
     nvgEndFrame((NVGcontext*)vg);
 
@@ -277,5 +288,84 @@ void OGUIWindow::setKeyFocus(OGUIWidget* widget)
 int OGUIWindow::getWindowHeight() {
     return height;
 }
+
+int OGUIWindow::getWindowWidth() {
+    return width;
+}
+
+int OGUIWindow::popup(string title, string text, int  type) {
+    _popup_title= title;
+    _popup_type= type;
+    _popup_text= text;
+    _popup_result= -1;
+    while(_popup_result==-1){
+        usleep(1000);// Wait a milisec
+    }
+    return _popup_result;
+}
+
+void OGUIWindow::drawPopup(){
+    if(_popup_type != NO_POPUP) {
+        NVGcontext *tmp_vg = (NVGcontext *) vg;
+        nvgBeginPath(tmp_vg);
+        nvgRect(tmp_vg, 0, 0, width, height);
+        nvgFillColor(tmp_vg, nvgRGBA(28,30,34, 220));
+        nvgFill(tmp_vg);
+
+        int x= (width/2)-200;
+        int y= (height/2)-75;
+
+        // Draw box
+        nvgBeginPath(tmp_vg);
+        nvgRoundedRect(tmp_vg, x, y, 400, 180, 5);
+        nvgFillColor(tmp_vg, nvgRGBA(0, 0, 0, 255));
+        nvgFill(tmp_vg);
+
+        // Draw icon
+        nvgFontSize(tmp_vg, 18.0f);
+        nvgFontFace(tmp_vg, "icons");
+        nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
+        if(_popup_type==POPUP_ALERT) {
+            nvgFillColor(tmp_vg, nvgRGBA(255,200,0,255));
+            nvgText(tmp_vg, x + 10, y + 10, "\uF071", NULL);
+        }else if(_popup_type==POPUP_ERROR) {
+            nvgFillColor(tmp_vg, nvgRGBA(255,84,0,255));
+            nvgText(tmp_vg, x + 10, y + 10, "\uF057", NULL);
+        }else if(_popup_type==POPUP_CONFIRM) {
+            nvgFillColor(tmp_vg, nvgRGBA(0,84,255,255));
+            nvgText(tmp_vg, x + 10, y + 10, "\uF05a", NULL);
+        }
+
+        // Draw title
+        nvgFontSize(tmp_vg, 18.0f);
+        nvgFontFace(tmp_vg, "sans-bold");
+        nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
+        nvgFillColor(tmp_vg, nvgRGBA(255,255,255,255));
+        nvgText(tmp_vg, x+30,y+10,_popup_title.c_str(), NULL);
+
+        // Draw text
+        drawParagraph(tmp_vg, _popup_text.c_str(), x+10, y+40, 380, 100, mouse_x, mouse_y);
+
+        // Draw buttons
+        if(drawBasicButton(tmp_vg, this, "Accept", x+400-100, y+180-30, 90, 20, mouse_x, mouse_y)){
+            _popup_result=1;
+            _popup_type= NO_POPUP;
+        }
+
+        if(_popup_type==POPUP_CONFIRM) {
+            if (drawBasicButton(tmp_vg, this, "Cancel", x + 400 - 200, y + 180 - 30, 90, 20, mouse_x, mouse_y)) {
+                _popup_result = 0;
+                _popup_type = NO_POPUP;
+            }
+        }
+
+        // End button
+
+
+    }
+}
+
+
+
 
 } /* End of namespace OpenCVGUI */
