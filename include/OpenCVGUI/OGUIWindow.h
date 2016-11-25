@@ -8,7 +8,8 @@
 #include <unistd.h>
 #include "perf.h"
 #include "OGUI3D.h"
-
+#include "OGUIFile.h"
+#include "OGUIFileBrowser.h"
 
 using namespace std;
 
@@ -33,7 +34,8 @@ namespace OpenCVGUI {
         POPUP_ALERT,
         POPUP_ERROR
     };
-    
+
+
 class OGUIWindow {
 
  public:
@@ -78,6 +80,16 @@ class OGUIWindow {
     /// Popups
     int popup(string title, string text, int type=2);
 
+    /// File browser
+    string openFileBrowser(string path, vector<string> filter);
+    //string saveFileBrowser(string path='.');
+
+    // Force to close window
+    void close();
+
+    // Get window status 0 is close 1 is open
+    int getStatus();
+
 private:
 
     /**
@@ -87,6 +99,7 @@ private:
     int width, height;
     string title;
     OGUIWidget* key_focus_widget_;
+    int _window_status= 1; // 0 close, 1 open
 
     PerfGraph fps;
     double prevt = 0;
@@ -100,6 +113,11 @@ private:
     string _popup_text;
     string _popup_title;
     int _popup_result=0;
+
+    // File Browser
+    OGUIFileBrowser *_fileBrowser;
+
+
 
 };
 

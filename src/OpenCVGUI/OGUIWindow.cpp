@@ -19,6 +19,7 @@
 
 #include "nanovg_gl.h"
 
+
 void errorcb(int error, const char* desc)
 {
     printf("GLFW error %d: %s\n", error, desc);
@@ -52,7 +53,10 @@ namespace OpenCVGUI {
     
 bool OGUIWindow::isInitGlfw= false;
 
-OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrientation, bool fullScreen)
+OGUIWindow::OGUIWindow(int width, int height,
+                       const char* title,
+                       int layoutOrientation,
+                       bool fullScreen)
 {
     this->width= width;
 	this->height= height;
@@ -66,6 +70,8 @@ OGUIWindow::OGUIWindow(int width,int height,const char* title, int layoutOrienta
     this->key_focus_widget_= NULL;
     this->key_pressed= 0;
     this->_show_graph= false;
+    this->_window_status= 1;
+    this->_fileBrowser= new OGUIFileBrowser(this);
 }
 
 OGUIWindow::~OGUIWindow()
@@ -216,6 +222,7 @@ bool OGUIWindow::update(){
         return true;
     }else{
         _popup_result= 0;
+        _window_status= 0;
         return false;
     }
 }
@@ -246,6 +253,9 @@ void OGUIWindow::draw()
 
     // Draw popups if there are one
     drawPopup();
+
+    // File browser
+    _fileBrowser->draw();
 
     nvgEndFrame((NVGcontext*)vg);
 
@@ -293,13 +303,20 @@ int OGUIWindow::getWindowWidth() {
     return width;
 }
 
+void OGUIWindow::close(){
+    // ToDo improve returns an Error GLXBadDrawable
+    glfwDestroyWindow((GLFWwindow*)glfw_window);
+}
+
 int OGUIWindow::popup(string title, string text, int  type) {
     _popup_title= title;
     _popup_type= type;
     _popup_text= text;
     _popup_result= -1;
-    while(_popup_result==-1){
-        usleep(1000);// Wait a milisec
+    if(_window_status!=0) {
+        while (_popup_result == -1) {
+            usleep(1000);// Wait a milisec
+        }
     }
     return _popup_result;
 }
@@ -363,9 +380,16 @@ void OGUIWindow::drawPopup(){
 
 
     }
+
 }
 
 
+int OGUIWindow::getStatus() {
+    return _window_status;
+}
 
+string OGUIWindow::openFileBrowser(string path, vector<string> filter) {
+    return _fileBrowser->open(path, filter);
+}
 
 } /* End of namespace OpenCVGUI */

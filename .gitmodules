@@ -7,3 +7,6 @@
 [submodule "3rdparty/glm"]
 	path = 3rdparty/glm
 	url = https://github.com/g-truc/glm
+[submodule "3rdparty/tinydir"]
+	path = 3rdparty/tinydir
+	url = https://github.com/cxong/tinydir.git

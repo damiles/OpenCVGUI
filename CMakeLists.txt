@@ -87,6 +87,7 @@ set(
         3rdparty/nanovg/src/
         3rdparty/glfw/include/
         3rdparty/glm/
+        3rdparty/tinydir/
 )
 # include required files
 include_directories(
