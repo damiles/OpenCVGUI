@@ -12,14 +12,19 @@ using namespace std;
 namespace OpenCVGUI {
     class OGUIFile {
     public:
-        OGUIFile(const char* file_name, const char* path, int isdir, const char* ext, double size);
+        OGUIFile(void* window, const char* file_name, const char* path, int isdir, const char* ext, double size);
         string _file_name;
         string _path;
         string _ext;
         bool  _is_dir;
         double _size;
+        void* _window;
 
-        string draw(int x, int y);
+        bool draw(void *vvg, int x, int y, int mouse_x, int mouse_y);
+
+    private:
+        int _mouse_state;
+
     };
 }
 

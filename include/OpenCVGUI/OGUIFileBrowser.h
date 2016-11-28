@@ -5,11 +5,15 @@
 #ifndef OPENCVGUI_OGUIFILEBROWSER_H
 #define OPENCVGUI_OGUIFILEBROWSER_H
 
+
 #include <vector>
 #include <string>
 
-#include "OGUIFile.h"
 #include "OGUIWindow.h"
+#include "OGUIFile.h"
+
+
+
 
 using namespace std;
 
@@ -25,9 +29,11 @@ namespace OpenCVGUI {
     private:
         OGUIWindow* _window;
         bool _is_file_browser_visible = false;
-        string _file_browser_result;
-        vector<OGUIFile> _file_list;
-
+        OGUIFile* _file_browser_result;
+        vector<OGUIFile*> _file_list;
+        string _actual_folder;
+        vector<string> _filter;
+        void readFolder(string path);
 
     };
 }

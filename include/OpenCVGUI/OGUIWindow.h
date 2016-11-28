@@ -7,8 +7,8 @@
 #include <iostream>
 #include <unistd.h>
 #include "perf.h"
+
 #include "OGUI3D.h"
-#include "OGUIFile.h"
 #include "OGUIFileBrowser.h"
 
 using namespace std;
@@ -18,6 +18,7 @@ namespace OpenCVGUI {
     class OGUILayout;
     class OGUIArea;
     class OGUIWidget;
+    class OGUIFileBrowser;
 
     enum MouseCursor {
         DEFAULT_CURSOR,
@@ -116,8 +117,6 @@ private:
 
     // File Browser
     OGUIFileBrowser *_fileBrowser;
-
-
 
 };
 
