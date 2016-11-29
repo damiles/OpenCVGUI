@@ -33,8 +33,13 @@ namespace OpenCVGUI {
         vector<OGUIFile*> _file_list;
         string _actual_folder;
         vector<string> _filter;
-        void readFolder(string path);
+        vector <OGUIFile*> _system;
 
+        char resolved_path[4096];
+
+        void readFolder(string path);
+        void readSystem();
+        int _preview_image=-1;
     };
 }
 

@@ -182,3 +182,33 @@ bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x
 
     return internal_state;
 }
+
+void drawHeader(void* vvg, string title, int x, int y, int w){
+    NVGpaint headerPaint;
+    float cornerRadius = 3.0f;
+    NVGcontext* vg=(NVGcontext*) vvg;
+    // Header
+    headerPaint = nvgLinearGradient(vg, x,y,x,y+15, nvgRGBA(255,255,255,8), nvgRGBA(0,0,0,16));
+    nvgBeginPath(vg);
+    nvgRoundedRect(vg, x+1,y+1, w-2,30, cornerRadius-1);
+    nvgFillPaint(vg, headerPaint);
+    nvgFill(vg);
+    nvgBeginPath(vg);
+    nvgMoveTo(vg, x+0.5f, y+0.5f+30);
+    nvgLineTo(vg, x+0.5f+w-1, y+0.5f+30);
+    nvgStrokeColor(vg, nvgRGBA(0,0,0,32));
+    nvgStroke(vg);
+
+    nvgFontSize(vg, 18.0f);
+    nvgFontFace(vg, "sans-bold");
+    nvgTextAlign(vg,NVG_ALIGN_CENTER|NVG_ALIGN_MIDDLE);
+
+    nvgFontBlur(vg,2);
+    nvgFillColor(vg, nvgRGBA(0,0,0,128));
+    nvgText(vg, x+w/2,y+16+1, title.c_str(), NULL);
+
+    nvgFontBlur(vg,0);
+    nvgFillColor(vg, nvgRGBA(220,220,220,160));
+    nvgText(vg, x+w/2,y+16, title.c_str(), NULL);
+
+}

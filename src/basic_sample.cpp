@@ -25,8 +25,11 @@ void cv_process() {
         window->imshow("threshold", &output);
         if(first_info==0) {
             string file_string= window->openFileBrowser(".", {"*"});
+            stringstream ss;
+            ss << "Selected file: " << file_string << "\n\n";
+            ss << "Please \"Accept\" to close this window";
             first_info = window->popup("Sample Info",
-                                       "Please \"Accept\" to close this window\nThis is a info box.\n Phasellus suscipit rhoncus auctor. Etiam tellus ligula, blandit ac vulputate vel, luctus tincidunt purus. Nam bibendum, sapien eu tristique facilisis, urna nisl consequat nunc.",
+                                       ss.str().c_str(),
                                        POPUP_CONFIRM);
         }
     }
