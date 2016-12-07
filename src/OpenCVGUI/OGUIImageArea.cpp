@@ -122,7 +122,7 @@ namespace OpenCVGUI {
         if(has_to_update){
             NVGcontext *ctx = (NVGcontext*)(window->vg);
             if(image==-1){
-                image= nvgCreateImageRGBA(ctx, image_width, image_height, 0, data);
+                image= nvgCreateImageRGBA(ctx, image_width, image_height, NVG_IMAGE_NEAREST, data);
             }else{
                 nvgUpdateImage(ctx, image, data);
             }
