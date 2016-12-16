@@ -1,0 +1,35 @@
+.bs-docs-nav {
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 0;
+}
+.nav-logo{
+    margin-top: 5px;
+    float: left;
+    margin-right: 5px;
+}
+.jumbotron{
+    background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+}
+.red{
+    color:red;
+}
+.blue{
+    color:blue;
+}
+.green{
+    color:green;
+}
+
+.nav-footer {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-top: 100px;
+    color: #99979c;
+    text-align: left;
+    background-color: #2a2730;
+}
+.sitemap a{
+    color:#fff;
+    padding-right:10px;
+}

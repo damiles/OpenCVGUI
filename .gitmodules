@@ -3,7 +3,7 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "3rdparty/nanovg"]
 	path = 3rdparty/nanovg
-	url = https://github.com/memononen/nanovg.git
+	url = https://github.com/damiles/nanovg.git
 [submodule "3rdparty/glm"]
 	path = 3rdparty/glm
 	url = https://github.com/g-truc/glm
