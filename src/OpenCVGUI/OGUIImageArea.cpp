@@ -71,6 +71,9 @@ namespace OpenCVGUI {
         }
 
         if(isMouseIn()) {
+            int mouse_x_img= (this->window->mouse_x - image_x) * (1.0/image_scale);
+            int mouse_y_img= (this->window->mouse_y - image_y) * (1.0/image_scale);
+
             nvgBeginPath(vg);
             nvgRect(vg, x, y, width, 22);
             nvgFillColor(vg, nvgRGBA(0, 0, 0, 100));
@@ -83,6 +86,60 @@ namespace OpenCVGUI {
             nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
             nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
+
+            // Draw X,Y mouse position
+            if(mouse_x_img >= 0 && mouse_x_img < image_width &&
+                    mouse_y_img >= 0 && mouse_y_img < image_height) {
+
+                // Show mouse position in image
+                stringstream mouse_pos;
+                mouse_pos << "x: " << mouse_x_img << ", y:" << mouse_y_img;
+                float tw = nvgTextBounds(vg, 0, 0, mouse_pos.str().c_str(), NULL, NULL);
+                nvgFontSize(vg, 16.0f);
+                nvgFontFace(vg, "sans");
+                nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+                nvgText(vg, x + 10.5f, y + 11, mouse_pos.str().c_str(), NULL);
+
+                // show color value
+                if (_img.channels()==1) {
+                    stringstream gray_val;
+                    gray_val << "Gray value: " << (int)_img.at<uchar>(mouse_y_img, mouse_x_img, 0);
+                    nvgFontSize(vg, 16.0f);
+                    nvgFontFace(vg, "sans");
+                    nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                    nvgFillColor(vg, nvgRGBA(255, 255, 255, 180));
+                    nvgText(vg, x + 10.5f + tw + 10.5f, y + 11, gray_val.str().c_str(), NULL);
+                }else if(_img.channels()==3){
+                    stringstream color_val;
+                    color_val << "R: " << (int)_img.at<Vec3b>(mouse_y_img, mouse_x_img)[2];
+                    nvgFontSize(vg, 16.0f);
+                    nvgFontFace(vg, "sans");
+                    nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                    nvgFillColor(vg, nvgRGBA(255, 0, 0, 255));
+                    nvgText(vg, x + 10.5f + tw + 10.5f, y + 11, color_val.str().c_str(), NULL);
+
+                    tw = tw + nvgTextBounds(vg, 0, 0, color_val.str().c_str(), NULL, NULL) + 2.5f;
+                    color_val.str("");
+                    color_val << "G: " << (int)_img.at<Vec3b>(mouse_y_img, mouse_x_img)[1];
+                    nvgFontSize(vg, 16.0f);
+                    nvgFontFace(vg, "sans");
+                    nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                    nvgFillColor(vg, nvgRGBA(0, 255, 0, 255));
+                    nvgText(vg, x + 10.5f + tw + 10.5f, y + 11, color_val.str().c_str(), NULL);
+
+                    tw = tw + nvgTextBounds(vg, 0, 0, color_val.str().c_str(), NULL, NULL) + 2.5f;
+                    color_val.str("");
+                    color_val << "B: " << (int)_img.at<Vec3b>(mouse_y_img, mouse_x_img)[0];
+                    nvgFontSize(vg, 16.0f);
+                    nvgFontFace(vg, "sans");
+                    nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                    nvgFillColor(vg, nvgRGBA(0, 0, 255, 255));
+                    nvgText(vg, x + 10.5f + tw + 10.5f, y + 11, color_val.str().c_str(), NULL);
+
+                }
+
+            }
 
             /// Click event test
             if(this->window->mouse_state == GLFW_PRESS && this->window->key_pressed == GLFW_KEY_LEFT_CONTROL){
@@ -103,9 +160,7 @@ namespace OpenCVGUI {
             }else if(this->window->mouse_state == GLFW_RELEASE && _prev_mouse_status == GLFW_PRESS){
                 _prev_mouse_status = GLFW_RELEASE;
                 if(btn_click_callback!=NULL) {
-                    int x_img_click= (this->window->mouse_x - image_x) * (1.0/image_scale);
-                    int y_img_click= (this->window->mouse_y - image_y) * (1.0/image_scale);
-                    btn_click_callback(x_img_click, y_img_click);
+                    btn_click_callback(mouse_x_img, mouse_y_img);
                 }
             }
 
