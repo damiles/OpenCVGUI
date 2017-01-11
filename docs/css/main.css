@@ -9,7 +9,11 @@
     margin-right: 5px;
 }
 .jumbotron{
-    background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    /*background-image: url("/OpenCVGUI/img/home_bg_head.png");*/
+    background-image:  url("/OpenCVGUI/img/home_bg_head.png"), linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 .red{
     color:red;

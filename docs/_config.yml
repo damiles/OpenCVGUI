@@ -19,7 +19,7 @@ description: > # this means to ignore newlines until "baseurl:"
   OpenCVGUI is a new graphical user inteface for OpenCV with different widgets
   and tools to provide developers a new and more powerful user interface
   with 3D and 2D plotting support, advanced forms, with small dependencies and OpenGL based.
-baseurl: "/OpenCVGui" # the subpath of your site, e.g. /blog
+baseurl: "/OpenCVGUI" # the subpath of your site, e.g. /blog
 url: "http://damiles.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: damiles3D
 github_username:  damiles
