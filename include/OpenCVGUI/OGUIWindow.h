@@ -91,6 +91,9 @@ class OGUIWindow {
     // Get window status 0 is close 1 is open
     int getStatus();
 
+    // Set Area as MaximizedArea
+    void maximizeArea(OGUIArea *area);
+
 private:
 
     /**
@@ -117,6 +120,9 @@ private:
 
     // File Browser
     OGUIFileBrowser *_fileBrowser;
+
+    // Maxmized Area
+    OGUIArea *_maximizedArea;
 
 };
 

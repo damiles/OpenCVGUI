@@ -37,7 +37,7 @@ private:
     int _prev_mouse_status;
     std::function<void(int, int)> btn_click_callback;
 
-
+    int _count_delay;
 
 };
 

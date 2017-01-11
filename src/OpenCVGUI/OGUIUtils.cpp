@@ -141,7 +141,7 @@ void drawParagraph(void* vvg, const char* text, float x, float y, float width, f
 
 
 
-bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y )
+bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y, const char* typography )
 {
     NVGcontext* tmp_vg=(NVGcontext*) context;
     bool internal_state= false;
@@ -172,7 +172,7 @@ bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x
 
     // Draw text
     nvgFontSize(tmp_vg, 20.0f);
-    nvgFontFace(tmp_vg, "sans");
+    nvgFontFace(tmp_vg, typography);
     float tw = nvgTextBounds(tmp_vg, 0,0, title, NULL, NULL);
     nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);
     nvgFillColor(tmp_vg, nvgRGBA(0,0,0,255));

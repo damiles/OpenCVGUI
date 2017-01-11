@@ -57,7 +57,7 @@ OGUIArea::OGUIArea(OGUIWindow* window)
 {
     this->layout= NULL;
     this->window= window;
-    
+    isMaximized= false;
     r= 28;
     g= 30;
     b= 34;

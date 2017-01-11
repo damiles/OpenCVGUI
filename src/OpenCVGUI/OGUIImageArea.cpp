@@ -3,6 +3,7 @@
 #include "OGUIWindow.h"
 #include <GLFW/glfw3.h>
 #include "nanovg.h"
+#include "OGUIUtils.h"
 
 namespace OpenCVGUI {
 
@@ -16,6 +17,7 @@ namespace OpenCVGUI {
         last_mouse_x=-1;
         last_mouse_y=-1;
         dx=0; dy=0;
+        _count_delay=0;
     }
 
     void OGUIImageArea::updateScrollStatus(double xoffset,double yoffset)
@@ -140,6 +142,21 @@ namespace OpenCVGUI {
                 }
 
             }
+
+            if(isMaximized){
+                if(drawBasicButton(vg, this->window, "\uF066", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons") && _count_delay>100){
+                    isMaximized= false;
+                    this->window->maximizeArea(NULL);
+                    _count_delay=0;
+                }
+            }else{
+                if(drawBasicButton(vg, this->window, "\uF065", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons") && _count_delay>100){
+                    this->window->maximizeArea(this);
+                    isMaximized= true;
+                    _count_delay=0;
+                }
+            }
+            _count_delay++;
 
             /// Click event test
             if(this->window->mouse_state == GLFW_PRESS && this->window->key_pressed == GLFW_KEY_LEFT_CONTROL){
