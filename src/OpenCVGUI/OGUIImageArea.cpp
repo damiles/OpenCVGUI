@@ -289,12 +289,9 @@ namespace OpenCVGUI {
         /// Compute the histograms:
         calcHist( &bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate );
         minMaxLoc(b_hist, NULL, &maxVal);
-//        normalize(b_hist, b_hist, 0, 130, NORM_MINMAX, -1, Mat() );
         if(_img.channels()==3) {
             calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
             calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
-//            normalize(g_hist, g_hist, 0, 130, NORM_MINMAX, -1, Mat() );
-//            normalize(r_hist, r_hist, 0, 130, NORM_MINMAX, -1, Mat() );
             double tmpMax;
             minMaxLoc(g_hist, NULL, &tmpMax);
             if(tmpMax>maxVal)
