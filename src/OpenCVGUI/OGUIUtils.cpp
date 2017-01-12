@@ -141,7 +141,7 @@ void drawParagraph(void* vvg, const char* text, float x, float y, float width, f
 
 
 
-bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y, const char* typography )
+bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y, const char* typography, double font_size )
 {
     NVGcontext* tmp_vg=(NVGcontext*) context;
     bool internal_state= false;
@@ -166,12 +166,12 @@ bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x
     nvgFill(tmp_vg);
 
     nvgBeginPath(tmp_vg);
-    nvgRoundedRect(tmp_vg, x+0.5f,y+0.5f, 89,19, 3.5);
+    nvgRoundedRect(tmp_vg, x+0.5f,y+0.5f, width, height, 3.5);
     nvgStrokeColor(tmp_vg, nvgRGBA(0,0,0,48));
     nvgStroke(tmp_vg);
 
     // Draw text
-    nvgFontSize(tmp_vg, 20.0f);
+    nvgFontSize(tmp_vg, font_size);
     nvgFontFace(tmp_vg, typography);
     float tw = nvgTextBounds(tmp_vg, 0,0, title, NULL, NULL);
     nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);
@@ -208,7 +208,19 @@ void drawHeader(void* vvg, string title, int x, int y, int w){
     nvgText(vg, x+w/2,y+16+1, title.c_str(), NULL);
 
     nvgFontBlur(vg,0);
-    nvgFillColor(vg, nvgRGBA(220,220,220,160));
+    nvgFillColor(vg, nvgRGBA(220,220,220,190));
     nvgText(vg, x+w/2,y+16, title.c_str(), NULL);
+
+}
+
+void drawLabel(void *context, const char* text, int x, int y, const char* typography, double font_size, int r, int g, int b, int a )
+{
+    NVGcontext* tmp_vg=(NVGcontext*) context;
+    // Draw text
+    nvgFontSize(tmp_vg, font_size);
+    nvgFontFace(tmp_vg, typography);
+    nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);
+    nvgFillColor(tmp_vg, nvgRGBA(r,g,b,a));
+    nvgText(tmp_vg, x,y, text, NULL);
 
 }

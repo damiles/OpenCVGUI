@@ -22,6 +22,7 @@ class OGUIImageArea : public OGUIArea {
     OGUIImageArea(OGUIWindow* window, string title="");
     void setImage(Mat *img);
     void setMouseClickCallBack(std::function<void(int, int)> func);
+    void calcHistogram();
 private:
     int image=-1;
     Mat _img, imgRGBA;
@@ -38,6 +39,10 @@ private:
     std::function<void(int, int)> btn_click_callback;
 
     int _count_delay;
+
+    bool _show_info;
+
+    Mat b_hist, g_hist, r_hist;
 
 };
 
