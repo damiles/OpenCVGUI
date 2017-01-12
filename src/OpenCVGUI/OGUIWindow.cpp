@@ -243,11 +243,28 @@ void OGUIWindow::draw()
     nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
 
     if(_maximizedArea!=NULL){
-        _maximizedArea->draw(0, 0, width, height);
+        // Draw title
+        NVGcontext* tvg= (NVGcontext*)(vg);
+        nvgBeginPath(tvg);
+        nvgRect(tvg, 0, 0, width, 22);
+        nvgFillColor(tvg, nvgRGBA(0, 0, 0, 100));
+        nvgFill(tvg);
+
+        // Draw text
+        nvgFontSize(tvg, 16.0f);
+        nvgFontFace(tvg, "sans");
+        float tw = nvgTextBounds(tvg, 0, 0, "Fullscreen Mode", NULL, NULL);
+        nvgTextAlign(tvg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+        nvgFillColor(tvg, nvgRGBA(255, 255, 255, 255));
+        nvgText(tvg, width * 0.5f - tw * 0.5f, 11, "Fullscreen Mode", NULL);
+
+        // draw maximized area
+        _maximizedArea->draw(0, 22, width, height-22);
     }else {
         // Draw the areas
         mainLayout->draw(0, 0, width, height);
     }
+
     if(_show_graph)
         renderGraph(vg, 5,height-40, &fps);
 
