@@ -72,6 +72,7 @@ OGUIWindow::OGUIWindow(int width, int height,
     this->_show_graph= false;
     this->_window_status= 1;
     this->_fileBrowser= new OGUIFileBrowser(this);
+    this->_maximizedArea= NULL;
 }
 
 OGUIWindow::~OGUIWindow()
@@ -241,8 +242,28 @@ void OGUIWindow::draw()
 
     nvgBeginFrame((NVGcontext*)vg, width, height, ratio);
 
-    // Draw the areas
-    mainLayout->draw(0,0,width, height);
+    if(_maximizedArea!=NULL){
+        // Draw title
+        NVGcontext* tvg= (NVGcontext*)(vg);
+        nvgBeginPath(tvg);
+        nvgRect(tvg, 0, 0, width, 22);
+        nvgFillColor(tvg, nvgRGBA(0, 0, 0, 100));
+        nvgFill(tvg);
+
+        // Draw text
+        nvgFontSize(tvg, 16.0f);
+        nvgFontFace(tvg, "sans");
+        float tw = nvgTextBounds(tvg, 0, 0, "Fullscreen Mode", NULL, NULL);
+        nvgTextAlign(tvg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+        nvgFillColor(tvg, nvgRGBA(255, 255, 255, 255));
+        nvgText(tvg, width * 0.5f - tw * 0.5f, 11, "Fullscreen Mode", NULL);
+
+        // draw maximized area
+        _maximizedArea->draw(0, 22, width, height-22);
+    }else {
+        // Draw the areas
+        mainLayout->draw(0, 0, width, height);
+    }
 
     if(_show_graph)
         renderGraph(vg, 5,height-40, &fps);
@@ -392,4 +413,7 @@ string OGUIWindow::openFileBrowser(string path, vector<string> filter) {
     return _fileBrowser->open(path, filter);
 }
 
+void OGUIWindow::maximizeArea(OGUIArea *area) {
+    _maximizedArea= area;
+}
 } /* End of namespace OpenCVGUI */

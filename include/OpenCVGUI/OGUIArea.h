@@ -22,6 +22,7 @@ class OGUIArea {
     int r,g,b;
     std::string title;
     int type=0; // 0 2d type, 1 3d type
+    bool isMaximized;
  public:
 
     OGUIWindow *window;
