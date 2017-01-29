@@ -24,9 +24,48 @@ url: "http://damiles.github.io" # the base hostname & protocol for your site, e.
 twitter_username: damiles3D
 github_username:  damiles
 
+defaults:
+- scope:
+    path: ''
+    type: posts
+  values:
+    layout: post
+    sectionid: blog
+- scope:
+    path: blog
+    type: pages
+  values:
+    sectionid: blog
+- scope:
+    path: tutorial
+    type: pages
+  values:
+    layout: tutorial
+    sectionid: tutorial
+- scope:
+    path: docs
+    type: pages
+  values:
+    layout: docs
+    sectionid: docs
+- scope:
+    path: contributing
+    type: pages
+  values:
+    sectionid: docs
+- scope:
+    path: community
+    type: pages
+  values:
+    layout: community
+    sectionid: community
+
+
 # Build settings
+highlighter: rouge
 markdown: kramdown
 # theme: minima
+
 gems:
   - jekyll-feed
 exclude:

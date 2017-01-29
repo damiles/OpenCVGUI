@@ -1,3 +1,7 @@
+body{
+    margin-top:60px;
+    background:#efefef;
+}
 .bs-docs-nav {
     margin-bottom: 0;
     background-color: #fff;
@@ -10,10 +14,18 @@
 }
 .jumbotron{
     /*background-image: url("/OpenCVGUI/img/home_bg_head.png");*/
-    background-image:  url("/OpenCVGUI/img/home_bg_head.png"), linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    /*background-image:  url("/OpenCVGUI/img/home_bg_head.png"), linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+    background-image:  linear-gradient(141deg, #2d2d2d 0%, #232323 75%);
     background-position: top right;
     background-repeat: no-repeat;
     background-size: contain;
+}
+.jumbotron h1{
+    color:#fff;
+    font-size:46px;
+}
+.jumbotron p{
+    color: #ddd;
 }
 .red{
     color:red;
@@ -36,4 +48,30 @@
 .sitemap a{
     color:#fff;
     padding-right:10px;
+}
+img[alt="screenshot"]
+{
+    width:400px;
+}
+.navbar-static-top{
+    top:0;
+  position:fixed;
+    width:100%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.navbar{
+    background: #222;
+}
+.navbar a{
+    color: #fff;
+}
+.navbar a:hover{
+    color: #333;
+}
+.inner-content{
+    padding-right: 30px;
+}
+
+.navbar-brand:hover{
+    color:#fff !important;
 }

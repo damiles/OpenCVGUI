@@ -3,8 +3,11 @@ layout: default
 sectionid: docs
 ---
 
-<section class="content wrap documentationContent">
-  <div class="inner-content">
+<section class="row content wrap documentationContent">
+
+  {% include nav_docs.html %}
+
+  <div class="col-sd-12 col-md-9 inner-content">
     <a class="edit-page-link" href="https://github.com/damiles/OpenCVGUI/tree/master/docs/{{ page.path }}" target="_blank">Edit on GitHub</a>
     <h1>
       {{ page.title }}
@@ -18,10 +21,10 @@ sectionid: docs
         <a class="docs-prev" href="/OpenCVGUI/docs/{{ page.prev }}">&larr; Prev</a>
       {% endif %}
       {% if page.next %}
-        <a class="docs-next" href="/OpenCVGUI/docs/{{ page.next }}">Next &rarr;</a>
+        <a class="pull-right docs-next" href="/OpenCVGUI/docs/{{ page.next }}">Next &rarr;</a>
       {% endif %}
     </div>
   </div>
 
-  {% include nav_docs.html %}
+
 </section>

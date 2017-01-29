@@ -1,14 +1,14 @@
-<div class="nav-docs">
+<div class="col-sd-12 col-md-3 nav-docs">
   <!-- Docs Nav -->
   {% for section in site.data.nav_docs %}
-    <div class="nav-docs-section">
+    <div class="bs-docs-sidebar nav-docs-section">
       <h3>{{ section.title }}</h3>
-      <ul>
+      <ul class="nav bs-docs-sidenav">
         {% for item in section.items %}
           <li>
             {{ item | docs_sidebar_link}}
             {% if item.subitems %}
-              <ul>
+              <ul class="nav">
                 {% for subitem in item.subitems %}
                   <li>
                     {{ subitem | docs_sidebar_link }}
