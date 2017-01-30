@@ -68,7 +68,7 @@
 .highlight .vi { color: #000000 } /* Name.Variable.Instance */
 .highlight .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
 pre.highlight{
-  -webkit-box-shadow: inset 0px 0px 17px -8px rgba(0,0,0,0.75);
+  /*-webkit-box-shadow: inset 0px 0px 17px -8px rgba(0,0,0,0.75);
   -moz-box-shadow: inset 0px 0px 17px -8px rgba(0,0,0,0.75);
-  box-shadow: inset 0px 0px 17px -8px rgba(0,0,0,0.75);
+  box-shadow: inset 0px 0px 17px -8px rgba(0,0,0,0.75);*/
 }

@@ -1,4 +1,4 @@
-/***
+/**
  * Created by damiles on 23/09/16.
  *
  */
@@ -14,7 +14,7 @@
 #include "OGUICVWindow.h"
 
 namespace OpenCVGUI {
-    /***
+    /**
      * Create new Computer Vision Template Window with lateral form and stacked areas
      * @param {const char*} title of window to create
      * @param {int} width of window, 1024 by default
@@ -24,18 +24,18 @@ namespace OpenCVGUI {
      */
     OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
 
-    /***
+    /**
      * Start main loop of UI and process as new thread
      * @param process_function is the main thread to compute
      */
     void app_run(std::function<void()> process_function);
 
-    /***
+    /**
      * variable to check if the UI is running or closed and finished
      */
     extern bool app_is_running;
 
-    /***
+    /**
      * list of windows that are created
      */
     extern vector<OGUIWindow*> windows;

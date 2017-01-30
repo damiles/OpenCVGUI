@@ -1,6 +1,6 @@
-//
-// Created by damiles on 27/09/16.
-//
+/**
+ *  Created by damiles on 27/09/16.
+ */
 
 #include "OGUICVWindow.h"
 

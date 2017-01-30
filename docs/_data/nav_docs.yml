@@ -6,12 +6,14 @@
       title: Hello World
 - title: API
   items:
-    - id: ogui
-      title: OGUI
+    - id: api
+      title: OpenCVGUI
     - id: oguiwindow
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window
       title: OGUIWindow
     - id: oguicvwindow
-      title: OGUIWindow
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window
+      title: OGUICVWindow
     - id: oguiarea
       title: OGUIArea
     - id: oguiformarea
