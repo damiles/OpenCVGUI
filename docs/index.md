@@ -3,7 +3,7 @@
 # Edit theme's home layout instead if you wanna make some changes
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 layout: hero
-title: OpenCG GUI
+title: OpenCVGUI a new graphical user interface for OpenCV. Easy, powerful and profesional.
 id: home
 ---
 # OpenCVGUI
