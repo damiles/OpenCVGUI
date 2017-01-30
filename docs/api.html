@@ -1,0 +1,1926 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>API - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="/OpenCVGUI/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/OpenCVGUI/feed.xml">
+
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/OpenCVGUI/css/main.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/navbar.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/syntax.css">
+
+</head>
+<body>
+
+    <header class="bs-docs-nav navbar navbar-static-top" id="top">
+  <div class="container">
+    <div class="navbar-header">
+      <button aria-controls="bs-navbar" aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <img class="nav-logo" src="/OpenCVGUI/img/icon_logo.svg" width="36" height="36"><a href="/OpenCVGUI/" class="navbar-brand">OpenCVGUI</a>
+    </div>
+    <nav class="collapse navbar-collapse" id="bs-navbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="/OpenCVGUI/docs/installation.html">Docs</a> </li>
+        <li> <a href="/OpenCVGUI/docs/hello-world.html">Getting started</a> </li>
+        <li><a href="/OpenCVGUI/tutorial/tutorial.html">Tutorial</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/damiles/OpenCVGUI">GitHub</a></li>
+        <li><a href="https://github.com/damiles/OpenCVGUI/releases">v0.0.5</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    <section class="row content wrap documentationContent">
+
+  <div class="col-sd-12 col-md-3 nav-docs">
+  <!-- Docs Nav -->
+  
+    <div class="bs-docs-sidebar nav-docs-section">
+      <h3>Quick Start</h3>
+      <ul class="nav bs-docs-sidenav">
+        
+          <li>
+            <a href="/OpenCVGUI/docs/installation.html">Installation</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/hello-world.html">Hello World</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="bs-docs-sidebar nav-docs-section">
+      <h3>API</h3>
+      <ul class="nav bs-docs-sidenav">
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html" class="active">OpenCVGUI</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window" class="external">OGUIWindow</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window" class="external">OGUICVWindow</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/oguiarea.html">OGUIArea</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/oguiformarea.html">OGUIFormArea</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+
+</div>
+
+
+  <div class="col-sd-12 col-md-9 col-md-offset-3 inner-content">
+    <a class="edit-page-link" href="https://github.com/damiles/OpenCVGUI/tree/master/docs/docs/api.md" target="_blank">Edit on GitHub</a>
+    <h1>
+      API
+    </h1>
+    <div class="subHeader"></div>
+
+    <h1 id="namespace_open_c_v_g_u_i">namespace <code class="highlighter-rouge">OpenCVGUI</code></h1>
+
+<h2 id="summary">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Classes</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d"><code class="highlighter-rouge">OpenCVGUI::OGUI3D</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera"><code class="highlighter-rouge">OpenCVGUI::OGUI3DCamera</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OpenCVGUI::OGUIArea</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_button"><code class="highlighter-rouge">OpenCVGUI::OGUIButton</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_check_box"><code class="highlighter-rouge">OpenCVGUI::OGUICheckBox</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window"><code class="highlighter-rouge">OpenCVGUI::OGUICVWindow</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_file"><code class="highlighter-rouge">OpenCVGUI::OGUIFile</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser"><code class="highlighter-rouge">OpenCVGUI::OGUIFileBrowser</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OpenCVGUI::OGUIFormArea</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_image"><code class="highlighter-rouge">OpenCVGUI::OGUIImage</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_image_area"><code class="highlighter-rouge">OpenCVGUI::OGUIImageArea</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OpenCVGUI::OGUILayout</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area"><code class="highlighter-rouge">OpenCVGUI::OGUIPlotArea</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons"><code class="highlighter-rouge">OpenCVGUI::OGUIRadioButtons</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_slider"><code class="highlighter-rouge">OpenCVGUI::OGUISlider</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_text_input"><code class="highlighter-rouge">OpenCVGUI::OGUITextInput</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_title"><code class="highlighter-rouge">OpenCVGUI::OGUITitle</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OpenCVGUI::OGUIWidget</code></a></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">class </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OpenCVGUI::OGUIWindow</code></a></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window"><code class="highlighter-rouge">OGUICVWindow</code></a><code class="highlighter-rouge"> * namedWindow(const char * title,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void app_run(std::function&lt; void()&gt; process_function)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int init()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members">Members</h2>
+
+<h3 id="namedwindow">namedWindow</h3>
+<h4 id="namespace_open_c_v_g_u_i_1aa46250ebbe732e463a839a6b33928c47"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window"><code class="highlighter-rouge">OGUICVWindow</code></a><code class="highlighter-rouge"> * namedWindow(const char * title,int width,int height)</code></h4>
+
+<p>Create new Computer Vision Template Window with lateral form and stacked areas</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">const</span></code> char*} title of window to create</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">int</span><span class="p">}</span></code> width of window, 1024 by default</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">int</span><span class="p">}</span></code> height of window, 768 by default</p>
+  </li>
+</ul>
+
+<h4 id="returns">Returns</h4>
+<p>{OGUICVWindow*} <a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window">OGUICVWindow</a> created</p>
+
+<h3 id="app_run">app_run</h3>
+<h4 id="namespace_open_c_v_g_u_i_1afb9d14584eff87fbb052006393d4f1fd"><code class="highlighter-rouge">public void app_run(std::function&lt; void()&gt; process_function)</code></h4>
+
+<p>Start main loop of UI and process as new thread</p>
+<h4 id="parameters-1">Parameters</h4>
+<ul>
+  <li><code class="highlighter-rouge">process_function</code> is the main thread to compute</li>
+</ul>
+
+<h3 id="init">init</h3>
+<h4 id="namespace_open_c_v_g_u_i_1a1eb96349d760c972cdaaa95c8f772d6d"><code class="highlighter-rouge">public int init()</code></h4>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d">class <code class="highlighter-rouge">OpenCVGUI::OGUI3D</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUI3D
+  : public OpenCVGUI::OGUIArea
+</code></pre>
+</div>
+
+<h2 id="summary-1">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint vao</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint vbo</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint ibo</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint shaderProgram</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint MatrixID</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public GLuint position_attribute</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 MVP</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public Mat data</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int dataLength</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int dataLengthIBO</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera"><code class="highlighter-rouge">OGUI3DCamera</code></a><code class="highlighter-rouge"> camera</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int lastMouseX</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int lastMouseY</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool isBufferCreated</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void replot(void * data)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUI3D(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void CreateVertexBuffer()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-1">Members</h2>
+
+<h3 id="vao">vao</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a684c3191ac187b83b510740e58820564"><code class="highlighter-rouge">public GLuint vao</code></h5>
+
+<h3 id="vbo">vbo</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a9706f5f43277965318ca52a83f48f52d"><code class="highlighter-rouge">public GLuint vbo</code></h5>
+
+<h3 id="ibo">ibo</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1aad3abe2d5031e7fb1ff4ac7925382152"><code class="highlighter-rouge">public GLuint ibo</code></h5>
+
+<h3 id="shaderprogram">shaderProgram</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1acb43870142690d9c17bd6b610d6dbed8"><code class="highlighter-rouge">public GLuint shaderProgram</code></h5>
+
+<h3 id="matrixid">MatrixID</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a9f3684f59716085785db35dbdfa5418d"><code class="highlighter-rouge">public GLuint MatrixID</code></h5>
+
+<h3 id="position_attribute">position_attribute</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a235f0ad2ea4730499c8b213139d30da7"><code class="highlighter-rouge">public GLuint position_attribute</code></h5>
+
+<h3 id="mvp">MVP</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a215445a006fa9ffe85aa0cc0a708c3c6"><code class="highlighter-rouge">public glm::mat4 MVP</code></h5>
+
+<h3 id="data">data</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a946906f9137d49c976a348fc68808ca5"><code class="highlighter-rouge">public Mat data</code></h5>
+
+<h3 id="datalength">dataLength</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1ad24f225c4fc68f111be37c0da361cc27"><code class="highlighter-rouge">public int dataLength</code></h5>
+
+<h3 id="datalengthibo">dataLengthIBO</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a31bdda832670f524641f9d3b49d9d575"><code class="highlighter-rouge">public int dataLengthIBO</code></h5>
+
+<h3 id="camera">camera</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1acf6cac799fd43a1a62d25249deb9c300"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera"><code class="highlighter-rouge">OGUI3DCamera</code></a><code class="highlighter-rouge"> camera</code></h5>
+
+<h3 id="lastmousex">lastMouseX</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1ae1690620528da53dbf4493e61bab4757"><code class="highlighter-rouge">public int lastMouseX</code></h5>
+
+<h3 id="lastmousey">lastMouseY</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1acb26af749169b192788a685cef0c061f"><code class="highlighter-rouge">public int lastMouseY</code></h5>
+
+<h3 id="isbuffercreated">isBufferCreated</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a95ffcead06e5a50cd908387224d4504c"><code class="highlighter-rouge">public bool isBufferCreated</code></h5>
+
+<h3 id="draw">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a985f597eab43b1fa8c4c3c075d8a340a"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="draw3d">draw3d</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a32f40e885ba0f23fd5d2e57564614e61"><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></h5>
+
+<h3 id="updatescrollstatus">updateScrollStatus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a2d423538127a277d83937ebf6089e27e"><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></h5>
+
+<h3 id="replot">replot</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1af839b1e6366d99edaa6daad0655ec10e"><code class="highlighter-rouge">public void replot(void * data)</code></h5>
+
+<h3 id="ogui3d">OGUI3D</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1a1d509608c0c74668ae9934af14f08365"><code class="highlighter-rouge">public  OGUI3D(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data)</code></h5>
+
+<h3 id="createvertexbuffer">CreateVertexBuffer</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_1aa35c8918348bd4b9cf74a3af9d9ac876"><code class="highlighter-rouge">public void CreateVertexBuffer()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera">class <code class="highlighter-rouge">OpenCVGUI::OGUI3DCamera</code></h1>
+
+<h2 id="summary-2">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 Projection</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 View</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 Model</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 MVP</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float x</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float y</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float z</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float phi</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float theta</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float radius</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUI3DCamera()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 mouseEvent(int dx,int dy)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 getMVP()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public glm::mat4 setRadius(float r)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-2">Members</h2>
+
+<h3 id="projection">Projection</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a1c9a2694723f1fd17f0f458f80ab18be"><code class="highlighter-rouge">public glm::mat4 Projection</code></h5>
+
+<h3 id="view">View</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1aab12d1ae5ac214c29bf1bbca6326bcb0"><code class="highlighter-rouge">public glm::mat4 View</code></h5>
+
+<h3 id="model">Model</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a40ebf2825ea6732d8b073f6dfe88327d"><code class="highlighter-rouge">public glm::mat4 Model</code></h5>
+
+<h3 id="mvp-1">MVP</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1ab3b03d2907019c59516a5a5d3b91dc7e"><code class="highlighter-rouge">public glm::mat4 MVP</code></h5>
+
+<h3 id="x">x</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1ad8ad6e653e48191500fd9aad8b7ba059"><code class="highlighter-rouge">public float x</code></h5>
+
+<h3 id="y">y</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a9392724af2ebf1367fe46670f9b132f3"><code class="highlighter-rouge">public float y</code></h5>
+
+<h3 id="z">z</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a58a5022d2c1f6684c6ba7a516210fa67"><code class="highlighter-rouge">public float z</code></h5>
+
+<h3 id="phi">phi</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a6650059cb68eb43bebb3929595cbf88e"><code class="highlighter-rouge">public float phi</code></h5>
+
+<h3 id="theta">theta</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1ac30d2a627f58de572e94ee377b5e0a41"><code class="highlighter-rouge">public float theta</code></h5>
+
+<h3 id="radius">radius</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a4b89867e278bdf2b1d078db6f6f17238"><code class="highlighter-rouge">public float radius</code></h5>
+
+<h3 id="ogui3dcamera">OGUI3DCamera</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a748f3020ffb94aa124ffce73457f0f8d"><code class="highlighter-rouge">public  OGUI3DCamera()</code></h5>
+
+<h3 id="mouseevent">mouseEvent</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a2527f12a973be67baa0ce2e52fa7350e"><code class="highlighter-rouge">public glm::mat4 mouseEvent(int dx,int dy)</code></h5>
+
+<h3 id="getmvp">getMVP</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a3bfbcc0b569d147361d830701ef54156"><code class="highlighter-rouge">public glm::mat4 getMVP()</code></h5>
+
+<h3 id="setradius">setRadius</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i3_d_camera_1a5fd1af4687412a6408af41644ceb56aa"><code class="highlighter-rouge">public glm::mat4 setRadius(float r)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area">class <code class="highlighter-rouge">OpenCVGUI::OGUIArea</code></h1>
+
+<h2 id="summary-3">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public int x</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int y</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int width</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int height</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int r</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int g</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int b</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public std::string title</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int type</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool isMaximized</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * layout</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool isMouseIn()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-3">Members</h2>
+
+<h3 id="x-1">x</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1adaef4f679c601d0e6494a328b64732c7"><code class="highlighter-rouge">public int x</code></h5>
+
+<h3 id="y-1">y</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a126fe1b66570a09f1768092da9dd8535"><code class="highlighter-rouge">public int y</code></h5>
+
+<h3 id="width">width</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1afedcfda9b63522012ca9ca394554cc18"><code class="highlighter-rouge">public int width</code></h5>
+
+<h3 id="height">height</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a1227141d1ae9f6877528490d879892e4"><code class="highlighter-rouge">public int height</code></h5>
+
+<h3 id="r">r</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a8b620b6181d4a381a0e1ccba52040777"><code class="highlighter-rouge">public int r</code></h5>
+
+<h3 id="g">g</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a2a9da61d98d59c93f961d74a5a54379b"><code class="highlighter-rouge">public int g</code></h5>
+
+<h3 id="b">b</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a1d3f768ead5ef26715efb205c267be7f"><code class="highlighter-rouge">public int b</code></h5>
+
+<h3 id="title">title</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a045aa1c27edc32f38ce5259ff47c0fab"><code class="highlighter-rouge">public std::string title</code></h5>
+
+<h3 id="type">type</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a5e87caff3188287e7cb420b2f1de2db8"><code class="highlighter-rouge">public int type</code></h5>
+
+<h3 id="ismaximized">isMaximized</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1af8bbea07de11aeff2ec69e6264986db0"><code class="highlighter-rouge">public bool isMaximized</code></h5>
+
+<h3 id="window">window</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ab2e8a8647a11e1f85e98d5ba1f294614"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window</code></h5>
+
+<h3 id="layout">layout</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ae3ce04546479b2f896655c194b4da5d0"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * layout</code></h5>
+
+<p>-type <a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout">OGUILayout</a></p>
+
+<h3 id="oguiarea">OGUIArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a3a9a2ed526f65041e216713d4d7752a1"><code class="highlighter-rouge">public  OGUIArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></h5>
+
+<h3 id="draw-1">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a61f4f34c7ddfdde0d8e40b66da5609a0"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="draw3d-1">draw3d</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a0a0ed3ac3a0233d3161995a0c4330388"><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></h5>
+
+<h3 id="updatescrollstatus-1">updateScrollStatus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ae42a4e9373771681b45fd5732749499c"><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></h5>
+
+<h3 id="ismousein">isMouseIn</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a2573a94cc51828419ef792c626e0e91f"><code class="highlighter-rouge">public bool isMouseIn()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_button">class <code class="highlighter-rouge">OpenCVGUI::OGUIButton</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIButton
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-4">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIButton(const char * title)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setCallBack(std::function&lt; void()&gt; func)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void changeTitle(const char * title)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-4">Members</h2>
+
+<h3 id="draw-2">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_button_1a70d4f2472ecbcd32a60ff01780dc2122"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></h5>
+
+<h3 id="oguibutton">OGUIButton</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_button_1aede91c5bb7de0d758f472da8383303f0"><code class="highlighter-rouge">public  OGUIButton(const char * title)</code></h5>
+
+<h3 id="setcallback">setCallBack</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_button_1abb73994de198636e5ae95b35b41058eb"><code class="highlighter-rouge">public void setCallBack(std::function&lt; void()&gt; func)</code></h5>
+
+<h3 id="changetitle">changeTitle</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_button_1aa26eb27ad80e99765ee6356371de41d4"><code class="highlighter-rouge">public void changeTitle(const char * title)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_check_box">class <code class="highlighter-rouge">OpenCVGUI::OGUICheckBox</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUICheckBox
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-5">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUICheckBox()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-5">Members</h2>
+
+<h3 id="draw-3">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_check_box_1ad682e778642e08b4b8ff2b40256b4038"><code class="highlighter-rouge">public virtual void draw()</code></h5>
+
+<h3 id="oguicheckbox">OGUICheckBox</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_check_box_1a3300e7ab2ebd2a4e1978443a380acb1a"><code class="highlighter-rouge">public  OGUICheckBox()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window">class <code class="highlighter-rouge">OpenCVGUI::OGUICVWindow</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUICVWindow
+  : public OpenCVGUI::OGUIWindow
+</code></pre>
+</div>
+
+<p>Comptuer Vision template window</p>
+
+<h2 id="summary-6">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OGUIFormArea</code></a><code class="highlighter-rouge"> * formArea</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void imshow(string area_title,void * img)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool setImShowMouseClickCallBack(string area_title,std::function&lt; void(int, int)&gt; func)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * findAreaByTitle(string title)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void addFormWidget(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void plot3D(string area_title,void * data)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-6">Members</h2>
+
+<h3 id="areas_showing">areas_showing</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a65ef037ff0a3ca68d24e1542123e0f22"><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></h5>
+
+<h3 id="layout-1">layout</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a84981166a2d4a9f232636103ca0df3f4"><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></h5>
+
+<h3 id="formarea">formArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a3d5dba640e4552ee1f1cd64bf8f24365"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OGUIFormArea</code></a><code class="highlighter-rouge"> * formArea</code></h5>
+
+<h3 id="oguicvwindow">OGUICVWindow</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1aa6449466c9262d6a25c1c8b7410846dc"><code class="highlighter-rouge">public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)</code></h5>
+
+<p>Create new Computer Vision Template Window with lateral form and stacked areas</p>
+<h4 id="parameters-2">Parameters</h4>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">const</span></code> char*} title of window to create</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">int</span><span class="p">}</span></code> width of window, 1024 by default</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">int</span><span class="p">}</span></code> height of window, 768 by default</p>
+  </li>
+</ul>
+
+<h4 id="returns-1">Returns</h4>
+<p>{OGUICVWindow*} <a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window">OGUICVWindow</a> created</p>
+
+<h3 id="imshow">imshow</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1aebe665258a951aae4c503911c4cd5523"><code class="highlighter-rouge">public void imshow(string area_title,void * img)</code></h5>
+
+<p>Add new image to window with title</p>
+<h4 id="parameters-3">Parameters</h4>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">string</span><span class="p">}</span></code> area_title image are title</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">Mat</span><span class="p">}</span></code> image opencv mat</p>
+  </li>
+</ul>
+
+<h3 id="setimshowmouseclickcallback">setImShowMouseClickCallBack</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a67fb4f02c9c69b9e9135072d0277c905"><code class="highlighter-rouge">public bool setImShowMouseClickCallBack(string area_title,std::function&lt; void(int, int)&gt; func)</code></h5>
+
+<p>Add callback for mouse interaction to specific image area</p>
+<h4 id="parameters-4">Parameters</h4>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">string</span><span class="p">}</span></code> area title identifier</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge"><span class="p">{</span><span class="err">function(int</span></code> <code class="highlighter-rouge">int)}</code> callback function</p>
+  </li>
+</ul>
+
+<h4 id="returns-2">Returns</h4>
+<p>{bool} true if setup correctly</p>
+
+<h3 id="findareabytitle">findAreaByTitle</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1ac6ca583cfd4a28eb47083953c788b4d1"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * findAreaByTitle(string title)</code></h5>
+
+<p>Find an area by a specific title</p>
+<h4 id="parameters-5">Parameters</h4>
+<ul>
+  <li><code class="highlighter-rouge"><span class="p">{</span><span class="err">string</span><span class="p">}</span></code> title of area to search</li>
+</ul>
+
+<h4 id="returns-3">Returns</h4>
+<p>{OGUIArea*} pointer to area that is found. Null in other case</p>
+
+<h3 id="addformwidget">addFormWidget</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a9b30297cc5a8cbbd6fa346ce19dad4bd"><code class="highlighter-rouge">public void addFormWidget(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></h5>
+
+<h3 id="plot3d">plot3D</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1af1a07fc606b1453b217dd7cd9b382e65"><code class="highlighter-rouge">public void plot3D(string area_title,void * data)</code></h5>
+
+<h3 id="plot2d">plot2D</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1ab9a2394a1267a6dd86d71ef7e057e608"><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file">class <code class="highlighter-rouge">OpenCVGUI::OGUIFile</code></h1>
+
+<h2 id="summary-7">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public string _file_name</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public string _path</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public string _ext</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int _is_dir</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public double _size</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void * _window</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIFile(void * window,const char * file_name,const char * path,int isdir,const char * ext,double size)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool draw(void * vvg,int x,int y,int mouse_x,int mouse_y)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool isImage()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public unsigned char * getPreview()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-7">Members</h2>
+
+<h3 id="_file_name">_file_name</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1adfb04538784610abe7c9fa37aae48b04"><code class="highlighter-rouge">public string _file_name</code></h5>
+
+<h3 id="_path">_path</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a68446631ff70c92578b56311cf7fb3d9"><code class="highlighter-rouge">public string _path</code></h5>
+
+<h3 id="_ext">_ext</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a52026621e3967683a9a2a12342138407"><code class="highlighter-rouge">public string _ext</code></h5>
+
+<h3 id="_is_dir">_is_dir</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a7178fec9350a9d07f8eec8a672b0d448"><code class="highlighter-rouge">public int _is_dir</code></h5>
+
+<h3 id="_size">_size</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a6203b91cd2cfe109276a4b82402daa4a"><code class="highlighter-rouge">public double _size</code></h5>
+
+<h3 id="_window">_window</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a76a172317773b97434eae21ca0160ce9"><code class="highlighter-rouge">public void * _window</code></h5>
+
+<h3 id="oguifile">OGUIFile</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a46a3ffa218aee9572c3f93c78f6831e3"><code class="highlighter-rouge">public  OGUIFile(void * window,const char * file_name,const char * path,int isdir,const char * ext,double size)</code></h5>
+
+<h3 id="draw-4">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a917e450a6c7bc7114a84679db2ff0b7f"><code class="highlighter-rouge">public bool draw(void * vvg,int x,int y,int mouse_x,int mouse_y)</code></h5>
+
+<h3 id="isimage">isImage</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1af467dbeda1baafef01f7e3da1804b218"><code class="highlighter-rouge">public bool isImage()</code></h5>
+
+<h3 id="getpreview">getPreview</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_1a749637f44f38e9b99f3aafe3239b4547"><code class="highlighter-rouge">public unsigned char * getPreview()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser">class <code class="highlighter-rouge">OpenCVGUI::OGUIFileBrowser</code></h1>
+
+<h2 id="summary-8">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIFileBrowser(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public string open(string path,vector&lt; string &gt; filter)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void draw()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-8">Members</h2>
+
+<h3 id="oguifilebrowser">OGUIFileBrowser</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1a35e659f9f6554f697f798ef93d1a1f2d"><code class="highlighter-rouge">public  OGUIFileBrowser(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></h5>
+
+<h3 id="open">open</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1a6c39ff044dcba20ebd1de6bbc7a0dadc"><code class="highlighter-rouge">public string open(string path,vector&lt; string &gt; filter)</code></h5>
+
+<h3 id="draw-5">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1acedffb5b5a8a6adf4e77ff2ca82b104a"><code class="highlighter-rouge">public void draw()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_form_area">class <code class="highlighter-rouge">OpenCVGUI::OGUIFormArea</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIFormArea
+  : public OpenCVGUI::OGUIArea
+</code></pre>
+</div>
+
+<h2 id="summary-9">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * &gt; widgets</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIFormArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void addWidget(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-9">Members</h2>
+
+<h3 id="widgets">widgets</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_form_area_1ab981b70216da79b43d866db5697acfc4"><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * &gt; widgets</code></h5>
+
+<p>-type <a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget">OGUIWidget</a></p>
+
+<h3 id="draw-6">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_form_area_1a2db415b6a8702fd2dafbf6e388139ed8"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="oguiformarea">OGUIFormArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_form_area_1a6d3299d197e94efdfb6206fece59068d"><code class="highlighter-rouge">public  OGUIFormArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></h5>
+
+<h3 id="addwidget">addWidget</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_form_area_1a86e33a01f9db161d821938f08f7ce763"><code class="highlighter-rouge">public void addWidget(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image">class <code class="highlighter-rouge">OpenCVGUI::OGUIImage</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIImage
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-10">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIImage()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-10">Members</h2>
+
+<h3 id="draw-7">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_1a430c5036aa3b32803222d6ba8dd27e9d"><code class="highlighter-rouge">public virtual void draw()</code></h5>
+
+<h3 id="oguiimage">OGUIImage</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_1a678b63104927b2ee4d4e93cc125fd036"><code class="highlighter-rouge">public  OGUIImage()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area">class <code class="highlighter-rouge">OpenCVGUI::OGUIImageArea</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIImageArea
+  : public OpenCVGUI::OGUIArea
+</code></pre>
+</div>
+
+<h2 id="summary-11">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIImageArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,string title)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setImage(Mat * img)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setMouseClickCallBack(std::function&lt; void(int, int)&gt; func)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void calcHistogram()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-11">Members</h2>
+
+<h3 id="draw-8">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1a5af155c8e6e2bf7f55245fda1ff25c20"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="updatescrollstatus-2">updateScrollStatus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1aa4d9dadd83bc9efa207098e31c8fb0c9"><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></h5>
+
+<h3 id="oguiimagearea">OGUIImageArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1a9f518e7c892f984fbc225773885baec9"><code class="highlighter-rouge">public  OGUIImageArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,string title)</code></h5>
+
+<h3 id="setimage">setImage</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1ab744e6daefb4be5228a5961fa1f8ed99"><code class="highlighter-rouge">public void setImage(Mat * img)</code></h5>
+
+<h3 id="setmouseclickcallback">setMouseClickCallBack</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1ab84445576177088de0d98a111eedc337"><code class="highlighter-rouge">public void setMouseClickCallBack(std::function&lt; void(int, int)&gt; func)</code></h5>
+
+<h3 id="calchistogram">calcHistogram</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_image_area_1a9f86c44b9fb746a6146495300153b138"><code class="highlighter-rouge">public void calcHistogram()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout">class <code class="highlighter-rouge">OpenCVGUI::OGUILayout</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUILayout
+  : public OpenCVGUI::OGUIArea
+</code></pre>
+</div>
+
+<h2 id="summary-12">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUILayout(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,int orientation)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void addArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setLayoutSizes(std::vector&lt; float &gt; sizes)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-12">Members</h2>
+
+<h3 id="areas">areas</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1a30cddcab1a21a4ed05e5158316122928"><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas</code></h5>
+
+<p>-type <a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area">OGUIArea</a></p>
+
+<h3 id="draw-9">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1af8c8651ee984fc7de1c29a0503236d56"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="draw3d-2">draw3d</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1a0067b3655612237e8db72fa7136a8391"><code class="highlighter-rouge">public virtual void draw3d(int x,int y,int width,int height)</code></h5>
+
+<h3 id="updatescrollstatus-3">updateScrollStatus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1a6cdf5aea6ab95e552b4baa6e47704f08"><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></h5>
+
+<h3 id="oguilayout">OGUILayout</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1abeb8443bffc30dd7fa1659f4e5ea9ac7"><code class="highlighter-rouge">public  OGUILayout(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,int orientation)</code></h5>
+
+<h3 id="addarea">addArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1aeb3402642674c34be8da09ac04a38a54"><code class="highlighter-rouge">public void addArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></h5>
+
+<h3 id="setlayoutsizes">setLayoutSizes</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_layout_1aaf0f9bda7b9889843818bb65ab5e1b61"><code class="highlighter-rouge">public void setLayoutSizes(std::vector&lt; float &gt; sizes)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area">class <code class="highlighter-rouge">OpenCVGUI::OGUIPlotArea</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIPlotArea
+  : public OpenCVGUI::OGUIArea
+</code></pre>
+</div>
+
+<h2 id="summary-13">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public std::vector&lt; int &gt; color_scheme</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void replot(void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-13">Members</h2>
+
+<h3 id="color_scheme">color_scheme</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1a71425aca23ec5ed99802648b7943762c"><code class="highlighter-rouge">public std::vector&lt; int &gt; color_scheme</code></h5>
+
+<h3 id="draw-10">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1a233d004c5d6b2732030bedf578ad5d06"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
+
+<h3 id="oguiplotarea">OGUIPlotArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1ad7b934dcf655b4c92ce6233f5e012ba0"><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></h5>
+
+<h3 id="replot-1">replot</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1aaf65308f2013089527294acf1778f678"><code class="highlighter-rouge">public void replot(void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons">class <code class="highlighter-rouge">OpenCVGUI::OGUIRadioButtons</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUIRadioButtons
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-14">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIRadioButtons(const char * title,std::vector&lt; std::string &gt; options,int default_selected)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setCallBack(std::function&lt; void(int)&gt; func)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-14">Members</h2>
+
+<h3 id="draw-11">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons_1a4536fa28d98e863cd718df62dab92165"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></h5>
+
+<h3 id="oguiradiobuttons">OGUIRadioButtons</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons_1a0388db6dd3773e26f20c34453d371ae9"><code class="highlighter-rouge">public  OGUIRadioButtons(const char * title,std::vector&lt; std::string &gt; options,int default_selected)</code></h5>
+
+<h3 id="setcallback-1">setCallBack</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons_1a5df626b5296f98c999e0aae890e28731"><code class="highlighter-rouge">public void setCallBack(std::function&lt; void(int)&gt; func)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_slider">class <code class="highlighter-rouge">OpenCVGUI::OGUISlider</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUISlider
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-15">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUISlider(const char * title,double min,double max,double value)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setCallBack(std::function&lt; void(double)&gt; func)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setValue(double v)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-15">Members</h2>
+
+<h3 id="draw-12">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_slider_1ae356017c6225e7696199aded9349c8bb"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width)</code></h5>
+
+<h3 id="oguislider">OGUISlider</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_slider_1a969b28218d2d76f02542f2721c1686bc"><code class="highlighter-rouge">public  OGUISlider(const char * title,double min,double max,double value)</code></h5>
+
+<h3 id="setcallback-2">setCallBack</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_slider_1a00f2542b2c559f19e232b0eb68a7f33d"><code class="highlighter-rouge">public void setCallBack(std::function&lt; void(double)&gt; func)</code></h5>
+
+<h3 id="setvalue">setValue</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_slider_1a79c4b9343dfdad94e46364e4636cf982"><code class="highlighter-rouge">public void setValue(double v)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input">class <code class="highlighter-rouge">OpenCVGUI::OGUITextInput</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUITextInput
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-16">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public string value</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool is_focus_</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int animation_alpha_</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public const char * label</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int w)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void characterCallback(unsigned int key)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void keyCallback(int key,int scancode,int action,int mods)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUITextInput(const char * label)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-16">Members</h2>
+
+<h3 id="value">value</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1adeef1d12026be1e1fa79a648c03716dd"><code class="highlighter-rouge">public string value</code></h5>
+
+<h3 id="is_focus_">is_focus_</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a21cda208b9e1d6c1e67e11e1766c48bb"><code class="highlighter-rouge">public bool is_focus_</code></h5>
+
+<h3 id="animation_alpha_">animation_alpha_</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a8f67b3dca6a1edb604001edc0f409e9d"><code class="highlighter-rouge">public int animation_alpha_</code></h5>
+
+<h3 id="label">label</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a1c3f824640f3d48181870b37a78f225c"><code class="highlighter-rouge">public const char * label</code></h5>
+
+<h3 id="draw-13">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1aceb51b4d75f25d1e1abc538c5b987089"><code class="highlighter-rouge">public virtual void draw(int x,int y,int w)</code></h5>
+
+<h3 id="charactercallback">characterCallback</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a342443dab4d7b6e1c70a646d6636f6c6"><code class="highlighter-rouge">public virtual void characterCallback(unsigned int key)</code></h5>
+
+<h3 id="keycallback">keyCallback</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a6bfc6a025d45fe90c6a10e6b7b483a46"><code class="highlighter-rouge">public virtual void keyCallback(int key,int scancode,int action,int mods)</code></h5>
+
+<h3 id="oguitextinput">OGUITextInput</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_text_input_1a6ee653b5d13878ee300aaa64b838f24e"><code class="highlighter-rouge">public  OGUITextInput(const char * label)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_title">class <code class="highlighter-rouge">OpenCVGUI::OGUITitle</code></h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class OpenCVGUI::OGUITitle
+  : public OpenCVGUI::OGUIWidget
+</code></pre>
+</div>
+
+<h2 id="summary-17">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUITitle()</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-17">Members</h2>
+
+<h3 id="draw-14">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_title_1a45a33dd8b684bde376c306c1b527be8d"><code class="highlighter-rouge">public virtual void draw()</code></h5>
+
+<h3 id="oguititle">OGUITitle</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_title_1a416e919ed0d782077a5cc7ed05298c71"><code class="highlighter-rouge">public  OGUITitle()</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget">class <code class="highlighter-rouge">OpenCVGUI::OGUIWidget</code></h1>
+
+<h2 id="summary-18">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OGUIFormArea</code></a><code class="highlighter-rouge"> * area</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int height</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void draw(int x,int y,int widht)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void characterCallback(unsigned int key)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public virtual void keyCallback(int key,int scancode,int action,int mods)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-18">Members</h2>
+
+<h3 id="area">area</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget_1a512c03b1d7e0b5e76994e4813e5889a8"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OGUIFormArea</code></a><code class="highlighter-rouge"> * area</code></h5>
+
+<h3 id="height-1">height</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget_1a760813db5c3d019304864cbdb0a633e8"><code class="highlighter-rouge">public int height</code></h5>
+
+<h3 id="draw-15">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget_1a458edbfdbc2988d11a05c95f74500bc4"><code class="highlighter-rouge">public virtual void draw(int x,int y,int widht)</code></h5>
+
+<h3 id="charactercallback-1">characterCallback</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget_1a699ba9782fd6f000e1052bc5932b64b3"><code class="highlighter-rouge">public virtual void characterCallback(unsigned int key)</code></h5>
+
+<h3 id="keycallback-1">keyCallback</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_widget_1ab16cb0d77ef1997915118fea32d698fa"><code class="highlighter-rouge">public virtual void keyCallback(int key,int scancode,int action,int mods)</code></h5>
+
+<h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window">class <code class="highlighter-rouge">OpenCVGUI::OGUIWindow</code></h1>
+
+<h2 id="summary-19">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d"><code class="highlighter-rouge">OGUI3D</code></a><code class="highlighter-rouge"> * test</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void * glfw_window</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void * vg</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public double mouse_x</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public double mouse_y</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int mouse_state</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int key_pressed</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int actual_cursor_type</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int mouse_left_state</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public std::vector&lt; void * &gt; mouse_cursors_</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  OGUIWindow(int width,int height,const char * title,int layoutOrientation,bool fullScreen)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public  ~OGUIWindow()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void draw()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public bool update()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int init(bool fullScreen)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void addArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setCursor(int cursor_type)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void drawCursor()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * getMainLayout()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setKeyFocus(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * getKeyFocusWidget()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int getWindowHeight()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int getWindowWidth()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void updatePerfGraph()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void showPerfGraph(bool show)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setExternal2DDraw(std::function&lt; void(void *context)&gt; func)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int popup(string title,string text,int type)</code></td>
+      <td>Popups.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public string openFileBrowser(string path,vector&lt; string &gt; filter)</code></td>
+      <td>File browser.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void close()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int getStatus()</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void maximizeArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-19">Members</h2>
+
+<h3 id="test">test</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ad111537e93536cb13f16eb4697b0dbb6"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d"><code class="highlighter-rouge">OGUI3D</code></a><code class="highlighter-rouge"> * test</code></h5>
+
+<h3 id="glfw_window">glfw_window</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a56d181d083f35e7eae72dee17cd16d92"><code class="highlighter-rouge">public void * glfw_window</code></h5>
+
+<h3 id="vg">vg</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ad73972cd21ecd7da37ce9ec6260195cb"><code class="highlighter-rouge">public void * vg</code></h5>
+
+<h3 id="mouse_x">mouse_x</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1af40d5267e143263b76fa6348805adc03"><code class="highlighter-rouge">public double mouse_x</code></h5>
+
+<h3 id="mouse_y">mouse_y</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1acb315b67254cf4d56c5f96f26f4034c4"><code class="highlighter-rouge">public double mouse_y</code></h5>
+
+<h3 id="mouse_state">mouse_state</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a19f481b356576803212c3e6a1aab4d78"><code class="highlighter-rouge">public int mouse_state</code></h5>
+
+<h3 id="key_pressed">key_pressed</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a883326e6fc4a7a2cb7f5e9056bf2b133"><code class="highlighter-rouge">public int key_pressed</code></h5>
+
+<h3 id="actual_cursor_type">actual_cursor_type</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a5483ab4149297446d12b3f7db51730b4"><code class="highlighter-rouge">public int actual_cursor_type</code></h5>
+
+<h3 id="mouse_left_state">mouse_left_state</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a07540983006556c35ecd8dd2dec6c896"><code class="highlighter-rouge">public int mouse_left_state</code></h5>
+
+<h3 id="mouse_cursors_">mouse_cursors_</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ac732dcb731d32fa8c00d21bf2ce27265"><code class="highlighter-rouge">public std::vector&lt; void * &gt; mouse_cursors_</code></h5>
+
+<h3 id="oguiwindow">OGUIWindow</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a7eedb16af7e06c8c3ff174c5f31a9c76"><code class="highlighter-rouge">public  OGUIWindow(int width,int height,const char * title,int layoutOrientation,bool fullScreen)</code></h5>
+
+<h3 id="oguiwindow-1">~OGUIWindow</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a33bc14b906fc61ffeb15e1723e521373"><code class="highlighter-rouge">public  ~OGUIWindow()</code></h5>
+
+<h3 id="draw-16">draw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a54baa6fd799bf44514081e953ea3d233"><code class="highlighter-rouge">public void draw()</code></h5>
+
+<h3 id="update">update</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a8258eb453ed57d610771df1b7585ff81"><code class="highlighter-rouge">public bool update()</code></h5>
+
+<h3 id="init-1">init</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1af1e737bea59407b3b0e4f11910404824"><code class="highlighter-rouge">public int init(bool fullScreen)</code></h5>
+
+<h3 id="addarea-1">addArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ae521f6749a272dd4461e6018bee9eabf"><code class="highlighter-rouge">public void addArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></h5>
+
+<h3 id="setcursor">setCursor</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ab198c9aa4125e674044080f370c7919b"><code class="highlighter-rouge">public void setCursor(int cursor_type)</code></h5>
+
+<h3 id="drawcursor">drawCursor</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a637a44f2b96d50c660c30147651372da"><code class="highlighter-rouge">public void drawCursor()</code></h5>
+
+<h3 id="getmainlayout">getMainLayout</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a0e6a0940955b4659508c5bba2e86d972"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * getMainLayout()</code></h5>
+
+<h3 id="setkeyfocus">setKeyFocus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a6c19b9d40550edc84d492a10833880a9"><code class="highlighter-rouge">public void setKeyFocus(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * widget)</code></h5>
+
+<h3 id="getkeyfocuswidget">getKeyFocusWidget</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1acbf16bf271046d6fe1a4454b77b6fa84"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_widget"><code class="highlighter-rouge">OGUIWidget</code></a><code class="highlighter-rouge"> * getKeyFocusWidget()</code></h5>
+
+<h3 id="getwindowheight">getWindowHeight</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a5daac852ade6b652e096583fe82be372"><code class="highlighter-rouge">public int getWindowHeight()</code></h5>
+
+<h3 id="getwindowwidth">getWindowWidth</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a468c04c92e49a8197b21d752b5b5974b"><code class="highlighter-rouge">public int getWindowWidth()</code></h5>
+
+<h3 id="updateperfgraph">updatePerfGraph</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a5b4d69f79390463a132f19a3e1ee6313"><code class="highlighter-rouge">public void updatePerfGraph()</code></h5>
+
+<h3 id="showperfgraph">showPerfGraph</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a44f4bf01265937c1ed101a889fd91b61"><code class="highlighter-rouge">public void showPerfGraph(bool show)</code></h5>
+
+<h3 id="setexternal2ddraw">setExternal2DDraw</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a4a208f57ee6db33d9e21ce340063cff3"><code class="highlighter-rouge">public void setExternal2DDraw(std::function&lt; void(void *context)&gt; func)</code></h5>
+
+<h3 id="popup">popup</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a7bad15ac09b4456cb09880a9e151ae7b"><code class="highlighter-rouge">public int popup(string title,string text,int type)</code></h5>
+
+<p>Popups.</p>
+
+<h3 id="openfilebrowser">openFileBrowser</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a9ba4a23ed3fe358744f1d9876045eba9"><code class="highlighter-rouge">public string openFileBrowser(string path,vector&lt; string &gt; filter)</code></h5>
+
+<p>File browser.</p>
+
+<h3 id="close">close</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a833428df1125ccc8c0254ba0c95e98f3"><code class="highlighter-rouge">public void close()</code></h5>
+
+<h3 id="getstatus">getStatus</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a2a1b55fe67976386d6cbd96fe4894653"><code class="highlighter-rouge">public int getStatus()</code></h5>
+
+<h3 id="maximizearea">maximizeArea</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a39e2d6dd86bd32da69d6fd4e18abd06e"><code class="highlighter-rouge">public void maximizeArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * area)</code></h5>
+
+<h1 id="struct_g_p_utimer">struct <code class="highlighter-rouge">GPUtimer</code></h1>
+
+<h2 id="summary-20">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public int supported</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int cur</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int ret</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public unsigned int queries</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-20">Members</h2>
+
+<h3 id="supported">supported</h3>
+<h5 id="struct_g_p_utimer_1ab54d9f4fe1fc810f9e8d736bf9381826"><code class="highlighter-rouge">public int supported</code></h5>
+
+<h3 id="cur">cur</h3>
+<h5 id="struct_g_p_utimer_1ac75c6fd1ca2bbd22f4f3155f06a2fffb"><code class="highlighter-rouge">public int cur</code></h5>
+
+<h3 id="ret">ret</h3>
+<h5 id="struct_g_p_utimer_1aa28be2ddd179ec58bb62561770ee361c"><code class="highlighter-rouge">public int ret</code></h5>
+
+<h3 id="queries">queries</h3>
+<h5 id="struct_g_p_utimer_1a19f7265e63c7f0ca32dcc432e975e88c"><code class="highlighter-rouge">public unsigned int queries</code></h5>
+
+<h1 id="struct_perf_graph">struct <code class="highlighter-rouge">PerfGraph</code></h1>
+
+<h2 id="summary-21">Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Members</th>
+      <th>Descriptions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">public int style</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public char name</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public float values</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public int head</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="members-21">Members</h2>
+
+<h3 id="style">style</h3>
+<h5 id="struct_perf_graph_1a0aa8f294ed1eee979ded828d3208b39e"><code class="highlighter-rouge">public int style</code></h5>
+
+<h3 id="name">name</h3>
+<h5 id="struct_perf_graph_1a8abe0c9b9f33916090cc186c489bd4f0"><code class="highlighter-rouge">public char name</code></h5>
+
+<h3 id="values">values</h3>
+<h5 id="struct_perf_graph_1a98e2a254e5a66226a5fac6a5c26eea7c"><code class="highlighter-rouge">public float values</code></h5>
+
+<h3 id="head">head</h3>
+<h5 id="struct_perf_graph_1ac2e6534450ce170d33608a56f07c1794"><code class="highlighter-rouge">public int head</code></h5>
+
+
+
+    <div class="docs-prevnext">
+      
+        <a class="docs-prev" href="/OpenCVGUI/docs/hello-world.html">&larr; Prev</a>
+      
+      
+    </div>
+  </div>
+
+
+</section>
+
+
+    <footer class="nav-footer">
+  <div class="container">
+    <section class="sitemap">
+      <a href="/OpenCVGUI/" class="nav-home">OpenCVGUI</a>
+      <a href="/OpenCVGUI/docs/">Docs</a>
+      <a href="/OpenCVGUI/docs/hello-world.html">Quick Start</a>
+    </section>
+    <section class="copyright">
+      Copyright © 2017 David Millan Escriva.
+    </section>
+  </div>
+</footer>
+
+
+</body>
+</html>

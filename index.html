@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>OpenCG GUI - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="/OpenCVGUI/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/OpenCVGUI/feed.xml">
+
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/OpenCVGUI/css/main.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/navbar.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/syntax.css">
+
+</head>
+<body>
+
+    <header class="bs-docs-nav navbar navbar-static-top" id="top">
+  <div class="container">
+    <div class="navbar-header">
+      <button aria-controls="bs-navbar" aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <img class="nav-logo" src="/OpenCVGUI/img/icon_logo.svg" width="36" height="36"><a href="/OpenCVGUI/" class="navbar-brand">OpenCVGUI</a>
+    </div>
+    <nav class="collapse navbar-collapse" id="bs-navbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="/OpenCVGUI/docs/installation.html">Docs</a> </li>
+        <li> <a href="/OpenCVGUI/docs/hello-world.html">Getting started</a> </li>
+        <li><a href="/OpenCVGUI/tutorial/tutorial.html">Tutorial</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/damiles/OpenCVGUI">GitHub</a></li>
+        <li><a href="https://github.com/damiles/OpenCVGUI/releases">v0.0.5</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    
+  <div class="jumbotron">
+  <div class="container">
+    <div class="col-xs-12 col-md-6">
+    <h1>OpenCV<span class="blue">G</span><span class="green">U</span><span class="red">I</span> <img style="margin-top:-15px;" src="/OpenCVGUI/img/icon_logo.svg" width="69" height="69"></h1>
+    <p>
+      An OpenCV Graphical User interface
+    </p>
+    </div>
+    <div class="col-xs-12 col-md-6">
+    <p>
+      <br>
+      <a href="/OpenCVGUI/docs/hello-world.html" class="btn btn-primary btn-lg">Get Started</a>
+      <a href="/OpenCVGUI/tutorial/tutorial.html" class="btn btn-primary btn-lg">Take the Tutorial</a>
+    </p>
+    </div>
+  </div>
+</div>
+
+
+
+<section class="container">
+  <h1 id="opencvgui">OpenCVGUI</h1>
+<p>Do you like OpenCV Highui but it’s not enough and don’t want waste your time
+in a new UI SDK? <strong>This is  your solution!</strong>
+OpenCVGUI is a new graphical user inteface for OpenCV with different 
+widgets and tools to provide developers a new and more powerful 
+user interface with 3D and 2D plotting support, advanced forms, 
+with small dependencies and OpenGL based.</p>
+
+<p>Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.</p>
+
+<p><img src="https://github.com/damiles/OpenCVGUI/raw/master/resources/screenshot.png" alt="screenshot" /></p>
+
+<h1 id="dependencies">Dependencies</h1>
+<ul>
+  <li>GLEW</li>
+  <li>xorg-dev</li>
+</ul>
+
+<h1 id="build">Build</h1>
+<ol>
+  <li>git submodule update –init –recursive</li>
+  <li>mkdir build</li>
+  <li>cd build</li>
+  <li>cmake ..</li>
+  <li>make</li>
+  <li>sudo make install</li>
+</ol>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>No complex sdk framework like others.</li>
+  <li>It’s like OpenCV Highui calls, simple and clean.</li>
+  <li>Computer vision in different Thread than UI</li>
+  <li>Image render</li>
+  <li>Forms</li>
+  <li>Input Text</li>
+  <li>Buttons</li>
+  <li>Radio buttons</li>
+  <li>Checkboxs</li>
+  <li>Sliders and progress bars</li>
+  <li>File Management (in progress)</li>
+  <li>2D plot</li>
+  <li>2D multiplot</li>
+  <li>3D Plot</li>
+</ul>
+
+<p><img src="https://github.com/damiles/OpenCVGUI/raw/master/resources/2dplot.png" alt="screenshot" />
+<img src="https://github.com/damiles/OpenCVGUI/raw/master/resources/2dmultiplot.png" alt="screenshot" /></p>
+
+<h2 id="short-snippets">Short snippets</h2>
+
+<p>Init the GUI</p>
+<pre><code class="language-C++">    OpenCVGUI::init();
+</code></pre>
+
+<p>Create a new window</p>
+<pre><code class="language-C++">    OGUICVWindow* window= OpenCVGUI::namedWindow("Wellcome to OpenCVGUI Example 2");
+</code></pre>
+
+<p>Show image in window</p>
+<pre><code class="language-C++">    Mat image= imread("./lena.jpg");
+    window-&gt;imshow("image title key like highui imshow", &amp;image);
+</code></pre>
+
+<h2 id="basic-example">Basic Example</h2>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include "OGUI.h"
+#include "OGUISlider.h"
+#include &lt;opencv2/core/core.hpp&gt;
+#include &lt;opencv2/highgui/highgui.hpp&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">OpenCVGUI</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">cv</span><span class="p">;</span>
+
+<span class="n">VideoCapture</span> <span class="n">cap</span><span class="p">;</span>
+<span class="n">Mat</span> <span class="n">frame</span><span class="p">,</span> <span class="n">gray</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">thr</span><span class="o">=</span><span class="mi">125</span><span class="p">;</span>
+<span class="n">OGUICVWindow</span> <span class="o">*</span><span class="n">window</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">cv_process</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">app_is_running</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cap</span> <span class="o">&gt;&gt;</span> <span class="n">frame</span><span class="p">;</span>
+        <span class="n">window</span><span class="o">-&gt;</span><span class="n">imshow</span><span class="p">(</span><span class="s">"camera"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+        <span class="n">Mat</span> <span class="n">output</span><span class="p">;</span>
+        <span class="n">cvtColor</span><span class="p">(</span> <span class="n">frame</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">COLOR_RGB2GRAY</span> <span class="p">);</span>
+        <span class="n">threshold</span><span class="p">(</span> <span class="n">gray</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">thr</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">CV_THRESH_BINARY</span><span class="p">);</span>
+        <span class="n">window</span><span class="o">-&gt;</span><span class="n">imshow</span><span class="p">(</span><span class="s">"threshold"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">on_change_slider_threshold</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">){</span>
+    <span class="n">thr</span><span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Init GUI
+</span>    <span class="n">OpenCVGUI</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
+
+    <span class="c1">// Create our window
+</span>    <span class="n">window</span><span class="o">=</span> <span class="n">OpenCVGUI</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="s">"Wellcome to OpenCVGUI Example 2"</span><span class="p">);</span>
+
+    <span class="c1">// Create the Forms we need and add to window
+</span>    <span class="n">OGUISlider</span> <span class="n">slider</span><span class="p">(</span><span class="s">"Threshold"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">125</span><span class="p">);</span>
+    <span class="n">slider</span><span class="p">.</span><span class="n">setCallBack</span><span class="p">(</span><span class="n">on_change_slider_threshold</span><span class="p">);</span>
+    <span class="n">window</span><span class="o">-&gt;</span><span class="n">addFormWidget</span><span class="p">(</span><span class="o">&amp;</span><span class="n">slider</span><span class="p">);</span>
+
+    <span class="c1">// Start video capture
+</span>    <span class="n">cap</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cap</span><span class="p">.</span><span class="n">isOpened</span><span class="p">()){</span>
+        <span class="n">cap</span> <span class="o">&gt;&gt;</span> <span class="n">frame</span><span class="p">;</span>
+        <span class="c1">// show image
+</span>        <span class="n">window</span><span class="o">-&gt;</span><span class="n">imshow</span><span class="p">(</span><span class="s">"camera"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Convert frame, threshodl and show
+</span>    <span class="n">cvtColor</span><span class="p">(</span> <span class="n">frame</span><span class="p">,</span> <span class="n">gray</span><span class="p">,</span> <span class="n">COLOR_RGB2GRAY</span> <span class="p">);</span>
+    <span class="n">Mat</span> <span class="n">output</span><span class="p">;</span>
+    <span class="n">threshold</span><span class="p">(</span> <span class="n">gray</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">CV_THRESH_BINARY</span><span class="p">);</span>
+    <span class="n">window</span><span class="o">-&gt;</span><span class="n">imshow</span><span class="p">(</span><span class="s">"threshold"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">output</span><span class="p">);</span>
+
+    <span class="c1">// Start the Comptuer vision process
+</span>    <span class="n">OpenCVGUI</span><span class="o">::</span><span class="n">app_run</span><span class="p">(</span><span class="n">cv_process</span><span class="p">);</span>
+
+<span class="p">}</span>    
+</code></pre>
+</div>
+
+<p><img src="https://github.com/damiles/OpenCVGUI/raw/master/resources/basic_sample.png" alt="screenshot" /></p>
+
+</section>
+
+
+    <footer class="nav-footer">
+  <div class="container">
+    <section class="sitemap">
+      <a href="/OpenCVGUI/" class="nav-home">OpenCVGUI</a>
+      <a href="/OpenCVGUI/docs/">Docs</a>
+      <a href="/OpenCVGUI/docs/hello-world.html">Quick Start</a>
+    </section>
+    <section class="copyright">
+      Copyright © 2017 David Millan Escriva.
+    </section>
+  </div>
+</footer>
+
+
+</body>
+</html>

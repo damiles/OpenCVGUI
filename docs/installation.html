@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Installation - React</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="/OpenCVGUI/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/OpenCVGUI/feed.xml">
+
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/OpenCVGUI/css/main.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/navbar.css">
+  <link rel="stylesheet" href="/OpenCVGUI/css/syntax.css">
+
+</head>
+<body>
+
+    <header class="bs-docs-nav navbar navbar-static-top" id="top">
+  <div class="container">
+    <div class="navbar-header">
+      <button aria-controls="bs-navbar" aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-navbar" data-toggle="collapse" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <img class="nav-logo" src="/OpenCVGUI/img/icon_logo.svg" width="36" height="36"><a href="/OpenCVGUI/" class="navbar-brand">OpenCVGUI</a>
+    </div>
+    <nav class="collapse navbar-collapse" id="bs-navbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="/OpenCVGUI/docs/installation.html">Docs</a> </li>
+        <li> <a href="/OpenCVGUI/docs/hello-world.html">Getting started</a> </li>
+        <li><a href="/OpenCVGUI/tutorial/tutorial.html">Tutorial</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/damiles/OpenCVGUI">GitHub</a></li>
+        <li><a href="https://github.com/damiles/OpenCVGUI/releases">v0.0.5</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    <section class="row content wrap documentationContent">
+
+  <div class="col-sd-12 col-md-3 nav-docs">
+  <!-- Docs Nav -->
+  
+    <div class="bs-docs-sidebar nav-docs-section">
+      <h3>Quick Start</h3>
+      <ul class="nav bs-docs-sidenav">
+        
+          <li>
+            <a href="/OpenCVGUI/docs/installation.html" class="active">Installation</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/hello-world.html">Hello World</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+    <div class="bs-docs-sidebar nav-docs-section">
+      <h3>API</h3>
+      <ul class="nav bs-docs-sidenav">
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html">OpenCVGUI</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window" class="external">OGUIWindow</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window" class="external">OGUICVWindow</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/oguiarea.html">OGUIArea</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/oguiformarea.html">OGUIFormArea</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  
+
+</div>
+
+
+  <div class="col-sd-12 col-md-9 col-md-offset-3 inner-content">
+    <a class="edit-page-link" href="https://github.com/damiles/OpenCVGUI/tree/master/docs/docs/installation.md" target="_blank">Edit on GitHub</a>
+    <h1>
+      Installation
+    </h1>
+    <div class="subHeader"></div>
+
+    <h1 id="dependencies">Dependencies</h1>
+<ul>
+  <li>GLEW</li>
+  <li>xorg-dev</li>
+</ul>
+
+<h1 id="build">Build</h1>
+<ol>
+  <li>git submodule update –init –recursive</li>
+  <li>mkdir build</li>
+  <li>cd build</li>
+  <li>cmake ..</li>
+  <li>make</li>
+  <li>sudo make install</li>
+</ol>
+
+
+    <div class="docs-prevnext">
+      
+      
+        <a class="pull-right docs-next" href="/OpenCVGUI/docs/hello-world.html">Next &rarr;</a>
+      
+    </div>
+  </div>
+
+
+</section>
+
+
+    <footer class="nav-footer">
+  <div class="container">
+    <section class="sitemap">
+      <a href="/OpenCVGUI/" class="nav-home">OpenCVGUI</a>
+      <a href="/OpenCVGUI/docs/">Docs</a>
+      <a href="/OpenCVGUI/docs/hello-world.html">Quick Start</a>
+    </section>
+    <section class="copyright">
+      Copyright © 2017 David Millan Escriva.
+    </section>
+  </div>
+</footer>
+
+
+</body>
+</html>
