@@ -23,17 +23,17 @@ namespace OpenCVGUI {
     public:
         OGUIFileBrowser(OGUIWindow* window);
 
-        string open(string path, vector<string> filter);
+        string open(string path, std::vector<string> filter);
         void draw();
 
     private:
         OGUIWindow* _window;
         bool _is_file_browser_visible = false;
         OGUIFile* _file_browser_result;
-        vector<OGUIFile*> _file_list;
+        std::vector<OGUIFile*> _file_list;
         string _actual_folder;
-        vector<string> _filter;
-        vector <OGUIFile*> _system;
+        std::vector<string> _filter;
+        std::vector <OGUIFile*> _system;
 
         char resolved_path[4096];
 

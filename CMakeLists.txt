@@ -127,7 +127,7 @@ target_include_directories(opencvgui PUBLIC
 #target_include_directories(opencvgui PRIVATE
 #                           "${OGUI_SRC_LIB}")
 
-# TARGET_LINK_LIBRARIES(opencvgui glfw nanovg)
+TARGET_LINK_LIBRARIES(opencvgui glfw)
 
 # Compile a sample project
 set(EXTRA_LIBS_EXE "")

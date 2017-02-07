@@ -409,7 +409,7 @@ int OGUIWindow::getStatus() {
     return _window_status;
 }
 
-string OGUIWindow::openFileBrowser(string path, vector<string> filter) {
+string OGUIWindow::openFileBrowser(string path, std::vector<string> filter) {
     return _fileBrowser->open(path, filter);
 }
 

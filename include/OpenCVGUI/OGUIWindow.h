@@ -82,7 +82,7 @@ class OGUIWindow {
     int popup(string title, string text, int type=2);
 
     /// File browser
-    string openFileBrowser(string path, vector<string> filter);
+    string openFileBrowser(string path, std::vector<string> filter);
     //string saveFileBrowser(string path='.');
 
     // Force to close window
