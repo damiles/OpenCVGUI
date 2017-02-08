@@ -25,7 +25,7 @@ Mat src, gray, output;
 OGUICVWindow *window;
 VideoCapture cap;
 Mat frame;
-
+bool sayHello=false;
 void on_change_slider_threshold(double value){
     threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
     window->imshow("threshold", &output);
@@ -33,12 +33,17 @@ void on_change_slider_threshold(double value){
 
 void hello_btn_click(){
     cout << "HELLO OGUI" << endl;
+    sayHello= true;
 }
 
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
         window->imshow("camera", &frame);
+        if(sayHello) {
+            window->popup("Hello World", "Hello to OpenCV GUI Sample", POPUP_ALERT);
+            sayHello= false;
+        }
     }
 }
 

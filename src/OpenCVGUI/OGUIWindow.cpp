@@ -280,8 +280,10 @@ void OGUIWindow::draw()
 
     nvgEndFrame((NVGcontext*)vg);
 
-    // 3D draw
-    mainLayout->draw3d(0,0,width, height);
+    if(_maximizedArea==NULL && _popup_type == NO_POPUP) {
+        // 3D draw
+        mainLayout->draw3d(0, 0, width, height);
+    }
 
     // Swap buffers
     glfwSwapBuffers((GLFWwindow*)glfw_window);
