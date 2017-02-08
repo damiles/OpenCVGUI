@@ -73,7 +73,8 @@ void OGUILayout::draw(int x, int y, int width, int height)
             ay = y + y0 + 1;
 
 
-            if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2) {
+            if (window->mouse_y < ay + 2 && window->mouse_y > ay - 2
+                && window->mouse_x < ax+aw && window->mouse_x > ax) {
                 window->setCursor(VRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
                     id_area_pressed= i-1;
@@ -105,7 +106,8 @@ void OGUILayout::draw(int x, int y, int width, int height)
             ax = x + x0 + 1;
             ay = y;
 
-            if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2) {
+            if (window->mouse_x < ax + 2 && window->mouse_x > ax - 2 &&
+                window->mouse_y < ay+ah && window->mouse_y > ay) {
                 window->setCursor(HRESIZE_CURSOR);
                 if (window->mouse_state == GLFW_PRESS){
                     is_pressed= true;
