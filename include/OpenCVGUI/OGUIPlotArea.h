@@ -34,6 +34,7 @@ private:
     bool data_lock, is_drawing;
     std::vector<std::string> _labels;
     float _x_step;
+    int _count_delay;
 };
 
 } /* End of namespace OpenCVGUI */

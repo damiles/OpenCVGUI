@@ -17,12 +17,15 @@ class OGUIArea {
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
+    void drawTitle();
     bool isMouseIn();
     int x, y, width, height;
     int r,g,b;
     std::string title;
     int type=0; // 0 2d type, 1 3d type
     bool isMaximized;
+    bool _show_title_bar= true;
+
  public:
 
     OGUIWindow *window;
@@ -31,6 +34,9 @@ class OGUIArea {
      * @element-type OGUILayout
      */
     OGUILayout *layout;
+
+private:
+    int _count_delay;
 };
 
 } /* End of namespace OpenCVGUI */

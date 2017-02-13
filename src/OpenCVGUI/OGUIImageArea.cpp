@@ -73,22 +73,11 @@ namespace OpenCVGUI {
             nvgFill(vg);
         }
 
+        drawTitle();
+
         if(isMouseIn() || _show_info) {
             int mouse_x_img= (this->window->mouse_x - image_x) * (1.0/image_scale);
             int mouse_y_img= (this->window->mouse_y - image_y) * (1.0/image_scale);
-
-            nvgBeginPath(vg);
-            nvgRect(vg, x, y, width, 22);
-            nvgFillColor(vg, nvgRGBA(0, 0, 0, 100));
-            nvgFill(vg);
-
-            // Draw text
-            nvgFontSize(vg, 16.0f);
-            nvgFontFace(vg, "sans");
-            float tw = nvgTextBounds(vg, 0, 0, title.c_str(), NULL, NULL);
-            nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
 
             // Draw X,Y mouse position
             if(mouse_x_img >= 0 && mouse_x_img < image_width &&
@@ -144,22 +133,6 @@ namespace OpenCVGUI {
 
             }
 
-            if(isMaximized){
-                if(drawBasicButton(vg, this->window, "\uF066", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
-                    isMaximized= false;
-                    this->window->maximizeArea(NULL);
-                    _count_delay=0;
-                }
-            }else{
-                if(drawBasicButton(vg, this->window, "\uF065", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
-                    this->window->maximizeArea(this);
-                    isMaximized= true;
-                    _count_delay=0;
-                }
-            }
-            _count_delay++;
-
-
             if(drawBasicButton(vg, this->window, "\uF05a", x+width-60, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16)){
                 _show_info=true;
             }
@@ -192,6 +165,7 @@ namespace OpenCVGUI {
                 last_mouse_y= -1;
             }
         }// End mouse in
+
 
         if(_show_info){
             float cornerRadius = 3.0f;
