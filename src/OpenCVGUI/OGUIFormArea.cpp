@@ -26,10 +26,12 @@ namespace OpenCVGUI {
             widget->draw(xw,yw, width-20);
             yw+= widget->height+5;
         }
+        drawTitle();
     }
 
     OGUIFormArea::OGUIFormArea(OGUIWindow* window): OGUIArea(window)
     {
+        _show_title_bar= false;
     }
 
 } /* End of namespace OpenCVGUI */

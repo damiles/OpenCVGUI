@@ -1,6 +1,7 @@
 #include "OGUIPlotArea.h"
 #include "OGUIWindow.h"
 #include "nanovg.h"
+#include "OGUIUtils.h"
 
 namespace OpenCVGUI {
 
@@ -24,20 +25,8 @@ namespace OpenCVGUI {
             is_drawing= false;
         }
 
-        if(isMouseIn()) {
-            nvgBeginPath(vg);
-            nvgRect(vg, x, y, width, 22);
-            nvgFillColor(vg, nvgRGBA(0, 0, 0, 100));
-            nvgFill(vg);
+        drawTitle();
 
-            // Draw text
-            nvgFontSize(vg, 16.0f);
-            nvgFontFace(vg, "sans");
-            float tw = nvgTextBounds(vg, 0, 0, title.c_str(), NULL, NULL);
-            nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
-        }
         nvgResetScissor(vg);
     }
 
