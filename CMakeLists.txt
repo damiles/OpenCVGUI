@@ -127,6 +127,7 @@ target_include_directories(opencvgui PUBLIC
 #target_include_directories(opencvgui PRIVATE
 #                           "${OGUI_SRC_LIB}")
 
+# TARGET_LINK_LIBRARIES(opencvgui glfw nanovg)
 TARGET_LINK_LIBRARIES(opencvgui glfw)
 
 # Compile a sample project
@@ -141,13 +142,13 @@ if(UNIX)
 endif()
 
 ADD_EXECUTABLE(example src/example.cpp )
-TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
 ADD_EXECUTABLE(example1 src/example1.cpp )
-TARGET_LINK_LIBRARIES(example1 ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+TARGET_LINK_LIBRARIES(example1 ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
 ADD_EXECUTABLE(basic_sample src/basic_sample.cpp )
-TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui glfw ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
 # INSTALLATION
 install(TARGETS opencvgui
