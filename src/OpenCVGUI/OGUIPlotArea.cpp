@@ -56,9 +56,9 @@ namespace OpenCVGUI {
     }
 
     void OGUIPlotArea::replot(void *d, std::vector<string> labels, float xstep) {
-        while(is_drawing){
-//            cout << "wait" << endl;
-        }
+//        while(is_drawing){
+////            cout << "wait" << endl;
+//        }
         data_lock= true;
         ((Mat*)d)->copyTo(data);
         //data= data.reshape(0,1);
@@ -169,11 +169,11 @@ namespace OpenCVGUI {
             nvgFontSize(vg, 16.0f);
             nvgFontFace(vg, "sans");
             nvgTextAlign(vg, NVG_ALIGN_LEFT);
-            stringstream ss_value;
-            ss_value << _labels.at(p);
+//            stringstream ss_value;
+//            ss_value << _labels.at(p);
             // Draw text
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, dot_x + 10, dot_y+3, ss_value.str().c_str(), NULL);
+            nvgText(vg, dot_x + 10, dot_y+3, _labels.at(p).c_str(), NULL);
         }
 
         // X axis
