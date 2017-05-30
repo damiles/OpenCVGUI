@@ -28,6 +28,8 @@ class OGUIPlotArea : public OGUIArea {
             255,204,51,
             99,176,99
     };
+
+    void setYScale(bool auto_scale, double min_value, double max_value);
 private:
     void drawPlot();
     Mat data;
@@ -35,6 +37,8 @@ private:
     std::vector<std::string> _labels;
     float _x_step;
     int _count_delay;
+    double _max_value, _min_value;
+    bool _auto_scale;
 };
 
 } /* End of namespace OpenCVGUI */

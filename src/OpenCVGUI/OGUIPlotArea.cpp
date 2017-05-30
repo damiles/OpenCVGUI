@@ -67,18 +67,29 @@ namespace OpenCVGUI {
         data_lock= false;
     }
 
+    void OGUIPlotArea::setYScale(bool auto_scale, double min_value, double max_value){
+        _auto_scale= auto_scale;
+        if(!auto_scale){
+            _min_value= min_value;
+            _max_value= max_value;
+        }
+    }
+
     void OGUIPlotArea::drawPlot() {
         float margin= 120;
         float start_x= x+margin/2.0f;
         float x_length= data.cols;
         float dx= (width-margin)/x_length;
 
-        double max_value, min_value;
-        minMaxLoc(data, &min_value, &max_value, NULL, NULL);
+        float m=_max_value;
+        if(_auto_scale) {
+            minMaxLoc(data, &_min_value, &_max_value, NULL, NULL);
+            //float m= (_max_value-_min_value);
+            m= (_max_value);
+        }
         float start_y= y+height-margin/2.0f;
         float dy= (height-margin);
-        //float m= (max_value-min_value);
-        float m= (max_value);
+
 
         NVGcontext* vg= (NVGcontext*)(window->vg);
 

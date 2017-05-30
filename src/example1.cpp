@@ -40,6 +40,14 @@ void cv_process() {
     while(app_is_running) {
         cap >> frame;
         window->imshow("camera", &frame);
+
+        Mat g_data, data;
+        cvtColor(frame, g_data, CV_BGR2GRAY);
+        g_data.convertTo(data, CV_32F, 1/255.0);
+        resize(data, data, Size(1000,10));
+        window->plot2D("2D plot", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"});
+
+
         if(sayHello) {
             window->popup("Hello World", "Hello to OpenCV GUI Sample", POPUP_ALERT);
             sayHello= false;
