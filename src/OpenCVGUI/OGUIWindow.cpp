@@ -37,8 +37,8 @@ namespace OpenCVGUI {
 
     #ifndef _WIN32 // don't require this on win32, and works with more cards
         #ifdef OGUI_GL3
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         #else

@@ -62,13 +62,13 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUICVWindow::plot2D(string area_title, void *data, std::vector<string> labels, float xstep) {
+    void OGUICVWindow::plot2D(string area_title, void *data, std::vector<string> labels, float xstep, int plot_type) {
         /// Look for area
         OGUIArea* area=findAreaByTitle(area_title);
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data, labels, xstep);
+            OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type);
             layout.at(areas_showing.size()%2)->addArea(ia);
             areas_showing.push_back((OGUIArea*)ia);
         }else{

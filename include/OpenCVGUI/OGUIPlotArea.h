@@ -8,13 +8,18 @@ using namespace cv;
 
 namespace OpenCVGUI {
 
+    enum PlotTypes{
+        PLOT_LINE,
+        PLOT_SCATTER
+    };
+
 class OGUIPlotArea : public OGUIArea {
 
  public:
 
     virtual void draw(int x, int y, int width, int height);
 
-    OGUIPlotArea(OGUIWindow* window, std::string title, void* data, std::vector<std::string> labels, float xstep=1.f);
+    OGUIPlotArea(OGUIWindow* window, std::string title, void* data, std::vector<std::string> labels, float xstep=1.f, int plot_type=0);
     void replot(void *data, std::vector<std::string> labels, float xstep=1.f);
     std::vector<int> color_scheme={
             0,160,192,
@@ -31,6 +36,8 @@ class OGUIPlotArea : public OGUIArea {
 
     void setYScale(bool auto_scale, double min_value, double max_value);
 private:
+    void drawLinePlot();
+    void drawScatterPlot();
     void drawPlot();
     Mat data;
     bool data_lock, is_drawing;
@@ -39,6 +46,7 @@ private:
     int _count_delay;
     double _max_value, _min_value;
     bool _auto_scale;
+    int _plot_type;
 };
 
 } /* End of namespace OpenCVGUI */

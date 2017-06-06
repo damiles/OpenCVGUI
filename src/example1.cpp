@@ -25,6 +25,7 @@ Mat src, gray, output;
 OGUICVWindow *window;
 VideoCapture cap;
 Mat frame;
+
 bool sayHello=false;
 void on_change_slider_threshold(double value){
     threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
@@ -37,6 +38,17 @@ void hello_btn_click(){
 }
 
 void cv_process() {
+
+    Mat scatter_data(4,20,CV_32FC2);
+    for(int s=0; s<4; s++){
+        float x_mean= (rand()%100)/100.0f;
+        float y_mean= (rand()%100)/100.0f;
+        for(int p=0; p<20; p++){
+            scatter_data.at<float>(s,p, 0)= x_mean + (rand()%100)/1000.0f;
+            scatter_data.at<float>(s,p, 1)= y_mean + (rand()%100)/1000.0f;
+        }
+    }
+
     while(app_is_running) {
         cap >> frame;
         window->imshow("camera", &frame);
@@ -44,9 +56,11 @@ void cv_process() {
         Mat g_data, data;
         cvtColor(frame, g_data, CV_BGR2GRAY);
         g_data.convertTo(data, CV_32F, 1/255.0);
-        resize(data, data, Size(1000,10));
-        window->plot2D("2D plot", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"});
+        resize(data, data, Size(50,10));
+        window->plot2D("2D plot", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"}, 1, OpenCVGUI::PLOT_LINE);
 
+        // 20 data 4 series (each channel is x and y)
+        window->plot2D("2D plot Scatter", &scatter_data, {"g1","g2","g3","g4"}, 1, OpenCVGUI::PLOT_SCATTER);
 
         if(sayHello) {
             window->popup("Hello World", "Hello to OpenCV GUI Sample", POPUP_ALERT);
