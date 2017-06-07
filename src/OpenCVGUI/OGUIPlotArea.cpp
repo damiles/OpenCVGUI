@@ -252,16 +252,27 @@ namespace OpenCVGUI {
     void OGUIPlotArea::drawScatterPlot(){
         float margin= 120;
         float start_x= x+margin/2.0f;
-        float x_length= data.cols;
-        float dx= (width-margin)/x_length;
-
-        float m=_max_value;
-        if(_auto_scale) {
-            minMaxLoc(data, &_min_value, &_max_value, NULL, NULL);
-            //float m= (_max_value-_min_value);
-            m= (_max_value);
-        }
         float start_y= y+height-margin/2.0f;
+
+        float x_length= data.cols;
+        float dx= (width-margin);
+
+        // Extract X and Y separatly
+        vector<Mat> plot_channels;
+        split(data, plot_channels);
+        double min_x=0.0;
+        double max_x=1.0;
+        double mx=0;
+        double min_y=0.0;
+        double max_y=1.0;
+        double my=0;
+
+        minMaxLoc(plot_channels[0], &min_x, &max_x, NULL, NULL);
+        mx= (max_x-min_x);
+
+        minMaxLoc(plot_channels[1], &min_y, &max_y, NULL, NULL);
+        my= (max_y-min_y);
+
         float dy= (height-margin);
 
 
@@ -275,8 +286,8 @@ namespace OpenCVGUI {
             // Dots
             for (int i = 0; i < data.cols; i++) {
                 Vec2f values= data.at<Vec2f>(p,i);
-                float dot_x=start_x + (values[0]) * dx;
-                float dot_y=start_y - dy * ((values[1]) / m);
+                float dot_x=start_x + dx * ((values[0]-min_x) / mx);
+                float dot_y=start_y - dy * ((values[1]-min_y) / my);
 
                 nvgBeginPath(vg);
                 nvgCircle(vg, dot_x, dot_y, 3.0f);
@@ -298,8 +309,9 @@ namespace OpenCVGUI {
             NVGcolor color= nvgRGBA(color_scheme.at(c), color_scheme.at(c+1), color_scheme.at(c+2), 255);
             // Dots
             for (int i = 0; i < data.cols; i++) {
-                float dot_x=start_x + i * dx;
-                float dot_y=start_y - dy * ((data.at<float>(p,i)) / m);
+                Vec2f values= data.at<Vec2f>(p,i);
+                float dot_x=start_x + dx * ((values[0]-min_x) / mx);
+                float dot_y=start_y - dy * ((values[1]-min_y) / my);
                 // Draw hover label
                 if(isMouseIn()) {
                     if( dot_y-4<= window->mouse_y && window->mouse_y <= dot_y+4 &&
@@ -311,7 +323,7 @@ namespace OpenCVGUI {
                         nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
                         stringstream ss_value;
                         ss_value.precision(4);
-                        ss_value << _labels.at(p) <<": "<< (i*_x_step) << ", " <<data.at<float>(p,i);
+                        ss_value << _labels.at(p) <<": "<< values[0] << ", " << values[1];
                         float tw = nvgTextBounds(vg, 0, 0, ss_value.str().c_str(), NULL, NULL);
 
                         nvgBeginPath(vg);
@@ -347,8 +359,6 @@ namespace OpenCVGUI {
             nvgFontSize(vg, 16.0f);
             nvgFontFace(vg, "sans");
             nvgTextAlign(vg, NVG_ALIGN_LEFT);
-//            stringstream ss_value;
-//            ss_value << _labels.at(p);
             // Draw text
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
             nvgText(vg, dot_x + 10, dot_y+3, _labels.at(p).c_str(), NULL);
@@ -363,26 +373,23 @@ namespace OpenCVGUI {
         nvgStroke(vg);
 
         // Lines x axis coord
-        for(int i=1; i<data.cols; i++){
-            int s=5;
-            if((i%s)==0) {
-                nvgBeginPath(vg);
-                nvgMoveTo(vg, start_x + i * dx, start_y);
-                nvgLineTo(vg, start_x + i * dx, start_y + 5);
-                nvgStrokeColor(vg, nvgRGBA(255, 255, 255, 255));
-                nvgStrokeWidth(vg, 1.0f);
-                nvgStroke(vg);
+        for(int i=1; i<=10; i++){
+            nvgBeginPath(vg);
+            nvgMoveTo(vg, start_x + (i/10.0f) * dx, start_y);
+            nvgLineTo(vg, start_x + (i/10.0f) * dx, start_y + 5);
+            nvgStrokeColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgStrokeWidth(vg, 1.0f);
+            nvgStroke(vg);
 
-                // Text label
-                stringstream ss;
-                ss << i * _x_step;
-                nvgFontSize(vg, 12.0f);
-                nvgFontFace(vg, "sans");
-                float tw = nvgTextBounds(vg, 0, 0, ss.str().c_str(), NULL, NULL);
-                nvgTextAlign(vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
-                nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-                nvgText(vg, start_x + i * dx, start_y + 10, ss.str().c_str(), NULL);
-            }
+            // Text label
+            stringstream ss;
+            ss << (min_x + i*mx/10);
+            nvgFontSize(vg, 12.0f);
+            nvgFontFace(vg, "sans");
+            float tw = nvgTextBounds(vg, 0, 0, ss.str().c_str(), NULL, NULL);
+            nvgTextAlign(vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
+            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgText(vg, start_x + (i/10.0f) * dx, start_y + 10, ss.str().c_str(), NULL);
         }
 
         // Y axis
@@ -405,7 +412,7 @@ namespace OpenCVGUI {
             // Text label
             stringstream ss;
             ss.precision(2);
-            ss << (i/10.0f)*m;
+            ss << (min_y + i*my/10);
             nvgFontSize(vg, 12.0f);
             nvgFontFace(vg, "sans");
             float tw = nvgTextBounds(vg, 0, 0, ss.str().c_str(), NULL, NULL);
@@ -413,6 +420,7 @@ namespace OpenCVGUI {
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
             nvgText(vg, start_x-10, start_y-(i/10.0f)*dy, ss.str().c_str(), NULL);
         }
+
     }
 
     void OGUIPlotArea::drawPlot() {

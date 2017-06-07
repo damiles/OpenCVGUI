@@ -41,11 +41,11 @@ void cv_process() {
 
     Mat scatter_data(4,20,CV_32FC2);
     for(int s=0; s<4; s++){
-        float x_mean= (rand()%100)/100.0f;
-        float y_mean= (rand()%100)/100.0f;
+        float x_mean= 0.5-(rand()%100)/100.0f;
+        float y_mean= 0.5-(rand()%100)/100.0f;
         for(int p=0; p<20; p++){
-            scatter_data.at<float>(s,p, 0)= x_mean + (rand()%100)/1000.0f;
-            scatter_data.at<float>(s,p, 1)= y_mean + (rand()%100)/1000.0f;
+            scatter_data.at<Vec2f>(s,p)[0]= x_mean + (50-(rand()%100))/1000.0f;
+            scatter_data.at<Vec2f>(s,p)[1]= y_mean + (50-(rand()%100))/1000.0f;
         }
     }
 
