@@ -41,6 +41,8 @@ private:
     void drawLinePlot();
     void drawSeriesPlot();
     void drawScatterPlot();
+    void drawBarPlot();
+    void drawLegends();
     void drawPlot();
     Mat data;
     bool data_lock, is_drawing;

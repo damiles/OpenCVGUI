@@ -101,6 +101,9 @@ void cv_process() {
 
         window->plot2D("2D plot Lines", &lines_data, {"star","circle"}, 1, OpenCVGUI::PLOT_LINE);
 
+        resize(data, data, Size(20,3));
+        window->plot2D("2D plot Bars", &data, {"g1","g2","g3"}, 1, OpenCVGUI::PLOT_BARS);
+
         if(sayHello) {
             window->popup("2D Plot Demo", "In this sample you can check different 2d plot types", POPUP_ALERT);
             sayHello= false;

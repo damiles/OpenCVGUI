@@ -94,9 +94,19 @@ OGUIArea::OGUIArea(OGUIWindow* window)
     this->layout= NULL;
     this->window= window;
     isMaximized= false;
+
     r= 28;
     g= 30;
     b= 34;
+    /*
+    r= 76;
+    g= 82;
+    b= 89;
+
+    r= 56;
+    g= 62;
+    b= 69;
+    */
     /*r= rand()%255;
     g= rand()%255;
     b= rand()%255;*/
