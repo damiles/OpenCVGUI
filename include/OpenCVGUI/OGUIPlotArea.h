@@ -9,8 +9,10 @@ using namespace cv;
 namespace OpenCVGUI {
 
     enum PlotTypes{
+        PLOT_SERIES,
         PLOT_LINE,
-        PLOT_SCATTER
+        PLOT_SCATTER,
+        PLOT_BARS
     };
 
 class OGUIPlotArea : public OGUIArea {
@@ -37,6 +39,7 @@ class OGUIPlotArea : public OGUIArea {
     void setYScale(bool auto_scale, double min_value, double max_value);
 private:
     void drawLinePlot();
+    void drawSeriesPlot();
     void drawScatterPlot();
     void drawPlot();
     Mat data;

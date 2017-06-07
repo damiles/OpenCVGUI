@@ -147,6 +147,10 @@ TARGET_LINK_LIBRARIES(example ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBR
 ADD_EXECUTABLE(example1 src/example1.cpp )
 TARGET_LINK_LIBRARIES(example1 ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
+ADD_EXECUTABLE(example_2dplot src/example_2dplot.cpp )
+TARGET_LINK_LIBRARIES(example_2dplot ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+
+
 ADD_EXECUTABLE(basic_sample src/basic_sample.cpp )
 TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 

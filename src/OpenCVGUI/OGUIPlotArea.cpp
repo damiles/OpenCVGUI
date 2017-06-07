@@ -76,7 +76,7 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUIPlotArea::drawLinePlot(){
+    void OGUIPlotArea::drawSeriesPlot(){
         float margin= 120;
         float start_x= x+margin/2.0f;
         float x_length= data.cols;
@@ -247,6 +247,194 @@ namespace OpenCVGUI {
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
             nvgText(vg, start_x-10, start_y-(i/10.0f)*dy, ss.str().c_str(), NULL);
         }
+    }
+
+    void OGUIPlotArea::drawLinePlot(){
+        float margin= 120;
+        float start_x= x+margin/2.0f;
+        float start_y= y+height-margin/2.0f;
+
+        float x_length= data.cols;
+        float dx= (width-margin);
+
+        // Extract X and Y separatly
+        vector<Mat> plot_channels;
+        split(data, plot_channels);
+        double min_x=0.0;
+        double max_x=1.0;
+        double mx=0;
+        double min_y=0.0;
+        double max_y=1.0;
+        double my=0;
+
+        minMaxLoc(plot_channels[0], &min_x, &max_x, NULL, NULL);
+        mx= (max_x-min_x);
+
+        minMaxLoc(plot_channels[1], &min_y, &max_y, NULL, NULL);
+        my= (max_y-min_y);
+
+        float dy= (height-margin);
+
+
+        NVGcontext* vg= (NVGcontext*)(window->vg);
+
+        // Plot each graph
+        for(int p=0; p<data.rows; p++) {
+            int c=p*3;
+            NVGcolor color= nvgRGBA(color_scheme.at(c), color_scheme.at(c+1), color_scheme.at(c+2), 255);
+            nvgBeginPath(vg);
+            for (int i = 0; i < data.cols; i++) {
+                Vec2f values= data.at<Vec2f>(p,i);
+                float p_x=start_x + dx * ((values[0]-min_x) / mx);
+                float p_y=start_y - dy * ((values[1]-min_y) / my);
+                if(i==0)
+                    nvgMoveTo(vg, p_x, p_y);
+                else
+                    nvgLineTo(vg, p_x, p_y);
+            }
+            nvgStrokeColor(vg, color);
+            nvgStrokeWidth(vg, 2.0f);
+            nvgStroke(vg);
+
+
+            // Dots
+            for (int i = 0; i < data.cols; i++) {
+                Vec2f values= data.at<Vec2f>(p,i);
+                float dot_x=start_x + dx * ((values[0]-min_x) / mx);
+                float dot_y=start_y - dy * ((values[1]-min_y) / my);
+
+                nvgBeginPath(vg);
+                nvgCircle(vg, dot_x, dot_y, 3.0f);
+                nvgFillColor(vg, nvgRGBA(220, 220, 220, 255));
+                nvgFill(vg);
+
+                nvgBeginPath(vg);
+                nvgCircle(vg, dot_x, dot_y, 2.0f);
+                nvgFillColor(vg, color);
+                nvgFill(vg);
+
+            }
+        }
+
+        nvgResetScissor(vg);
+        // Plot hover labels
+        for(int p=0; p<data.rows; p++) {
+            int c=p*3;
+            NVGcolor color= nvgRGBA(color_scheme.at(c), color_scheme.at(c+1), color_scheme.at(c+2), 255);
+            // Dots
+            for (int i = 0; i < data.cols; i++) {
+                Vec2f values= data.at<Vec2f>(p,i);
+                float dot_x=start_x + dx * ((values[0]-min_x) / mx);
+                float dot_y=start_y - dy * ((values[1]-min_y) / my);
+                // Draw hover label
+                if(isMouseIn()) {
+                    if( dot_y-4<= window->mouse_y && window->mouse_y <= dot_y+4 &&
+                        dot_x-4<= window->mouse_x && window->mouse_x <= dot_x+4 ){
+
+                        // Calculate text width for box
+                        nvgFontSize(vg, 16.0f);
+                        nvgFontFace(vg, "sans");
+                        nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+                        stringstream ss_value;
+                        ss_value.precision(4);
+                        ss_value << _labels.at(p) <<": "<< values[0] << ", " << values[1];
+                        float tw = nvgTextBounds(vg, 0, 0, ss_value.str().c_str(), NULL, NULL);
+
+                        nvgBeginPath(vg);
+                        nvgRect(vg, dot_x-tw-20, dot_y-32, tw+20, 32);
+                        nvgFillColor(vg, nvgRGBA(0, 0, 0, 200));
+                        nvgFill(vg);
+
+                        // Draw text
+                        nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+                        nvgText(vg, dot_x - tw - 10, dot_y - 16, ss_value.str().c_str(), NULL);
+                    }
+                }
+            }
+        }
+        nvgScissor(vg, x, y, width, height);
+
+        ///Plot labels box
+        nvgBeginPath(vg);
+        nvgRect(vg, x + width - 100-20, y + 40, 120, 15 + data.rows*20);
+        nvgFillColor(vg, nvgRGBA(0, 0, 0, 100));
+        nvgFill(vg);
+        for(int p=0; p<data.rows; p++) {
+            int c = p * 3;
+            NVGcolor color = nvgRGBA(color_scheme.at(c), color_scheme.at(c + 1), color_scheme.at(c + 2), 255);
+            float dot_x=x + width - 100;
+            float dot_y=y + 60 + p*20;
+            nvgBeginPath(vg);
+            nvgCircle(vg, dot_x, dot_y, 4.0f);
+            nvgFillColor(vg, color);
+            nvgFill(vg);
+
+            // Calculate text width for box
+            nvgFontSize(vg, 16.0f);
+            nvgFontFace(vg, "sans");
+            nvgTextAlign(vg, NVG_ALIGN_LEFT);
+            // Draw text
+            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgText(vg, dot_x + 10, dot_y+3, _labels.at(p).c_str(), NULL);
+        }
+
+        // X axis
+        nvgBeginPath(vg);
+        nvgMoveTo(vg, start_x, start_y);
+        nvgLineTo(vg, start_x+width-margin, start_y);
+        nvgStrokeColor(vg, nvgRGBA(255,255,255,255));
+        nvgStrokeWidth(vg, 1.0f);
+        nvgStroke(vg);
+
+        // Lines x axis coord
+        for(int i=1; i<=10; i++){
+            nvgBeginPath(vg);
+            nvgMoveTo(vg, start_x + (i/10.0f) * dx, start_y);
+            nvgLineTo(vg, start_x + (i/10.0f) * dx, start_y + 5);
+            nvgStrokeColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgStrokeWidth(vg, 1.0f);
+            nvgStroke(vg);
+
+            // Text label
+            stringstream ss;
+            ss << (min_x + i*mx/10);
+            nvgFontSize(vg, 12.0f);
+            nvgFontFace(vg, "sans");
+            float tw = nvgTextBounds(vg, 0, 0, ss.str().c_str(), NULL, NULL);
+            nvgTextAlign(vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
+            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgText(vg, start_x + (i/10.0f) * dx, start_y + 10, ss.str().c_str(), NULL);
+        }
+
+        // Y axis
+        nvgBeginPath(vg);
+        nvgMoveTo(vg, start_x, start_y);
+        nvgLineTo(vg, start_x, start_y-dy);
+        nvgStrokeColor(vg, nvgRGBA(255,255,255,255));
+        nvgStrokeWidth(vg, 1.0f);
+        nvgStroke(vg);
+
+        // Lines y axis coord
+        for(int i=1; i<=10; i++){
+            nvgBeginPath(vg);
+            nvgMoveTo(vg, start_x, start_y-(i/10.0f)*dy);
+            nvgLineTo(vg, start_x-5, start_y-(i/10.0f)*dy);
+            nvgStrokeColor(vg, nvgRGBA(255,255,255,255));
+            nvgStrokeWidth(vg, 1.0f);
+            nvgStroke(vg);
+
+            // Text label
+            stringstream ss;
+            ss.precision(2);
+            ss << (min_y + i*my/10);
+            nvgFontSize(vg, 12.0f);
+            nvgFontFace(vg, "sans");
+            float tw = nvgTextBounds(vg, 0, 0, ss.str().c_str(), NULL, NULL);
+            nvgTextAlign(vg, NVG_ALIGN_RIGHT | NVG_ALIGN_MIDDLE);
+            nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
+            nvgText(vg, start_x-10, start_y-(i/10.0f)*dy, ss.str().c_str(), NULL);
+        }
+
     }
 
     void OGUIPlotArea::drawScatterPlot(){
@@ -426,6 +614,9 @@ namespace OpenCVGUI {
     void OGUIPlotArea::drawPlot() {
 
         switch (_plot_type){
+            case PLOT_SERIES:
+                drawSeriesPlot();
+                break;
             case PLOT_LINE:
                 drawLinePlot();
                 break;
