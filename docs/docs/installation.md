@@ -10,9 +10,11 @@ next: hello-world.html
 * xorg-dev 
 
 # Build
-1. git submodule update --init --recursive
-2. mkdir build
-3. cd build
-4. cmake ..
-5. make
-6. sudo make install
+```bash
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```

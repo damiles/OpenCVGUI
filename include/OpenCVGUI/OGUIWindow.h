@@ -41,8 +41,6 @@ class OGUIWindow {
 
  public:
 
-    OGUI3D* test;
-
     OGUIWindow(int width,int height,const char* title, int layoutOrientation=0, bool fullScreen= false);
     ~OGUIWindow();
     void draw();

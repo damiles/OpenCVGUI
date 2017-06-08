@@ -23,3 +23,16 @@
   {% endfor %}
 
 </div>
+<script>
+  $( document ).ready(function() {
+    var url      = window.location.href;
+    var res = url.split("#");
+    if(res.length==2){
+      $(".sidebar_menu_item[href*='"+res[1]+"']").addClass("active");
+    }
+    $(".sidebar_menu_item").click(function(){
+      $(".sidebar_menu_item").removeClass("active");
+      $(this).addClass("active");
+    });
+  });
+</script>

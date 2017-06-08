@@ -71,4 +71,4 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
-opencvgui_version: 0.0.5
+opencvgui_version: 0.1

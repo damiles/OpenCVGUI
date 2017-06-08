@@ -22,9 +22,9 @@ module Jekyll
       pageID = @context.registers[:page]["id"]
       itemID = item["id"]
       href = item["href"] || "/OpenCVGUI/#{group}/#{itemID}.html"
-      classes = []
+      classes = ["sidebar_menu_item"]
       if pageID == itemID
-        classes.push("active")
+         classes.push("active")
       end
       if item["href"] && (forceInternal == nil)
         classes.push("external")

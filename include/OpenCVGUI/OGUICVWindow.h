@@ -20,12 +20,16 @@ namespace OpenCVGUI {
 class OGUICVWindow : public OGUIWindow{
 public:
     /**
-     * Create new Computer Vision Template Window with lateral form and stacked areas
+     * \brief Create new Computer Vision Template Window with lateral form and stacked areas
+     *
+     * This class allow create easy computer vision purposes windows where each new area
+     * created is stacked. There are similar functions than OpenCV to show images (imshow) and
+     * more missing areas for plotting and forms.
+     *
      * @param {const char*} title of window to create
      * @param {int} width of window, 1024 by default
      * @param {int} height of window, 768 by default
      * @return {OGUICVWindow*} OGUICVWindow created
-     *
      */
     OGUICVWindow(int width,int height,const char* title, int layoutOrientation=0);
 

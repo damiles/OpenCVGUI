@@ -68,9 +68,9 @@ Create new Computer Vision Template Window with lateral form and stacked areas
 
 
 
-Start main loop of UI and process as new thread 
+Start main loop of UI and processing stuff as new thread. 
 #### Parameters
-* `process_function` is the main thread to compute
+* `process_function` function for processing computer vision thread.
 
 ### init
 #### `public int init()` {#namespace_open_c_v_g_u_i_1a1eb96349d760c972cdaaa95c8f772d6d}
@@ -404,12 +404,14 @@ class OpenCVGUI::OGUI3D
 `public std::string title` | 
 `public int type` | 
 `public bool isMaximized` | 
+`public bool _show_title_bar` | 
 `public `[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window` | 
 `public `[`OGUILayout`](#class_open_c_v_g_u_i_1_1_o_g_u_i_layout)` * layout` | 
 `public  OGUIArea(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window)` | 
 `public virtual void draw(int x,int y,int width,int height)` | 
 `public virtual void draw3d(int x,int y,int width,int height)` | 
 `public virtual void updateScrollStatus(double xoffset,double yoffset)` | 
+`public void drawTitle()` | 
 `public bool isMouseIn()` | 
 
 ## Members
@@ -484,6 +486,13 @@ class OpenCVGUI::OGUI3D
 
 
 
+### _show_title_bar
+##### `public bool _show_title_bar` {#class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a1195fe440157529495c195792ad1aa8f}
+
+
+
+
+
 ### window
 ##### `public `[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window` {#class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ab2e8a8647a11e1f85e98d5ba1f294614}
 
@@ -521,6 +530,13 @@ class OpenCVGUI::OGUI3D
 
 ### updateScrollStatus
 ##### `public virtual void updateScrollStatus(double xoffset,double yoffset)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ae42a4e9373771681b45fd5732749499c}
+
+
+
+
+
+### drawTitle
+##### `public void drawTitle()` {#class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a15a0e9acca5fce3e479f64b507c4126f}
 
 
 
@@ -632,28 +648,28 @@ Comptuer Vision template window
 
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
-`public vector< `[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * > areas_showing` | 
-`public vector< `[`OGUILayout`](#class_open_c_v_g_u_i_1_1_o_g_u_i_layout)` * > layout` | 
+`public std::vector< `[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * > areas_showing` | 
+`public std::vector< `[`OGUILayout`](#class_open_c_v_g_u_i_1_1_o_g_u_i_layout)` * > layout` | 
 `public `[`OGUIFormArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area)` * formArea` | 
-`public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)` | 
+`public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)` | Create new Computer Vision Template Window with lateral form and stacked areas.
 `public void imshow(string area_title,void * img)` | 
 `public bool setImShowMouseClickCallBack(string area_title,std::function< void(int, int)> func)` | 
 `public `[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * findAreaByTitle(string title)` | 
 `public void addFormWidget(`[`OGUIWidget`](#class_open_c_v_g_u_i_1_1_o_g_u_i_widget)` * widget)` | 
 `public void plot3D(string area_title,void * data)` | 
-`public void plot2D(string area_title,void * data,std::vector< string > labels,float xstep)` | 
+`public void plot2D(string area_title,void * data,std::vector< string > labels,float xstep,int plot_type)` | 
 
 ## Members
 
 ### areas_showing
-##### `public vector< `[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * > areas_showing` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a65ef037ff0a3ca68d24e1542123e0f22}
+##### `public std::vector< `[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * > areas_showing` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a5a1bdd606aa57c91a194c48c816f5d05}
 
 
 
 
 
 ### layout
-##### `public vector< `[`OGUILayout`](#class_open_c_v_g_u_i_1_1_o_g_u_i_layout)` * > layout` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a84981166a2d4a9f232636103ca0df3f4}
+##### `public std::vector< `[`OGUILayout`](#class_open_c_v_g_u_i_1_1_o_g_u_i_layout)` * > layout` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a8c9946ad2741d3de75b640dc2a89d679}
 
 
 
@@ -669,9 +685,11 @@ Comptuer Vision template window
 ### OGUICVWindow
 ##### `public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1aa6449466c9262d6a25c1c8b7410846dc}
 
+Create new Computer Vision Template Window with lateral form and stacked areas.
+
+This class allow create easy computer vision purposes windows where each new area created is stacked. There are similar functions than OpenCV to show images (imshow) and more missing areas for plotting and forms.
 
 
-Create new Computer Vision Template Window with lateral form and stacked areas 
 #### Parameters
 * `{const` char*} title of window to create 
 
@@ -750,7 +768,7 @@ Find an area by a specific title
 
 
 ### plot2D
-##### `public void plot2D(string area_title,void * data,std::vector< string > labels,float xstep)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1ab9a2394a1267a6dd86d71ef7e057e608}
+##### `public void plot2D(string area_title,void * data,std::vector< string > labels,float xstep,int plot_type)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a03beefda266cb54174d550ee6da14522}
 
 
 
@@ -862,7 +880,7 @@ Find an area by a specific title
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
 `public  OGUIFileBrowser(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window)` | 
-`public string open(string path,vector< string > filter)` | 
+`public string open(string path,std::vector< string > filter)` | 
 `public void draw()` | 
 
 ## Members
@@ -875,7 +893,7 @@ Find an area by a specific title
 
 
 ### open
-##### `public string open(string path,vector< string > filter)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1a6c39ff044dcba20ebd1de6bbc7a0dadc}
+##### `public string open(string path,std::vector< string > filter)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1aa8ef34765a2228238da466ce574b36ce}
 
 
 
@@ -1129,8 +1147,9 @@ class OpenCVGUI::OGUIPlotArea
 --------------------------------|---------------------------------------------
 `public std::vector< int > color_scheme` | 
 `public virtual void draw(int x,int y,int width,int height)` | 
-`public  OGUIPlotArea(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window,std::string title,void * data,std::vector< std::string > labels,float xstep)` | 
+`public  OGUIPlotArea(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window,std::string title,void * data,std::vector< std::string > labels,float xstep,int plot_type)` | 
 `public void replot(void * data,std::vector< std::string > labels,float xstep)` | 
+`public void setYScale(bool auto_scale,double min_value,double max_value)` | 
 
 ## Members
 
@@ -1149,7 +1168,7 @@ class OpenCVGUI::OGUIPlotArea
 
 
 ### OGUIPlotArea
-##### `public  OGUIPlotArea(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window,std::string title,void * data,std::vector< std::string > labels,float xstep)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1ad7b934dcf655b4c92ce6233f5e012ba0}
+##### `public  OGUIPlotArea(`[`OGUIWindow`](#class_open_c_v_g_u_i_1_1_o_g_u_i_window)` * window,std::string title,void * data,std::vector< std::string > labels,float xstep,int plot_type)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1ac30231d13ff4f3f18936aaa3f044fdf6}
 
 
 
@@ -1157,6 +1176,13 @@ class OpenCVGUI::OGUIPlotArea
 
 ### replot
 ##### `public void replot(void * data,std::vector< std::string > labels,float xstep)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1aaf65308f2013089527294acf1778f678}
+
+
+
+
+
+### setYScale
+##### `public void setYScale(bool auto_scale,double min_value,double max_value)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1a9fb36d85d851e28697587073aadde9c7}
 
 
 
@@ -1435,7 +1461,6 @@ class OpenCVGUI::OGUITitle
 
  Members                        | Descriptions                                
 --------------------------------|---------------------------------------------
-`public `[`OGUI3D`](#class_open_c_v_g_u_i_1_1_o_g_u_i3_d)` * test` | 
 `public void * glfw_window` | 
 `public void * vg` | 
 `public double mouse_x` | 
@@ -1462,19 +1487,12 @@ class OpenCVGUI::OGUITitle
 `public void showPerfGraph(bool show)` | 
 `public void setExternal2DDraw(std::function< void(void *context)> func)` | 
 `public int popup(string title,string text,int type)` | Popups.
-`public string openFileBrowser(string path,vector< string > filter)` | File browser.
+`public string openFileBrowser(string path,std::vector< string > filter)` | File browser.
 `public void close()` | 
 `public int getStatus()` | 
 `public void maximizeArea(`[`OGUIArea`](#class_open_c_v_g_u_i_1_1_o_g_u_i_area)` * area)` | 
 
 ## Members
-
-### test
-##### `public `[`OGUI3D`](#class_open_c_v_g_u_i_1_1_o_g_u_i3_d)` * test` {#class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ad111537e93536cb13f16eb4697b0dbb6}
-
-
-
-
 
 ### glfw_window
 ##### `public void * glfw_window` {#class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a56d181d083f35e7eae72dee17cd16d92}
@@ -1659,7 +1677,7 @@ Popups.
 
 
 ### openFileBrowser
-##### `public string openFileBrowser(string path,vector< string > filter)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a9ba4a23ed3fe358744f1d9876045eba9}
+##### `public string openFileBrowser(string path,std::vector< string > filter)` {#class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a9d5976dd1eb4642fd36d171cf70fe5bc}
 
 File browser.
 

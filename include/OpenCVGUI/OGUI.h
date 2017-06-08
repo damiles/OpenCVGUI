@@ -25,8 +25,8 @@ namespace OpenCVGUI {
     OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
 
     /**
-     * Start main loop of UI and process as new thread
-     * @param process_function is the main thread to compute
+     * Start main loop of UI and processing stuff as new thread.
+     * @param process_function function for processing computer vision thread.
      */
     void app_run(std::function<void()> process_function);
 

@@ -6,15 +6,48 @@
       title: Hello World
 - title: API
   items:
-    - id: api
+    - id: namespace_open_c_v_g_u_i
+      href: /OpenCVGUI/docs/api.html#namespace_open_c_v_g_u_i
       title: OpenCVGUI
-    - id: oguiwindow
-      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window
-      title: OGUIWindow
-    - id: oguicvwindow
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window
       href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window
       title: OGUICVWindow
-    - id: oguiarea
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_window
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window
+      title: OGUIWindow
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_area
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_area
       title: OGUIArea
-    - id: oguiformarea
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_form_area
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area
       title: OGUIFormArea
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_image_area
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_image_area
+      title: OGUIImageArea
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area
+      title: OGUIPlotArea
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser
+      title: OGUIFileBrowser
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_button
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_button
+      title: OGUIButton
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_check_box
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_check_box
+      title: OGUICheckBox
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons
+      title: OGUIRadioButtons
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_slider
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_slider
+      title: OGUISlider
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_text_input
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_text_input
+      title: OGUITextInput
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i_title
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_title
+      title: OGUITitle
+    - id: class_open_c_v_g_u_i_1_1_o_g_u_i3_d
+      href: /OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i3_d
+      title: OGUI3D

@@ -1,10 +1,10 @@
 {% if page.excerpt %}
 {% assign type = 'article' %}
-{% assign sectionTitle = 'React Blog' %}
+{% assign sectionTitle = 'OpenCGGUI Blog' %}
 {% assign description = page.excerpt | remove: '<p>' | remove: '</p>' %}
 {% else %}
 {% assign type = 'website' %}
-{% assign sectionTitle = 'React' %}
+{% assign sectionTitle = 'OpenCVGUI' %}
 {% assign description = 'A JavaScript library for building user interfaces' %}
 {% endif %}
 {% assign title = page.title | append: ' - ' | append: sectionTitle %}

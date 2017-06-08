@@ -23,13 +23,14 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 * xorg-dev 
 
 # Build
-1. git submodule update --init --recursive
-2. mkdir build
-3. cd build
-4. cmake ..
-5. make
-6. sudo make install
-
+```bash
+git submodule update --init --recursive
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
 
 ## Features
 
@@ -46,6 +47,8 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 * File Management (in progress)
 * 2D plot
 * 2D multiplot
+* Scatter plot
+* Bar Plot
 * 3D Plot
 
 ![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/2dplot.png)
