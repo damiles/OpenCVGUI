@@ -53,7 +53,7 @@ namespace OpenCVGUI {
         _labels= labels;
         _x_step= xstep;
         data_lock= false;
-
+        _auto_scale= true;
     }
 
     void OGUIPlotArea::replot(void *d, std::vector<string> labels, float xstep) {
