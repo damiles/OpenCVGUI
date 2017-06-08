@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>API - React</title>
+  <title>API - OpenCVGUI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="shortcut icon" href="/OpenCVGUI/favicon.ico">
@@ -42,7 +42,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="https://github.com/damiles/OpenCVGUI">GitHub</a></li>
-        <li><a href="https://github.com/damiles/OpenCVGUI/releases">v0.0.5</a></li>
+        <li><a href="https://github.com/damiles/OpenCVGUI/releases">v0.1</a></li>
       </ul>
     </nav>
   </div>
@@ -58,12 +58,12 @@
       <ul class="nav bs-docs-sidenav">
         
           <li>
-            <a href="/OpenCVGUI/docs/installation.html">Installation</a>
+            <a href="/OpenCVGUI/docs/installation.html" class="sidebar_menu_item">Installation</a>
             
           </li>
         
           <li>
-            <a href="/OpenCVGUI/docs/hello-world.html">Hello World</a>
+            <a href="/OpenCVGUI/docs/hello-world.html" class="sidebar_menu_item">Hello World</a>
             
           </li>
         
@@ -75,27 +75,77 @@
       <ul class="nav bs-docs-sidenav">
         
           <li>
-            <a href="/OpenCVGUI/docs/api.html" class="active">OpenCVGUI</a>
+            <a href="/OpenCVGUI/docs/api.html#namespace_open_c_v_g_u_i" class="sidebar_menu_item external">OpenCVGUI</a>
             
           </li>
         
           <li>
-            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window" class="external">OGUIWindow</a>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window" class="sidebar_menu_item external">OGUICVWindow</a>
             
           </li>
         
           <li>
-            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window" class="external">OGUICVWindow</a>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_window" class="sidebar_menu_item external">OGUIWindow</a>
             
           </li>
         
           <li>
-            <a href="/OpenCVGUI/docs/oguiarea.html">OGUIArea</a>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_area" class="sidebar_menu_item external">OGUIArea</a>
             
           </li>
         
           <li>
-            <a href="/OpenCVGUI/docs/oguiformarea.html">OGUIFormArea</a>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area" class="sidebar_menu_item external">OGUIFormArea</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_image_area" class="sidebar_menu_item external">OGUIImageArea</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area" class="sidebar_menu_item external">OGUIPlotArea</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser" class="sidebar_menu_item external">OGUIFileBrowser</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_button" class="sidebar_menu_item external">OGUIButton</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_check_box" class="sidebar_menu_item external">OGUICheckBox</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons" class="sidebar_menu_item external">OGUIRadioButtons</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_slider" class="sidebar_menu_item external">OGUISlider</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_text_input" class="sidebar_menu_item external">OGUITextInput</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i_title" class="sidebar_menu_item external">OGUITitle</a>
+            
+          </li>
+        
+          <li>
+            <a href="/OpenCVGUI/docs/api.html#class_open_c_v_g_u_i_1_1_o_g_u_i3_d" class="sidebar_menu_item external">OGUI3D</a>
             
           </li>
         
@@ -104,10 +154,23 @@
   
 
 </div>
+<script>
+  $( document ).ready(function() {
+    var url      = window.location.href;
+    var res = url.split("#");
+    if(res.length==2){
+      $(".sidebar_menu_item[href*='"+res[1]+"']").addClass("active");
+    }
+    $(".sidebar_menu_item").click(function(){
+      $(".sidebar_menu_item").removeClass("active");
+      $(this).addClass("active");
+    });
+  });
+</script>
 
 
   <div class="col-sd-12 col-md-9 col-md-offset-3 inner-content">
-    <a class="edit-page-link" href="https://github.com/damiles/OpenCVGUI/tree/master/docs/docs/api.md" target="_blank">Edit on GitHub</a>
+    <!--<a class="edit-page-link" href="https://github.com/damiles/OpenCVGUI/tree/master/docs/docs/api.md" target="_blank">Edit on GitHub</a>-->
     <h1>
       API
     </h1>
@@ -252,10 +315,10 @@
 <h3 id="app_run">app_run</h3>
 <h4 id="namespace_open_c_v_g_u_i_1afb9d14584eff87fbb052006393d4f1fd"><code class="highlighter-rouge">public void app_run(std::function&lt; void()&gt; process_function)</code></h4>
 
-<p>Start main loop of UI and process as new thread</p>
+<p>Start main loop of UI and processing stuff as new thread.</p>
 <h4 id="parameters-1">Parameters</h4>
 <ul>
-  <li><code class="highlighter-rouge">process_function</code> is the main thread to compute</li>
+  <li><code class="highlighter-rouge">process_function</code> function for processing computer vision thread.</li>
 </ul>
 
 <h3 id="init">init</h3>
@@ -591,6 +654,10 @@
       <td> </td>
     </tr>
     <tr>
+      <td><code class="highlighter-rouge">public bool _show_title_bar</code></td>
+      <td> </td>
+    </tr>
+    <tr>
       <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window</code></td>
       <td> </td>
     </tr>
@@ -612,6 +679,10 @@
     </tr>
     <tr>
       <td><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void drawTitle()</code></td>
       <td> </td>
     </tr>
     <tr>
@@ -653,6 +724,9 @@
 <h3 id="ismaximized">isMaximized</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1af8bbea07de11aeff2ec69e6264986db0"><code class="highlighter-rouge">public bool isMaximized</code></h5>
 
+<h3 id="_show_title_bar">_show_title_bar</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a1195fe440157529495c195792ad1aa8f"><code class="highlighter-rouge">public bool _show_title_bar</code></h5>
+
 <h3 id="window">window</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ab2e8a8647a11e1f85e98d5ba1f294614"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window</code></h5>
 
@@ -672,6 +746,9 @@
 
 <h3 id="updatescrollstatus-1">updateScrollStatus</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1ae42a4e9373771681b45fd5732749499c"><code class="highlighter-rouge">public virtual void updateScrollStatus(double xoffset,double yoffset)</code></h5>
+
+<h3 id="drawtitle">drawTitle</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a15a0e9acca5fce3e479f64b507c4126f"><code class="highlighter-rouge">public void drawTitle()</code></h5>
 
 <h3 id="ismousein">isMouseIn</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_area_1a2573a94cc51828419ef792c626e0e91f"><code class="highlighter-rouge">public bool isMouseIn()</code></h5>
@@ -782,11 +859,11 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></td>
+      <td><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></td>
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></td>
+      <td><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></td>
       <td> </td>
     </tr>
     <tr>
@@ -795,7 +872,7 @@
     </tr>
     <tr>
       <td><code class="highlighter-rouge">public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)</code></td>
-      <td> </td>
+      <td>Create new Computer Vision Template Window with lateral form and stacked areas.</td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">public void imshow(string area_title,void * img)</code></td>
@@ -818,7 +895,7 @@
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep)</code></td>
+      <td><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep,int plot_type)</code></td>
       <td> </td>
     </tr>
   </tbody>
@@ -827,10 +904,10 @@
 <h2 id="members-6">Members</h2>
 
 <h3 id="areas_showing">areas_showing</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a65ef037ff0a3ca68d24e1542123e0f22"><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a5a1bdd606aa57c91a194c48c816f5d05"><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_area"><code class="highlighter-rouge">OGUIArea</code></a><code class="highlighter-rouge"> * &gt; areas_showing</code></h5>
 
 <h3 id="layout-1">layout</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a84981166a2d4a9f232636103ca0df3f4"><code class="highlighter-rouge">public vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a8c9946ad2741d3de75b640dc2a89d679"><code class="highlighter-rouge">public std::vector&lt; </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_layout"><code class="highlighter-rouge">OGUILayout</code></a><code class="highlighter-rouge"> * &gt; layout</code></h5>
 
 <h3 id="formarea">formArea</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a3d5dba640e4552ee1f1cd64bf8f24365"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_form_area"><code class="highlighter-rouge">OGUIFormArea</code></a><code class="highlighter-rouge"> * formArea</code></h5>
@@ -838,7 +915,10 @@
 <h3 id="oguicvwindow">OGUICVWindow</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1aa6449466c9262d6a25c1c8b7410846dc"><code class="highlighter-rouge">public  OGUICVWindow(int width,int height,const char * title,int layoutOrientation)</code></h5>
 
-<p>Create new Computer Vision Template Window with lateral form and stacked areas</p>
+<p>Create new Computer Vision Template Window with lateral form and stacked areas.</p>
+
+<p>This class allow create easy computer vision purposes windows where each new area created is stacked. There are similar functions than OpenCV to show images (imshow) and more missing areas for plotting and forms.</p>
+
 <h4 id="parameters-2">Parameters</h4>
 <ul>
   <li>
@@ -905,7 +985,7 @@
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1af1a07fc606b1453b217dd7cd9b382e65"><code class="highlighter-rouge">public void plot3D(string area_title,void * data)</code></h5>
 
 <h3 id="plot2d">plot2D</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1ab9a2394a1267a6dd86d71ef7e057e608"><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep)</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_c_v_window_1a03beefda266cb54174d550ee6da14522"><code class="highlighter-rouge">public void plot2D(string area_title,void * data,std::vector&lt; string &gt; labels,float xstep,int plot_type)</code></h5>
 
 <h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file">class <code class="highlighter-rouge">OpenCVGUI::OGUIFile</code></h1>
 
@@ -1011,7 +1091,7 @@
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">public string open(string path,vector&lt; string &gt; filter)</code></td>
+      <td><code class="highlighter-rouge">public string open(string path,std::vector&lt; string &gt; filter)</code></td>
       <td> </td>
     </tr>
     <tr>
@@ -1027,7 +1107,7 @@
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1a35e659f9f6554f697f798ef93d1a1f2d"><code class="highlighter-rouge">public  OGUIFileBrowser(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window)</code></h5>
 
 <h3 id="open">open</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1a6c39ff044dcba20ebd1de6bbc7a0dadc"><code class="highlighter-rouge">public string open(string path,vector&lt; string &gt; filter)</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1aa8ef34765a2228238da466ce574b36ce"><code class="highlighter-rouge">public string open(string path,std::vector&lt; string &gt; filter)</code></h5>
 
 <h3 id="draw-5">draw</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_file_browser_1acedffb5b5a8a6adf4e77ff2ca82b104a"><code class="highlighter-rouge">public void draw()</code></h5>
@@ -1283,11 +1363,15 @@
       <td> </td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></td>
+      <td><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep,int plot_type)</code></td>
       <td> </td>
     </tr>
     <tr>
       <td><code class="highlighter-rouge">public void replot(void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">public void setYScale(bool auto_scale,double min_value,double max_value)</code></td>
       <td> </td>
     </tr>
   </tbody>
@@ -1302,10 +1386,13 @@
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1a233d004c5d6b2732030bedf578ad5d06"><code class="highlighter-rouge">public virtual void draw(int x,int y,int width,int height)</code></h5>
 
 <h3 id="oguiplotarea">OGUIPlotArea</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1ad7b934dcf655b4c92ce6233f5e012ba0"><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1ac30231d13ff4f3f18936aaa3f044fdf6"><code class="highlighter-rouge">public  OGUIPlotArea(</code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i_window"><code class="highlighter-rouge">OGUIWindow</code></a><code class="highlighter-rouge"> * window,std::string title,void * data,std::vector&lt; std::string &gt; labels,float xstep,int plot_type)</code></h5>
 
 <h3 id="replot-1">replot</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1aaf65308f2013089527294acf1778f678"><code class="highlighter-rouge">public void replot(void * data,std::vector&lt; std::string &gt; labels,float xstep)</code></h5>
+
+<h3 id="setyscale">setYScale</h3>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_plot_area_1a9fb36d85d851e28697587073aadde9c7"><code class="highlighter-rouge">public void setYScale(bool auto_scale,double min_value,double max_value)</code></h5>
 
 <h1 id="class_open_c_v_g_u_i_1_1_o_g_u_i_radio_buttons">class <code class="highlighter-rouge">OpenCVGUI::OGUIRadioButtons</code></h1>
 
@@ -1579,10 +1666,6 @@
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d"><code class="highlighter-rouge">OGUI3D</code></a><code class="highlighter-rouge"> * test</code></td>
-      <td> </td>
-    </tr>
-    <tr>
       <td><code class="highlighter-rouge">public void * glfw_window</code></td>
       <td> </td>
     </tr>
@@ -1687,7 +1770,7 @@
       <td>Popups.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">public string openFileBrowser(string path,vector&lt; string &gt; filter)</code></td>
+      <td><code class="highlighter-rouge">public string openFileBrowser(string path,std::vector&lt; string &gt; filter)</code></td>
       <td>File browser.</td>
     </tr>
     <tr>
@@ -1706,9 +1789,6 @@
 </table>
 
 <h2 id="members-19">Members</h2>
-
-<h3 id="test">test</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1ad111537e93536cb13f16eb4697b0dbb6"><code class="highlighter-rouge">public </code><a href="#class_open_c_v_g_u_i_1_1_o_g_u_i3_d"><code class="highlighter-rouge">OGUI3D</code></a><code class="highlighter-rouge"> * test</code></h5>
 
 <h3 id="glfw_window">glfw_window</h3>
 <h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a56d181d083f35e7eae72dee17cd16d92"><code class="highlighter-rouge">public void * glfw_window</code></h5>
@@ -1791,7 +1871,7 @@
 <p>Popups.</p>
 
 <h3 id="openfilebrowser">openFileBrowser</h3>
-<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a9ba4a23ed3fe358744f1d9876045eba9"><code class="highlighter-rouge">public string openFileBrowser(string path,vector&lt; string &gt; filter)</code></h5>
+<h5 id="class_open_c_v_g_u_i_1_1_o_g_u_i_window_1a9d5976dd1eb4642fd36d171cf70fe5bc"><code class="highlighter-rouge">public string openFileBrowser(string path,std::vector&lt; string &gt; filter)</code></h5>
 
 <p>File browser.</p>
 

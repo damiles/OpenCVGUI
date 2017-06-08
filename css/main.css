@@ -1,5 +1,5 @@
 body{
-    margin-top:60px;
+    margin-top:50px;
     background:#efefef;
 }
 .bs-docs-nav {
@@ -61,6 +61,7 @@ img[alt="screenshot"]
 }
 .navbar{
     background: #222;
+    border-top: 4px solid #9933bb;
 }
 .navbar a{
     color: #fff;
@@ -81,6 +82,7 @@ img[alt="screenshot"]
     margin-top:20px;
     color:#fff;
     border-radius: 5px;
+    padding-top:80px;
 }
 .documentationContent h1 code{
     background-color: transparent !important;
