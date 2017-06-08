@@ -615,12 +615,12 @@ namespace OpenCVGUI {
             NVGcolor color= nvgRGBA(color_scheme.at(c), color_scheme.at(c+1), color_scheme.at(c+2), 255);
             // Dots
             for (int i = 0; i < data.cols; i++) {
-                float dot_x=start_x + i * dx;
+                float dot_x=start_x + i * dx + bar_width * p;
                 float dot_y=start_y - dy * ((data.at<float>(p,i)) / m);
                 // Draw hover label
                 if(isMouseIn()) {
-                    if( dot_y-4<= window->mouse_y && window->mouse_y <= dot_y+4 &&
-                        dot_x-4<= window->mouse_x && window->mouse_x <= dot_x+4 ){
+                    if( dot_y<= window->mouse_y && window->mouse_y <= start_y &&
+                        dot_x<= window->mouse_x && window->mouse_x <= dot_x+bar_width ){
 
                         // Calculate text width for box
                         nvgFontSize(vg, 16.0f);
