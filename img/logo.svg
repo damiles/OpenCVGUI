@@ -134,7 +134,7 @@
          id="image4155-3"
          x="554.84595"
          y="836.06635" />
-      <text
+      <!--<text
          sodipodi:linespacing="125%"
          id="text4203-3"
          y="967.26874"
@@ -145,7 +145,7 @@
            y="967.26874"
            x="115.27673"
            id="tspan4205-2"
-           sodipodi:role="line">GUI</tspan></text>
+           sodipodi:role="line">GUI</tspan></text>-->
     </g>
   </g>
 </svg>
