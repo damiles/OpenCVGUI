@@ -18,6 +18,10 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 
 ![screenshot](https://github.com/damiles/OpenCVGUI/raw/master/resources/screenshot.png)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QHKTZtBCSWs?ecver=1" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K-8mz9q6_zU?ecver=1" frameborder="0" allowfullscreen></iframe>
+
 # Dependencies
 * GLEW
 * xorg-dev 

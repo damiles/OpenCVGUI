@@ -133,8 +133,8 @@ int OGUIWindow::init(bool fullScreen)
         return 0;
     }
 
-    nvgCreateFont((NVGcontext*)vg, "sans", "../resources/Roboto-Regular.ttf");
-    nvgCreateFont((NVGcontext*)vg, "sans-bold", "../resources/fonts/Varela_Round/VarelaRound-Regular.ttf");
+    nvgCreateFont((NVGcontext*)vg, "sans", "../resources/fonts/Roboto-Regular.ttf");
+    nvgCreateFont((NVGcontext*)vg, "sans-bold", "../resources/fonts/VarelaRound-Regular.ttf");
     nvgCreateFont((NVGcontext*)vg, "icons", "../resources/fonts/fontawesome-webfont.ttf");
 
     // Load all cursors
