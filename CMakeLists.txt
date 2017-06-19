@@ -97,9 +97,10 @@ include_directories(
 )
 	
 file(GLOB OGUI_SRC_LIB
+    "src/OpenCVGUI/resources/*.cpp"
 	"src/OpenCVGUI/*.cpp"
     "src/OpenCVGUI/*.c"
-	"include/OpenCVGUI/*.h"
+    "include/OpenCVGUI/*.h"
 )
 
 # Set library type
@@ -153,6 +154,8 @@ TARGET_LINK_LIBRARIES(example_2dplot ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GL
 
 ADD_EXECUTABLE(basic_sample src/basic_sample.cpp )
 TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+
+ADD_EXECUTABLE(font2c src/font2c.cpp )
 
 # INSTALLATION
 install(TARGETS opencvgui

@@ -19,7 +19,6 @@
 
 #include "nanovg_gl.h"
 
-
 void errorcb(int error, const char* desc)
 {
     printf("GLFW error %d: %s\n", error, desc);
@@ -133,9 +132,9 @@ int OGUIWindow::init(bool fullScreen)
         return 0;
     }
 
-    nvgCreateFont((NVGcontext*)vg, "sans", "../resources/fonts/Roboto-Regular.ttf");
-    nvgCreateFont((NVGcontext*)vg, "sans-bold", "../resources/fonts/VarelaRound-Regular.ttf");
-    nvgCreateFont((NVGcontext*)vg, "icons", "../resources/fonts/fontawesome-webfont.ttf");
+    nvgCreateFontMem((NVGcontext*)vg, "sans", font_roboto, font_roboto_size, 1);
+    nvgCreateFontMem((NVGcontext*)vg, "sans-bold", font_valera, font_valera_size, 1);
+    nvgCreateFontMem((NVGcontext*)vg, "icons", font_awesome, font_awesome_size, 1);
 
     // Load all cursors
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_ARROW_CURSOR));

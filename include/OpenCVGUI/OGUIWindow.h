@@ -13,6 +13,15 @@
 
 using namespace std;
 
+// Font images
+extern unsigned char font_roboto[];
+extern int font_roboto_size;
+extern int font_awesome_size;
+extern unsigned char font_awesome[];
+extern int font_valera_size;
+extern unsigned char font_valera[];
+
+
 namespace OpenCVGUI {
     int init();
     class OGUILayout;
