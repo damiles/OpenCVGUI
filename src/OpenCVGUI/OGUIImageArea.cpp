@@ -174,7 +174,7 @@ namespace OpenCVGUI {
             int h=300;
             float arrx = 230.5f;
             int sx= x + width - w -20;
-            int sy= 32;
+            int sy= y + 32;
             shadowPaint = nvgBoxGradient(vg, sx,sy+4, w,h, cornerRadius*2, 20, nvgRGBA(0,0,0,128), nvgRGBA(0,0,0,0));
             nvgBeginPath(vg);
             nvgRect(vg, sx-10,sy-10, w+20,h+30);
