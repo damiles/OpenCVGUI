@@ -34,7 +34,7 @@ namespace OpenCVGUI {
         NVGpaint bg;
 
         // Draw text
-        nvgFontSize(vg, 18.0f);
+        nvgFontSize(vg, 18.0f*area->window->font_scale);
         nvgFontFace(vg, "sans-bold");
         nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
         nvgFillColor(vg, nvgRGBA(0,0,0,255));
@@ -81,7 +81,7 @@ namespace OpenCVGUI {
 
 
             // Draw text
-            nvgFontSize(vg, 18.0f);
+            nvgFontSize(vg, 18.0f*area->window->font_scale);
             nvgFontFace(vg, "sans");
             nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
             nvgFillColor(vg, nvgRGBA(0,0,0,128));

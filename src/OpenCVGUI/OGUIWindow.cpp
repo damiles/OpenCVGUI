@@ -60,6 +60,7 @@ OGUIWindow::OGUIWindow(int width, int height,
     this->width= width;
 	this->height= height;
 	this->title.append(title);
+    this->font_scale=1.0;
 
     init(fullScreen);
     

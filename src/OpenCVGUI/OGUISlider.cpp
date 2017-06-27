@@ -27,7 +27,7 @@ void OGUISlider::draw(int x, int y, int w)
     NVGpaint bg, knob;
 
     // Draw text
-    nvgFontSize(vg, 18.0f);
+    nvgFontSize(vg, 18.0f*area->window->font_scale);
     nvgFontFace(vg, "sans-bold");
     nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
     nvgFillColor(vg, nvgRGBA(0,0,0,255));
@@ -54,7 +54,7 @@ void OGUISlider::draw(int x, int y, int w)
     // Draw text
     stringstream ss;
     ss << value;
-    nvgFontSize(vg, 12.0f);
+    nvgFontSize(vg, 12.0f*area->window->font_scale);
     nvgFontFace(vg, "sans-bold");
     float tw = nvgTextBounds(vg, 0,0, ss.str().c_str(), NULL, NULL);
     nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);

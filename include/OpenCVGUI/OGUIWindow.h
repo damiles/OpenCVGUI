@@ -101,6 +101,9 @@ class OGUIWindow {
     // Set Area as MaximizedArea
     void maximizeArea(OGUIArea *area);
 
+    // font scale, default value 1.0
+    float font_scale=1.0;
+
 private:
 
     /**

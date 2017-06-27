@@ -53,7 +53,7 @@ namespace OpenCVGUI {
         nvgStroke(vg);
 
         // Draw text
-        nvgFontSize(vg, 20.0f);
+        nvgFontSize(vg, 20.0f*area->window->font_scale);
         nvgFontFace(vg, "sans");
         float tw = nvgTextBounds(vg, 0,0, title, NULL, NULL);
         nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_MIDDLE);

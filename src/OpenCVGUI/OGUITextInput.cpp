@@ -34,7 +34,7 @@ void OGUITextInput::draw(int x, int y, int w)
     nvgStrokeColor(vg, nvgRGBA(0,0,0,48));
     nvgStroke(vg);
 
-    nvgFontSize(vg, 20.0f);
+    nvgFontSize(vg, 20.0f*area->window->font_scale);
     nvgFontFace(vg, "sans");
     if(value.compare(label)==0)
         nvgFillColor(vg, nvgRGBA(255,255,255,64));
