@@ -39,7 +39,7 @@ void hello_btn_click(){
 }
 
 void cv_process() {
-    while(app_is_running) {
+    while(app_is_running()) {
         cap >> frame;
         imageArea3->setImage(&frame);
     }
@@ -97,7 +97,7 @@ int main( int argc, const char* argv[] )
         imageArea3->setImage(&gray);
     }
 
-    OpenCVGUI::windows.push_back(window);
+    OpenCVGUI::add_window(window);
     OpenCVGUI::app_run(cv_process);
 
 	return 1;

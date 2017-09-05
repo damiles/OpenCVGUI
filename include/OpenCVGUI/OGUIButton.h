@@ -1,13 +1,14 @@
 #ifndef OpenCVGUI_OGUIButton_h
 #define OpenCVGUI_OGUIButton_h
 
+#include "common.h"
 #include "OGUIWidget.h"
 #include <functional>
 
 
 namespace OpenCVGUI {
 
-class OGUIButton : public OGUIWidget {
+class CV_OGUI_EXPORTS OGUIButton : public OGUIWidget {
 
  public:
 

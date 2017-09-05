@@ -1,6 +1,7 @@
 #ifndef OpenCVGUI_OGUITextInput_h
 #define OpenCVGUI_OGUITextInput_h
 
+#include "common.h"
 #include "OGUIWidget.h"
 #include <string>
 
@@ -8,7 +9,7 @@ using namespace std;
 
 namespace OpenCVGUI {
 
-class OGUITextInput : public OGUIWidget {
+class CV_OGUI_EXPORTS OGUITextInput : public OGUIWidget {
 
  public:
 

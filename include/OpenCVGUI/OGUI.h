@@ -10,6 +10,8 @@
 #include <vector>
 #include <functional>
 
+#include "common.h"
+
 #include <opencv2/core/core.hpp>
 #include "OGUICVWindow.h"
 
@@ -22,23 +24,25 @@ namespace OpenCVGUI {
      * @return {OGUICVWindow*} OGUICVWindow created
      *
      */
-    OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
+	CV_OGUI_EXPORTS OGUICVWindow* namedWindow(const char* title, int width=1024, int height=768);
 
     /**
      * Start main loop of UI and processing stuff as new thread.
      * @param process_function function for processing computer vision thread.
      */
-    void app_run(std::function<void()> process_function);
+	CV_OGUI_EXPORTS void app_run(std::function<void()> process_function);
 
     /**
      * variable to check if the UI is running or closed and finished
      */
-    extern bool app_is_running;
+	CV_OGUI_EXPORTS bool app_is_running();
+	extern bool _app_is_running;
 
     /**
      * list of windows that are created
      */
-    extern vector<OGUIWindow*> windows;
+	CV_OGUI_EXPORTS void add_window(OGUIWindow* window);
+	extern vector<OGUIWindow*> windows;
 
 }
 #endif //OPENCVGUI_OGUI_H

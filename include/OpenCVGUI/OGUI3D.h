@@ -1,6 +1,8 @@
 #ifndef OpenCVGUI_OGUI3D_h
 #define OpenCVGUI_OGUI3D_h
 
+#include "common.h"
+
 #include <opencv2/core/core.hpp>
 #include <GL/glew.h>
 #include "OGUIArea.h"
@@ -8,11 +10,11 @@
 // Include GLM
 #include <glm/glm.hpp>
 
-using namespace cv;
+
 
 namespace OpenCVGUI {
 
-    class OGUI3DCamera
+    class CV_OGUI_EXPORTS OGUI3DCamera
     {
     public:
         OGUI3DCamera();
@@ -27,7 +29,7 @@ namespace OpenCVGUI {
         float phi, theta, radius;
     };
 
-class OGUI3D : public OGUIArea {
+class CV_OGUI_EXPORTS OGUI3D : public OGUIArea {
 
  public:
 
@@ -43,7 +45,7 @@ class OGUI3D : public OGUIArea {
     glm::mat4 MVP;
     void CreateVertexBuffer();
 
-    Mat data;
+    cv::Mat data;
     int dataLength, dataLengthIBO;
     OGUI3DCamera camera;
 

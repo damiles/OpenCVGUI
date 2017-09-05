@@ -3,7 +3,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <chrono>
-
 #include "OGUI.h"
 #include "OGUICVWindow.h"
 #include "OGUILayout.h"
@@ -81,12 +80,12 @@ void cv_process() {
     lines_data.at<Vec2f>(0,10)[1]= 10;
 
     for(int i=0; i< 11; i++){
-        double a= i*(2*M_PI)/10.0f;
+        double a= 3.14159265358979323846*i*2/10.0f;
         lines_data.at<Vec2f>(1,i)[0]= 10 + 10*cos(a);
         lines_data.at<Vec2f>(1,i)[1]= 5 + 10*sin(a);
     }
 
-    while(app_is_running) {
+    while(app_is_running()) {
         cap >> frame;
         window->imshow("camera", &frame);
 
@@ -109,6 +108,7 @@ void cv_process() {
             sayHello= false;
         }
     }
+	cout << "Finished" << endl;
 }
 
 void input_mouse_click(int mouse_x, int mouse_y)

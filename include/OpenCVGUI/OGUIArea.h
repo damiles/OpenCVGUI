@@ -1,6 +1,7 @@
 #ifndef OpenCVGUI_OGUIArea_h
 #define OpenCVGUI_OGUIArea_h
 
+#include "common.h"
 #include <string>
 
 namespace OpenCVGUI {
@@ -8,7 +9,7 @@ namespace OpenCVGUI {
     class OGUILayout;
     class OGUIWindow;
     
-class OGUIArea {
+class CV_OGUI_EXPORTS OGUIArea {
 
  public:
     

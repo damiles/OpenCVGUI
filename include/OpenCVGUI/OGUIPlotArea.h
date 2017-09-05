@@ -1,10 +1,11 @@
 #ifndef OpenCVGUI_OGUIPlotArea_h
 #define OpenCVGUI_OGUIPlotArea_h
 
+#include "common.h"
 #include "OGUIArea.h"
 #include <opencv2/core/core.hpp>
 
-using namespace cv;
+
 
 namespace OpenCVGUI {
 
@@ -15,7 +16,7 @@ namespace OpenCVGUI {
         PLOT_BARS
     };
 
-class OGUIPlotArea : public OGUIArea {
+class CV_OGUI_EXPORTS OGUIPlotArea : public OGUIArea {
 
  public:
 
@@ -44,7 +45,7 @@ private:
     void drawBarPlot();
     void drawLegends();
     void drawPlot();
-    Mat data;
+    cv::Mat data;
     bool data_lock, is_drawing;
     std::vector<std::string> _labels;
     float _x_step;

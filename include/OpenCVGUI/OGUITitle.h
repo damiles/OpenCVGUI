@@ -1,12 +1,13 @@
 #ifndef OpenCVGUI_OGUITitle_h
 #define OpenCVGUI_OGUITitle_h
 
+#include "common.h"
 #include "OGUIWidget.h"
 
 
 namespace OpenCVGUI {
 
-class OGUITitle : public OGUIWidget {
+class CV_OGUI_EXPORTS OGUITitle : public OGUIWidget {
 
  public:
 

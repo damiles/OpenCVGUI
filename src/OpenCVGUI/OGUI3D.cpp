@@ -10,6 +10,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+using namespace cv;
+
 namespace OpenCVGUI {
 
     // Read a shader source from a file
@@ -150,7 +152,8 @@ namespace OpenCVGUI {
 
     // Create points from Mat
     dataLength= data.cols*data.rows*3;
-    GLfloat vertices_position[dataLength];
+    //GLfloat vertices_position[dataLength];
+	GLfloat* vertices_position = (GLfloat*)malloc( dataLength * sizeof(GLfloat));
     int index=0;
     for(int x=0; x<data.cols; x++){
         for(int y=0; y<data.rows; y++){
@@ -174,7 +177,9 @@ namespace OpenCVGUI {
 
     // INDEX BUFFERS
     dataLengthIBO= (data.cols-1)*(data.rows-1)*3*2;
-    unsigned int indexs[dataLengthIBO];
+    //unsigned int indexs[dataLengthIBO];
+	unsigned int *indexs= (unsigned int*)malloc(dataLengthIBO*sizeof(unsigned int));
+
     index=0;
     for(int x=0; x<data.cols-1; x++){
         for(int y=0; y<data.rows-1; y++){
@@ -213,6 +218,9 @@ namespace OpenCVGUI {
 
         // Specify how the data for position can be accessed
     glVertexAttribPointer(position_attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	free(indexs);
+	free(vertices_position);
 
 
 }

@@ -1,11 +1,13 @@
 #ifndef OpenCVGUI_OGUIWindow_h
 #define OpenCVGUI_OGUIWindow_h
 
+#include "common.h"
 #include <string>
 #include <vector>
 #include <thread>
 #include <iostream>
-#include <unistd.h>
+//#include <unistd.h>
+#include <chrono>
 #include "perf.h"
 
 #include "OGUI3D.h"
@@ -23,13 +25,13 @@ extern unsigned char font_valera[];
 
 
 namespace OpenCVGUI {
-    int init();
+	CV_OGUI_EXPORTS int init();
     class OGUILayout;
     class OGUIArea;
     class OGUIWidget;
     class OGUIFileBrowser;
 
-    enum MouseCursor {
+	CV_OGUI_EXPORTS enum MouseCursor {
         DEFAULT_CURSOR,
         HRESIZE_CURSOR,
         VRESIZE_CURSOR,
@@ -38,7 +40,7 @@ namespace OpenCVGUI {
         CROSS_CURSOR,
     };
 
-    enum PopupTypes{
+	CV_OGUI_EXPORTS enum PopupTypes{
         NO_POPUP,
         POPUP_CONFIRM,
         POPUP_ALERT,
@@ -46,7 +48,7 @@ namespace OpenCVGUI {
     };
 
 
-class OGUIWindow {
+class CV_OGUI_EXPORTS OGUIWindow {
 
  public:
 

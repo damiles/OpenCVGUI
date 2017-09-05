@@ -5,6 +5,8 @@
 #include "nanovg.h"
 #include "OGUIUtils.h"
 
+using namespace cv;
+
 namespace OpenCVGUI {
 
 
@@ -96,7 +98,7 @@ namespace OpenCVGUI {
                 // show color value
                 if (_img.channels()==1) {
                     stringstream gray_val;
-                    gray_val << "Gray value: " << (int)_img.at<uchar>(mouse_y_img, mouse_x_img, 0);
+                    gray_val << "Gray value: " << (int)_img.at<uchar>(mouse_y_img, mouse_x_img);
                     nvgFontSize(vg, 16.0f);
                     nvgFontFace(vg, "sans");
                     nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
@@ -133,7 +135,7 @@ namespace OpenCVGUI {
 
             }
 
-            if(drawBasicButton(vg, this->window, "\uF05a", x+width-60, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16)){
+            if(drawBasicButton(vg, this->window, u8"\uF05A", x+width-60, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16)){
                 _show_info=true;
             }
 
@@ -211,7 +213,7 @@ namespace OpenCVGUI {
             nvgFill(vg);
 
             if(b_hist.data!=NULL) {
-                for (int i = 0; i <= 256; i++) {
+                for (int i = 0; i < 256; i++) {
                     float val = b_hist.at<float>(i);
                     nvgBeginPath(vg);
                     nvgRect(vg, sx+i, sy + 260 - val, 1, val);

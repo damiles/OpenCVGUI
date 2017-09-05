@@ -1,13 +1,14 @@
 #ifndef OpenCVGUI_OGUISlider_h
 #define OpenCVGUI_OGUISlider_h
 
+#include "common.h"
 #include <vector>
 #include "OGUIWidget.h"
 #include <functional>
 
 namespace OpenCVGUI {
 
-class OGUISlider : public OGUIWidget {
+class CV_OGUI_EXPORTS OGUISlider : public OGUIWidget {
 
  public:
 

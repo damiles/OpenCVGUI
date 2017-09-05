@@ -39,7 +39,7 @@ void hello_btn_click(){
 
 void cv_process() {
 
-    while(app_is_running) {
+    while(app_is_running()) {
         cap >> frame;
         window->imshow("camera", &frame);
 

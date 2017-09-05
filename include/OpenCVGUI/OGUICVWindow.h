@@ -5,6 +5,7 @@
 #ifndef OPENCVGUI_OGUICVWINDOW_H
 #define OPENCVGUI_OGUICVWINDOW_H
 
+#include "common.h"
 #include "OGUIWindow.h"
 #include "OGUIFormArea.h"
 #include "OGUILayout.h"
@@ -17,7 +18,7 @@ namespace OpenCVGUI {
 /**
  * Comptuer Vision template window
  */
-class OGUICVWindow : public OGUIWindow{
+class CV_OGUI_EXPORTS OGUICVWindow : public OGUIWindow{
 public:
     /**
      * \brief Create new Computer Vision Template Window with lateral form and stacked areas

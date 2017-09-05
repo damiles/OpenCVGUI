@@ -4,7 +4,10 @@
 
 // for realpath, ToDo: check if will work in windows
 #include <stdlib.h>
+
+#ifdef __linux__
 #include <mntent.h>
+#endif
 
 #include "OGUIFileBrowser.h"
 
@@ -31,7 +34,8 @@ namespace OpenCVGUI {
     }
 
     void OGUIFileBrowser::readSystem() {
-        struct mntent *ent;
+#ifdef __linux__
+		struct mntent *ent;
         FILE *aFile;
         // ToDo (damiles): Windows and osx support
         aFile = setmntent("/proc/mounts", "r");
@@ -52,13 +56,14 @@ namespace OpenCVGUI {
             }
         }
         endmntent(aFile);
+#endif
     }
 
     void OGUIFileBrowser::readFolder(string path) {
-        realpath(path.c_str(), resolved_path);
+        //realpath(path.c_str(), resolved_path);
         _file_list.clear();
         tinydir_dir dir;
-        if (tinydir_open_sorted(&dir, resolved_path) == -1) {
+        if (tinydir_open_sorted(&dir, path.c_str()) == -1) {
             cout << "Error opening file" << endl;
             return;
         }
@@ -92,7 +97,8 @@ namespace OpenCVGUI {
             _is_file_browser_visible = true;
 
             while (_is_file_browser_visible && _window->getStatus()) {
-                usleep(1000);// Wait a milisec
+                //usleep(1000);// Wait a milisec
+				std::this_thread::sleep_for(std::chrono::milliseconds(5));
             }
         }
         if (_file_browser_result != NULL){

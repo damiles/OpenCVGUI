@@ -8,7 +8,7 @@
 namespace OpenCVGUI{
 
     vector<OGUIWindow*> windows;
-    bool app_is_running= true;
+	bool _app_is_running= true;
 
     OGUICVWindow* namedWindow(const char* title, int width,int height)
     {
@@ -17,8 +17,13 @@ namespace OpenCVGUI{
         return w;
     }
 
+	void add_window(OGUIWindow* window) {
+		windows.push_back(window);
+	}
+
     void app_run(std::function<void()> process_function)
     {
+		_app_is_running = true;
         std::thread t1(process_function);
 
         while(true){
@@ -30,7 +35,13 @@ namespace OpenCVGUI{
             if(close)
                 break;
         }
-        app_is_running= false;
+		cout << "Closing app" << endl;
+		_app_is_running= false;
         t1.join();
+		cout << "Thread closed" << endl;
     }
+
+	bool app_is_running() {
+		return _app_is_running;
+	}
 }

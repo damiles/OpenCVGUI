@@ -1,8 +1,8 @@
-cmake_minimum_required (VERSION 2.8.3)
+cmake_minimum_required (VERSION 3.3)
 
 project("OpenCVGUI")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 set(OGUI_VERSION_MAJOR "1")
 set(OGUI_VERSION_MINOR "0")
@@ -12,7 +12,8 @@ set(OGUI_VERSION "${OGUI_VERSION_MAJOR}.${OGUI_VERSION_MINOR}")
 set(OGUI_VERSION_FULL "${OGUI_VERSION}.${OGUI_VERSION_PATCH}${OGUI_VERSION_EXTRA}")
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_STANDARD 11)
 
 option(OGUI_BUILD_SHARED  "Build OpenCVGUI as a shared library?" ON)
 option(OGUI_GL3  "Build OpenCVGUI with OpenGL 3 support?" ON)
@@ -111,7 +112,7 @@ else()
 endif()
 
 # Create library
-ADD_LIBRARY( opencvgui ${OGUI_LIBRARY_TYPE} ${OGUI_SRC_LIB} ${NANOVG_SRC})
+ADD_LIBRARY( opencvgui ${OGUI_SRC_LIB} ${NANOVG_SRC})
 	
 set_target_properties(opencvgui PROPERTIES
                       OUTPUT_NAME "OpenCVGUI"
@@ -119,6 +120,12 @@ set_target_properties(opencvgui PROPERTIES
                       SOVERSION ${OGUI_VERSION_MAJOR}
                       POSITION_INDEPENDENT_CODE ON
                       FOLDER "OpenCVGUI")
+if (OGUI_BUILD_SHARED)
+#	if(WIN32)
+#		set_target_properties(opencvgui PROPERTIES IMPORT_SUFFIX ".lib")
+#		SET_TARGET_PROPERTIES(opencvgui PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE) 
+#	endif()
+endif()
 
 target_include_directories(opencvgui PUBLIC
 			${OGUI_INCLUDE_DIRS}
@@ -129,7 +136,7 @@ target_include_directories(opencvgui PUBLIC
 #                           "${OGUI_SRC_LIB}")
 
 # TARGET_LINK_LIBRARIES(opencvgui glfw nanovg)
-TARGET_LINK_LIBRARIES(opencvgui glfw)
+TARGET_LINK_LIBRARIES(opencvgui glfw ${EXTRA_LIBS} ${OpenCV_LIBS})
 
 # Compile a sample project
 set(EXTRA_LIBS_EXE "")

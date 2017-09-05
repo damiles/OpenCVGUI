@@ -1,13 +1,15 @@
 #ifndef OpenCVGUI_OGUIWidget_h
 #define OpenCVGUI_OGUIWidget_h
 
+#include "common.h"
+
 namespace OpenCVGUI {
 class OGUIFormArea;
 } /* End of namespace OpenCVGUI */
 
 namespace OpenCVGUI {
 
-class OGUIWidget {
+class CV_OGUI_EXPORTS OGUIWidget {
 
  public:
 

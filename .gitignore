@@ -1,5 +1,5 @@
 3rdparty/*
-build/
+build*
 bin
 .idea
 /docs/docs/xml

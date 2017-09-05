@@ -8,7 +8,10 @@
 
 #include <vector>
 #include <string>
+#include <thread>
+#include <chrono>
 
+#include "common.h"
 #include "OGUIWindow.h"
 #include "OGUIFile.h"
 
@@ -19,7 +22,7 @@ using namespace std;
 
 namespace OpenCVGUI {
 
-    class OGUIFileBrowser {
+    class CV_OGUI_EXPORTS OGUIFileBrowser {
     public:
         OGUIFileBrowser(OGUIWindow* window);
 

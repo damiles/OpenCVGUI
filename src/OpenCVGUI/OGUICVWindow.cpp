@@ -4,6 +4,8 @@
 
 #include "OGUICVWindow.h"
 
+using namespace cv;
+
 namespace OpenCVGUI {
 
     OGUICVWindow::OGUICVWindow(int width,int height,const char* title, int layoutOrientation): OGUIWindow(width, height, title, layoutOrientation)

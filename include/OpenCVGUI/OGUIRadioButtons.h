@@ -5,13 +5,14 @@
 #ifndef OPENCVGUI_OGUIRADIOBUTTONS_H
 #define OPENCVGUI_OGUIRADIOBUTTONS_H
 
+#include "common.h"
 #include <vector>
 #include <string>
 #include <functional>
 #include "OGUIWidget.h"
 
 namespace OpenCVGUI {
-    class OGUIRadioButtons : public OGUIWidget {
+    class CV_OGUI_EXPORTS OGUIRadioButtons : public OGUIWidget {
     public:
         virtual void draw(int x, int y, int width);
         OGUIRadioButtons(const char *title, std::vector<std::string> options, int default_selected=0);

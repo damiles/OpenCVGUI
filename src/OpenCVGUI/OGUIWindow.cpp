@@ -343,7 +343,8 @@ int OGUIWindow::popup(string title, string text, int  type) {
     _popup_result= -1;
     if(_window_status!=0) {
         while (_popup_result == -1) {
-            usleep(1000);// Wait a milisec
+            //usleep(1000);// Wait a milisec
+			std::this_thread::sleep_for(std::chrono::milliseconds(5));
         }
     }
     return _popup_result;
@@ -372,13 +373,13 @@ void OGUIWindow::drawPopup(){
         nvgTextAlign(tmp_vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
         if(_popup_type==POPUP_ALERT) {
             nvgFillColor(tmp_vg, nvgRGBA(255,200,0,255));
-            nvgText(tmp_vg, x + 10, y + 10, "\uF071", NULL);
+            nvgText(tmp_vg, x + 10, y + 10, u8"\uF071", NULL);
         }else if(_popup_type==POPUP_ERROR) {
             nvgFillColor(tmp_vg, nvgRGBA(255,84,0,255));
-            nvgText(tmp_vg, x + 10, y + 10, "\uF057", NULL);
+            nvgText(tmp_vg, x + 10, y + 10, u8"\uF057", NULL);
         }else if(_popup_type==POPUP_CONFIRM) {
             nvgFillColor(tmp_vg, nvgRGBA(0,84,255,255));
-            nvgText(tmp_vg, x + 10, y + 10, "\uF05a", NULL);
+            nvgText(tmp_vg, x + 10, y + 10, u8"\uF05a", NULL);
         }
 
         // Draw title

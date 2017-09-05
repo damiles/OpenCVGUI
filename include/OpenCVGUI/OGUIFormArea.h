@@ -2,7 +2,7 @@
 #define OpenCVGUI_OGUIFormArea_h
 
 #include <vector>
-
+#include "common.h"
 #include "OGUIArea.h"
 
 namespace OpenCVGUI {
@@ -11,7 +11,7 @@ class OGUIWidget;
 
 namespace OpenCVGUI {
 
-class OGUIFormArea : public OGUIArea {
+class CV_OGUI_EXPORTS OGUIFormArea : public OGUIArea {
 
  public:
 

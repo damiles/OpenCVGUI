@@ -59,21 +59,23 @@ void OGUIArea::drawTitle()
         nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
         nvgText(vg, x + width * 0.5f - tw * 0.5f, y + 11, title.c_str(), NULL);
 
-        if(isMaximized){
-            if(drawBasicButton(vg, this->window, "\uF066", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
+        if(isMaximized  && _count_delay>10){
+            if(drawBasicButton(vg, this->window, u8"\uF066", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
                 isMaximized= false;
                 this->window->maximizeArea(NULL);
                 _count_delay=0;
             }
-        }else{
-            if(drawBasicButton(vg, this->window, "\uF065", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
-                this->window->maximizeArea(this);
+        }
+		
+		if ( !isMaximized  && _count_delay>10) {
+            if(drawBasicButton(vg, this->window, u8"\uF065", x+width-30, y, 30, 22, this->window->mouse_x, this->window->mouse_y, "icons", 16) && _count_delay>100){
+				this->window->maximizeArea(this);
                 isMaximized= true;
                 _count_delay=0;
             }
         }
-        _count_delay++;
     }
+	_count_delay++;
 }
 
 bool OGUIArea::isMouseIn()
@@ -94,7 +96,7 @@ OGUIArea::OGUIArea(OGUIWindow* window)
     this->layout= NULL;
     this->window= window;
     isMaximized= false;
-
+	_count_delay = 0;
     r= 28;
     g= 30;
     b= 34;

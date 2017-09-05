@@ -3,6 +3,8 @@
 #include "nanovg.h"
 #include "OGUIUtils.h"
 
+using namespace cv;
+
 namespace OpenCVGUI {
 
 

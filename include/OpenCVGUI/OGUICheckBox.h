@@ -1,12 +1,13 @@
 #ifndef OpenCVGUI_OGUICheckBox_h
 #define OpenCVGUI_OGUICheckBox_h
 
+#include "common.h"
 #include "OGUIWidget.h"
 
 
 namespace OpenCVGUI {
 
-class OGUICheckBox : public OGUIWidget {
+class CV_OGUI_EXPORTS OGUICheckBox : public OGUIWidget {
 
  public:
 

@@ -64,6 +64,8 @@ void OGUILayout::draw(int x, int y, int width, int height)
     float y0=0;
     for(int i=0; i<areas.size(); i++) {
         int ax, ay, aw, ah;
+		aw = this->width;
+		ah = this->height;
         // Draw basic line for separate each area
         //nvgBeginPath(vg);
 

@@ -16,7 +16,7 @@ double thr=125;
 OGUICVWindow *window;
 int first_info=0;
 void cv_process() {
-    while(app_is_running) {
+    while(app_is_running()) {
         cap >> frame;
         window->imshow("camera", &frame);
         Mat output;

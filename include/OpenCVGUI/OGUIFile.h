@@ -5,16 +5,17 @@
 #ifndef OPENCVGUI_OGUIFILE_H
 #define OPENCVGUI_OGUIFILE_H
 
+#include "common.h"
 #include <string>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 
 using namespace std;
-using namespace cv;
+
 
 namespace OpenCVGUI {
-    class OGUIFile {
+    class CV_OGUI_EXPORTS OGUIFile {
     public:
         OGUIFile(void* window, const char* file_name, const char* path, int isdir, const char* ext, double size);
         string _file_name;

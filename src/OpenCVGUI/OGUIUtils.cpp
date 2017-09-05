@@ -9,7 +9,7 @@
 #include <math.h>
 #include <vector>
 #include <iostream>
-#include <unistd.h>
+//#include <unistd.h>
 #include <iostream>
 
 #include "nanovg.h"
@@ -156,6 +156,7 @@ bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x
         nvgFillColor(tmp_vg, nvgRGBA(50,53,58,255));
         window->setCursor(HAND_CURSOR);
         if(window->mouse_state == 1){
+			cout << "Button preded " << title << endl; 
             internal_state=true;
         }
 
