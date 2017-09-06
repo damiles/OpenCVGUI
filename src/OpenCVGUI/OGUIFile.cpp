@@ -65,19 +65,19 @@ namespace OpenCVGUI {
         nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
         nvgFillColor(vg, nvgRGBA(0,0,0,255));
         if(_is_dir==1) {
-            nvgText(vg, x+5, y+3, "\uF115", NULL);
+            nvgText(vg, x+5, y+3, u8"\uF115", NULL);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + 6, y + 5, "\uF115", NULL);
+            nvgText(vg, x + 6, y + 5, u8"\uF115", NULL);
             nvgFillColor(vg, nvgRGBA(255,255,255,255));
         }else if(_is_dir==2){
-            nvgText(vg, x+5, y+3, "\uF0A0", NULL);
+            nvgText(vg, x+5, y+3, u8"\uF0A0", NULL);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + 6, y + 5, "\uF0A0", NULL);
+            nvgText(vg, x + 6, y + 5, u8"\uF0A0", NULL);
             nvgFillColor(vg, nvgRGBA(255,255,255,255));
         }else{
-            nvgText(vg, x+5, y+3, "\uF016", NULL);
+            nvgText(vg, x+5, y+3, u8"\uF016", NULL);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, x + 6, y + 5, "\uF016", NULL);
+            nvgText(vg, x + 6, y + 5, u8"\uF016", NULL);
             nvgFillColor(vg, nvgRGBA(255,255,255,255));
         }
 

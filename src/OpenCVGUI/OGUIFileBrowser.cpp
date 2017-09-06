@@ -201,9 +201,9 @@ namespace OpenCVGUI {
             nvgFontFace(vg, "icons");
             nvgTextAlign(vg,NVG_ALIGN_LEFT|NVG_ALIGN_TOP);
             nvgFillColor(vg, nvgRGBA(0,0,0,255));
-            nvgText(vg, 10, 11, "\uF115", NULL);
+            nvgText(vg, 10, 11, u8"\uF115", NULL);
             nvgFillColor(vg, nvgRGBA(255, 255, 255, 255));
-            nvgText(vg, 11, 13, "\uF115", NULL);
+            nvgText(vg, 11, 13, u8"\uF115", NULL);
             nvgFillColor(vg, nvgRGBA(255,255,255,255));
 
             // show path in header
