@@ -226,11 +226,12 @@ namespace OpenCVGUI {
 
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
-    if(!isBufferCreated)
+    if(!isBufferCreated && data.data!=NULL)
     {
         CreateVertexBuffer();
         isBufferCreated= true;
     }
+
     glEnable(GL_DEPTH_TEST);
     glPointSize(2.f);
     // ToDo Enable GL3 version...
@@ -260,21 +261,25 @@ void OGUI3D::draw3d(int x, int y, int width, int height)
 
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
-    // Get the location of the attributes that enters in the vertex shader
-    position_attribute = glGetAttribLocation(shaderProgram, "position");
+    if(isBufferCreated) {
+        // Get the location of the attributes that enters in the vertex shader
+        position_attribute = glGetAttribLocation(shaderProgram, "position");
 
-    // Enable the attribute
-    glBindVertexArray(vao);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // Specify how the data for position can be accessed
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        // Enable the attribute
+        glBindVertexArray(vao);
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        // Specify how the data for position can be accessed
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glDrawElements(GL_TRIANGLES, dataLengthIBO, GL_UNSIGNED_INT, 0);
-    //glDrawArrays(GL_POINTS, 0, dataLength/3);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glDrawElements(GL_TRIANGLES, dataLengthIBO, GL_UNSIGNED_INT, 0);
+        //glDrawArrays(GL_POINTS, 0, dataLength/3);
 
-    glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(0);
+    }
+    if(externDraw3d!=NULL)
+        externDraw3d(x, y, width, height);
 
 }
 

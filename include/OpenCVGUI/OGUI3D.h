@@ -1,6 +1,7 @@
 #ifndef OpenCVGUI_OGUI3D_h
 #define OpenCVGUI_OGUI3D_h
 
+#include <functional>
 #include <opencv2/core/core.hpp>
 #include <GL/glew.h>
 #include "OGUIArea.h"
@@ -33,6 +34,7 @@ class OGUI3D : public OGUIArea {
 
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
+    std::function<void(int x, int y, int width, int height)> externDraw3d;
     virtual void updateScrollStatus(double xoffset,double yoffset);
     void replot(void *data);
 

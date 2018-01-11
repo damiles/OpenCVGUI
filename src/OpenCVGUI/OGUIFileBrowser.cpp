@@ -74,7 +74,7 @@ namespace OpenCVGUI {
             OGUIFile *oguifile= new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0);
             _file_list.push_back(oguifile);
 
-            printf("\n");
+           // printf("\n");
 
         }
 
