@@ -28,7 +28,7 @@ Mat frame;
 
 bool sayHello=false;
 void on_change_slider_threshold(double value){
-    threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
+    threshold( gray, output, (int)value, 255, THRESH_BINARY);
     window->imshow("threshold", &output);
 }
 
@@ -44,7 +44,7 @@ void cv_process() {
         window->imshow("camera", &frame);
 
         Mat g_data, data;
-        cvtColor(frame, g_data, CV_BGR2GRAY);
+        cvtColor(frame, g_data, COLOR_BGR2GRAY);
         g_data.convertTo(data, CV_32F, 1/255.0);
         resize(data, data, Size(50,10));
         window->plot2D("2D plot Series", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"}, 1, OpenCVGUI::PLOT_SERIES);
@@ -83,11 +83,11 @@ int main( int argc, const char* argv[] )
     window->imshow("input", &src);
     window->setImShowMouseClickCallBack("input", input_mouse_click);
     cvtColor( src, gray, COLOR_RGB2GRAY );
-    threshold( gray, output, 125, 255, CV_THRESH_BINARY);
+    threshold( gray, output, 125, 255, THRESH_BINARY);
     window->imshow("threshold", &output);
 
     Mat data;
-    Mat indata= imread("../resources/3d.png", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat indata= imread("../resources/3d.png", IMREAD_GRAYSCALE);
     //   window->imshow("3dindata", &indata);
 //    indata.convertTo(data, CV_32F, 1/255.0);
     gray.convertTo(data, CV_32F, 1/255.0);

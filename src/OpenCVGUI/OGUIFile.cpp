@@ -138,11 +138,11 @@ namespace OpenCVGUI {
             switch (img.channels())
             {
                 case 1:
-                    cvtColor(_img, imgRGBA, CV_GRAY2RGBA);
+                    cvtColor(_img, imgRGBA, COLOR_GRAY2RGBA);
                     _preview_data = imgRGBA.data;
                     break;
                 case 3:
-                    cvtColor(_img, imgRGBA, CV_BGR2RGBA);
+                    cvtColor(_img, imgRGBA, COLOR_BGR2RGBA);
                     _preview_data = imgRGBA.data;
                     break;
                 case 4:

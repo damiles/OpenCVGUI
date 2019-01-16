@@ -30,7 +30,7 @@ VideoCapture cap;
 Mat frame;
 
 void on_change_slider_threshold(double value){
-    threshold( gray, output, (int)value, 255, CV_THRESH_BINARY);
+    threshold( gray, output, (int)value, 255, THRESH_BINARY);
     imageArea2->setImage(&output);
 }
 
@@ -85,7 +85,7 @@ int main( int argc, const char* argv[] )
     
     imageArea1->setImage(&src);
     cvtColor( src, gray, COLOR_RGB2GRAY );
-    threshold( gray, output, 125, 255, CV_THRESH_BINARY);
+    threshold( gray, output, 125, 255, THRESH_BINARY);
     imageArea2->setImage(&output);
 
     //imageArea3.setImage(gray);
