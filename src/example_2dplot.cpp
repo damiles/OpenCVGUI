@@ -91,7 +91,7 @@ void cv_process() {
         window->imshow("camera", &frame);
 
         Mat g_data, data;
-        cvtColor(frame, g_data, CV_BGR2GRAY);
+        cvtColor(frame, g_data, COLOR_BGR2GRAY);
         g_data.convertTo(data, CV_32F, 1/255.0);
         resize(data, data, Size(50,10));
         window->plot2D("2D plot Series", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"}, 1, OpenCVGUI::PLOT_SERIES);

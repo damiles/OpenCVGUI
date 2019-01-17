@@ -21,7 +21,7 @@ void cv_process() {
         window->imshow("camera", &frame);
         Mat output;
         cvtColor( frame, gray, COLOR_RGB2GRAY );
-        threshold( gray, output, (int)thr, 255, CV_THRESH_BINARY);
+        threshold( gray, output, (int)thr, 255, THRESH_BINARY);
         window->imshow("threshold", &output);
         if(first_info==0) {
             string file_string= window->openFileBrowser(".", {"*"});
@@ -65,7 +65,7 @@ int main( int argc, const char* argv[] )
     // Convert frame, threshodl and show
     cvtColor( frame, gray, COLOR_RGB2GRAY );
     Mat output;
-    threshold( gray, output, 125, 255, CV_THRESH_BINARY);
+    threshold( gray, output, 125, 255, THRESH_BINARY);
     window->imshow("threshold", &output);
 
     // Start the Comptuer vision process
