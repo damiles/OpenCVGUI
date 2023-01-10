@@ -81,7 +81,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
                     is_pressed= true;
                 }
             }
-            if(is_pressed) {
+            if(is_pressed && id_area_pressed>=0) {
                 float new_size= ((float) window->mouse_y / (float) height)- (areas.at(id_area_pressed)->y/(float)height);
                 float diff= this->area_sizes.at(id_area_pressed) - new_size;
 
@@ -114,7 +114,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
                     id_area_pressed=i-1;
                 }
             }
-            if(is_pressed) {
+            if(is_pressed && id_area_pressed>=0) {
 
                 float new_size= ((float) window->mouse_x / (float) width)- (areas.at(id_area_pressed)->x/(float)width);
                 float diff= this->area_sizes.at(id_area_pressed) - new_size;
