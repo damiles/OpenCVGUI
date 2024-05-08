@@ -104,6 +104,9 @@ class OGUIWindow {
     // font scale, default value 1.0
     float font_scale=1.0;
 
+    void show_progress(string title, float percentage);
+    void hide_progress();
+
 private:
 
     /**
@@ -118,6 +121,9 @@ private:
     PerfGraph fps;
     double prevt = 0;
     bool _show_graph= false;
+    bool _show_progress= false;
+    float _progress = 0;
+    string _progress_title;
 
     std::function<void(void* context)> _external2dDraw;
 

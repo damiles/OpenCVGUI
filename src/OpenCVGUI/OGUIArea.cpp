@@ -42,10 +42,10 @@ void OGUIArea::draw(int x, int y, int width, int height)
 
 }
 
-void OGUIArea::drawTitle()
+void OGUIArea::drawTitle(bool always_show)
 {
     NVGcontext* vg= (NVGcontext*)(window->vg);
-    if(isMouseIn() && _show_title_bar) {
+    if((isMouseIn() && _show_title_bar) || always_show ) {
         nvgBeginPath(vg);
         nvgRect(vg, x, y, width, 22);
         nvgFillColor(vg, nvgRGBA(0, 0, 0, 100));

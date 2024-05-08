@@ -47,7 +47,7 @@ namespace OpenCVGUI {
     #endif
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
 
-        
+        return 1;
       } ;
     
 bool OGUIWindow::isInitGlfw= false;
@@ -278,6 +278,22 @@ void OGUIWindow::draw()
     // File browser
     _fileBrowser->draw();
 
+    if (_show_progress){
+        NVGcontext* tvg= (NVGcontext*)(vg);
+        nvgResetScissor(tvg);
+        
+        nvgBeginPath(tvg);
+        nvgRect(tvg, 0, 0, width, height);
+        nvgFillColor(tvg, nvgRGBA(0, 0, 0, 220));
+        nvgFill(tvg);
+        
+        nvgBeginPath(tvg);
+        nvgRect(tvg, 0, 0, _progress*width, 14);
+        nvgFillColor(tvg, nvgRGBA(100, 0, 0, 255));
+        nvgFill(tvg);
+        drawLabel(tvg, _progress_title.c_str(), 5, 7, "sans", 14.0f, 255,255,255,255 );
+    }
+    
     nvgEndFrame((NVGcontext*)vg);
 
     if(_maximizedArea!=NULL){
@@ -292,6 +308,16 @@ void OGUIWindow::draw()
 
     // Swap buffers
     glfwSwapBuffers((GLFWwindow*)glfw_window);
+}
+
+void OGUIWindow::show_progress(string title, float percentage) {
+    _progress= percentage;
+    _show_progress=true;
+    _progress_title= title;
+}
+
+void OGUIWindow::hide_progress(){
+    _show_progress=false;
 }
 
 void OGUIWindow::setExternal2DDraw(std::function<void(void* context)> func) {
@@ -343,7 +369,7 @@ int OGUIWindow::popup(string title, string text, int  type) {
     _popup_result= -1;
     if(_window_status!=0) {
         while (_popup_result == -1) {
-            usleep(1000);// Wait a milisec
+            // usleep(1000);// Wait a milisec
         }
     }
     return _popup_result;

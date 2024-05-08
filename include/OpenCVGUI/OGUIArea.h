@@ -17,7 +17,7 @@ class OGUIArea {
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
-    void drawTitle();
+    void drawTitle(bool always_show=false);
     bool isMouseIn();
     int x, y, width, height;
     int r,g,b;

@@ -155,6 +155,11 @@ TARGET_LINK_LIBRARIES(example_2dplot ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GL
 ADD_EXECUTABLE(basic_sample src/basic_sample.cpp )
 TARGET_LINK_LIBRARIES(basic_sample ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
 
+find_package(OpenMP)
+add_executable(example_videotimeline src/example_videotimeline.cpp)
+target_link_libraries(example_videotimeline OpenMP::OpenMP_CXX ${OpenCV_LIBS} opencvgui ${EXTRA_LIBS} ${GLEW_LIBRARIES} ${EXTRA_LIBS_EXE})
+
+
 ADD_EXECUTABLE(font2c src/font2c.cpp )
 
 # INSTALLATION
