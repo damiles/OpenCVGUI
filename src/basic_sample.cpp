@@ -4,6 +4,7 @@
 
 #include "OGUI.h"
 #include "OGUISlider.h"
+#include "OGUICheckBox.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -51,6 +52,9 @@ int main( int argc, const char* argv[] )
     OGUISlider slider("Threshold", 0, 255, 125);
     slider.setCallBack(on_change_slider_threshold);
     window->addFormWidget(&slider);
+
+    OGUICheckBox checkbox("Title", 1);
+    window->addFormWidget(&checkbox);
 
     // Start video capture
     cap.open(0);
