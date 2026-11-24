@@ -1,4 +1,4 @@
-#include <opencv2/imgproc/types_c.h>
+#include <opencv2/imgproc.hpp>
 #include "OGUIImageArea.h"
 #include "OGUIWindow.h"
 #include <GLFW/glfw3.h>
@@ -12,6 +12,9 @@ namespace OpenCVGUI {
     {
         image_scale=1.0;
         has_to_update= false;
+        _size_changed= false;
+        image_width= 0;
+        image_height= 0;
         this->title= title;
         _prev_mouse_status= GLFW_RELEASE;
         last_mouse_x=-1;
@@ -34,6 +37,11 @@ namespace OpenCVGUI {
         this->width= width;
         this->height= height;
         NVGcontext* vg= (NVGcontext*)(window->vg);
+
+        // Mouse click callback is called at the end, without the lock
+        bool clicked= false;
+        int click_x= 0, click_y= 0;
+        std::unique_lock<std::mutex> lock(_mutex);
 
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
@@ -156,7 +164,9 @@ namespace OpenCVGUI {
             }else if(this->window->mouse_state == GLFW_RELEASE && _prev_mouse_status == GLFW_PRESS){
                 _prev_mouse_status = GLFW_RELEASE;
                 if(btn_click_callback!=NULL) {
-                    btn_click_callback(mouse_x_img, mouse_y_img);
+                    clicked= true;
+                    click_x= mouse_x_img;
+                    click_y= mouse_y_img;
                 }
             }
 
@@ -211,7 +221,7 @@ namespace OpenCVGUI {
             nvgFill(vg);
 
             if(b_hist.data!=NULL) {
-                for (int i = 0; i <= 256; i++) {
+                for (int i = 0; i < 256; i++) {
                     float val = b_hist.at<float>(i);
                     nvgBeginPath(vg);
                     nvgRect(vg, sx+i, sy + 260 - val, 1, val);
@@ -243,6 +253,11 @@ namespace OpenCVGUI {
         }
 
         nvgResetScissor(vg);
+
+        std::function<void(int, int)> callback= btn_click_callback;
+        lock.unlock();
+        if(clicked)
+            callback(click_x, click_y);
     }
 
     void OGUIImageArea::calcHistogram(){
@@ -288,6 +303,10 @@ namespace OpenCVGUI {
 
         if(has_to_update){
             NVGcontext *ctx = (NVGcontext*)(window->vg);
+            if(image!=-1 && _size_changed){
+                nvgDeleteImage(ctx, image);
+                image= -1;
+            }
             if(image==-1){
                 image= nvgCreateImageRGBA(ctx, image_width, image_height, NVG_IMAGE_NEAREST, data);
             }else{
@@ -296,38 +315,44 @@ namespace OpenCVGUI {
             //std::thread t1(&OGUIImageArea::calcHistogram, this);
             calcHistogram();
             has_to_update= false;
+            _size_changed= false;
         }
     }
 
     void OGUIImageArea::setImage(Mat *img) {
 
-        img->copyTo(_img);
+        // Copy and convert img to RGBA outside the lock
+        Mat new_img, new_rgba;
+        img->copyTo(new_img);
+        switch (new_img.channels())
+        {
+            case 1:
+                cvtColor(new_img, new_rgba, COLOR_GRAY2RGBA);
+                break;
+            case 3:
+                cvtColor(new_img, new_rgba, COLOR_BGR2RGBA);
+                break;
+            case 4:
+                new_rgba= new_img;
+                break;
+        }
+
+        std::lock_guard<std::mutex> lock(_mutex);
+        _img= new_img;
+        imgRGBA= new_rgba;
+        data= imgRGBA.data;
 
         // Reinit image if don't have same size
         if(img->cols!= image_width || img->rows!= image_height)
-            image=-1;
+            _size_changed= true;
 
         image_width = img->cols;
         image_height = img->rows;
-        // convert img to RGBA
-        switch (img->channels())
-        {
-            case 1:
-                cvtColor(_img, imgRGBA, CV_GRAY2RGBA);
-                data = imgRGBA.data;
-                break;
-            case 3:
-                cvtColor(_img, imgRGBA, CV_BGR2RGBA);
-                data = imgRGBA.data;
-                break;
-            case 4:
-                data = _img.data;
-                break;
-        }
         has_to_update= true;
     }
 
     void OGUIImageArea::setMouseClickCallBack(std::function<void(int, int)> func) {
+        std::lock_guard<std::mutex> lock(_mutex);
         btn_click_callback= func;
     }
 

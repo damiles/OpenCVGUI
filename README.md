@@ -61,6 +61,14 @@ Show image in window
     window->imshow("image title key like highui imshow", &image);
 ```
 
+Custom 3D plot shaders (optional, defaults are embedded in the library).
+Put `vert.shader` and/or `frag.shader` in a directory, missing files keep the
+default one. You can use `resources/shaders` as template.
+```C++
+    OpenCVGUI::setShadersDir("./my_shaders");
+```
+or with the environment variable `OPENCVGUI_SHADERS_DIR=./my_shaders`.
+
 ## Basic Example
 
 ```c++

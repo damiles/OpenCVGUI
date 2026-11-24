@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <atomic>
+#include <functional>
 #include <iostream>
 #include <unistd.h>
 #include "perf.h"
@@ -85,11 +89,14 @@ class OGUIWindow {
     void showPerfGraph(bool show);
     void setExternal2DDraw(std::function<void(void* context)> func);
 
-    /// Popups
+    /// Popups, blocks until it is closed, can not be called from the UI thread
     int popup(string title, string text, int type=2);
 
-    /// File browser
+    /// File browser, blocks until it is closed, can not be called from the UI thread
     string openFileBrowser(string path, std::vector<string> filter);
+
+    // Check if the caller is running in the UI thread
+    bool isUIThread();
     //string saveFileBrowser(string path='.');
 
     // Force to close window
@@ -107,7 +114,15 @@ class OGUIWindow {
     void show_progress(string title, float percentage);
     void hide_progress();
 
+    // Queue a function to run in the UI thread before the next frame is drawn
+    void runOnUIThread(std::function<void()> func);
+
 private:
+
+    // Functions queued from other threads to run in the UI thread
+    std::mutex _ui_tasks_mutex;
+    std::vector<std::function<void()>> _ui_tasks;
+    void runUITasks();
 
     /**
      * @element-type OGUIArea
@@ -116,11 +131,16 @@ private:
     int width, height;
     string title;
     OGUIWidget* key_focus_widget_;
-    int _window_status= 1; // 0 close, 1 open
+    std::atomic<int> _window_status; // 0 close, 1 open
+    std::thread::id _ui_thread_id;
 
     PerfGraph fps;
     double prevt = 0;
     bool _show_graph= false;
+
+    // Protects popup and progress state, they are set from the vision thread
+    std::mutex _state_mutex;
+    std::condition_variable _popup_closed;
     bool _show_progress= false;
     float _progress = 0;
     string _progress_title;
@@ -128,7 +148,7 @@ private:
     std::function<void(void* context)> _external2dDraw;
 
     // Popups
-    void drawPopup();
+    bool drawPopup(); // Return true if a popup is visible
     int _popup_type=0; // 0 no popup visible, 1 confirm, 2 alert, 3 error
     string _popup_text;
     string _popup_title;

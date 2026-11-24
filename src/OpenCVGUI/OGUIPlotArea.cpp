@@ -19,10 +19,9 @@ namespace OpenCVGUI {
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
 
-        if(!data_lock) {
-            is_drawing= true;
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
             drawPlot();
-            is_drawing= false;
         }
 
         drawTitle();
@@ -46,29 +45,26 @@ namespace OpenCVGUI {
                 99,176,99
         };
         this->title= title;
-        is_drawing= false;
-        data_lock= true;
         ((Mat*)d)->copyTo(data);
         //data= data.reshape(0,1);
         _labels= labels;
         _x_step= xstep;
-        data_lock= false;
         _auto_scale= true;
     }
 
     void OGUIPlotArea::replot(void *d, std::vector<string> labels, float xstep) {
-//        while(is_drawing){
-////            cout << "wait" << endl;
-//        }
-        data_lock= true;
-        ((Mat*)d)->copyTo(data);
+        // Copy outside the lock, the lock only swaps the data
+        Mat new_data;
+        ((Mat*)d)->copyTo(new_data);
         //data= data.reshape(0,1);
+        std::lock_guard<std::mutex> lock(_mutex);
+        data= new_data;
         _labels= labels;
         _x_step= xstep;
-        data_lock= false;
     }
 
     void OGUIPlotArea::setYScale(bool auto_scale, double min_value, double max_value){
+        std::lock_guard<std::mutex> lock(_mutex);
         _auto_scale= auto_scale;
         if(!auto_scale){
             _min_value= min_value;

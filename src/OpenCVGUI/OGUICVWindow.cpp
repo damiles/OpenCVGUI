@@ -26,16 +26,16 @@ namespace OpenCVGUI {
 
     /// Show image into layouts
     void OGUICVWindow::imshow(string area_title, void *img) {
+        std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
-        OGUIArea* area=findAreaByTitle(area_title);
+        OGUIArea* area=findArea(area_title);
 
         /// create or redraw
         if(area==NULL){
             // create new area and ad
             OGUIImageArea *ia= new OGUIImageArea(this, area_title);
             ia->setImage((Mat*)img);
-            layout.at(areas_showing.size()%2)->addArea(ia);
-            areas_showing.push_back((OGUIArea*)ia);
+            showArea(ia);
         }else{
             OGUIImageArea *ia= (OGUIImageArea*)area;
             ia->setImage((Mat*)img);
@@ -47,14 +47,14 @@ namespace OpenCVGUI {
     }
 
     void OGUICVWindow::plot3D(string area_title, void *data) {
+        std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
-        OGUIArea* area=findAreaByTitle(area_title);
+        OGUIArea* area=findArea(area_title);
         /// create or redraw
         if(area==NULL){
             // create new area and ad
             OGUI3D *ia= new OGUI3D(this, area_title, data);
-            layout.at(areas_showing.size()%2)->addArea(ia);
-            areas_showing.push_back((OGUIArea*)ia);
+            showArea(ia);
         }else{
             OGUI3D *ia= (OGUI3D*)area;
             // ToDo replot new 3D
@@ -63,14 +63,14 @@ namespace OpenCVGUI {
     }
 
     void OGUICVWindow::plot2D(string area_title, void *data, std::vector<string> labels, float xstep, int plot_type) {
+        std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
-        OGUIArea* area=findAreaByTitle(area_title);
+        OGUIArea* area=findArea(area_title);
         /// create or redraw
         if(area==NULL){
             // create new area and ad
             OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type);
-            layout.at(areas_showing.size()%2)->addArea(ia);
-            areas_showing.push_back((OGUIArea*)ia);
+            showArea(ia);
         }else{
             OGUIPlotArea *ia= (OGUIPlotArea*)area;
             ia->replot(data, labels, xstep);
@@ -78,6 +78,11 @@ namespace OpenCVGUI {
     }
 
     OGUIArea *OGUICVWindow::findAreaByTitle(string title) {
+        std::lock_guard<std::mutex> lock(_areas_mutex);
+        return findArea(title);
+    }
+
+    OGUIArea *OGUICVWindow::findArea(string title) {
         OGUIArea* area= NULL;
         for(int i=0; i<areas_showing.size(); i++){
             OGUIArea* tmp= areas_showing.at(i);
@@ -89,9 +94,19 @@ namespace OpenCVGUI {
         return area;
     }
 
+    /// Add new area to the stacked layouts, layouts are only modified in the UI thread
+    void OGUICVWindow::showArea(OGUIArea *area) {
+        OGUILayout* l= layout.at(areas_showing.size()%2);
+        areas_showing.push_back(area);
+        runOnUIThread([l, area]() {
+            l->addArea(area);
+        });
+    }
+
     bool OGUICVWindow::setImShowMouseClickCallBack(string area_title, std::function<void(int, int)> func) {
+        std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
-        OGUIArea* area=findAreaByTitle(area_title);
+        OGUIArea* area=findArea(area_title);
         /// create or redraw
         if(area==NULL){
             return false;

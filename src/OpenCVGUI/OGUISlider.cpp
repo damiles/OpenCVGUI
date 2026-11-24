@@ -43,7 +43,7 @@ void OGUISlider::draw(int x, int y, int w)
     nvgFillPaint(vg, bg);
     nvgFill(vg);
 
-    double progress_pos= w*(value/(max-min));
+    double progress_pos= w*((value-min)/(max-min));
     bg = nvgBoxGradient(vg, x, y, progress_pos,20, 2,2, nvgRGBA(29,157,206,64), nvgRGBA(29,157,206,128));
     nvgBeginPath(vg);
     nvgRoundedRect(vg, x, y, progress_pos,20, 2);
@@ -73,7 +73,7 @@ void OGUISlider::draw(int x, int y, int w)
 
         if (area->window->mouse_state == GLFW_PRESS){
             actual_press_status = GLFW_PRESS;
-            value= (min+(area->window->mouse_x - x)/w)*(max-min);
+            value= min+((area->window->mouse_x - x)/w)*(max-min);
             if(btn_click_callback!=NULL) {
                 btn_click_callback(value);
             }

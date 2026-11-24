@@ -5,12 +5,23 @@
 #include <GL/glew.h>
 #include "OGUIArea.h"
 #include <string>
+#include <mutex>
 // Include GLM
 #include <glm/glm.hpp>
 
 using namespace cv;
 
 namespace OpenCVGUI {
+
+    /**
+     * Set a directory with custom shaders for 3D plots.
+     * If the directory contains vert.shader and/or frag.shader they replace the
+     * embedded default ones; missing files keep the default shader. The
+     * OPENCVGUI_SHADERS_DIR environment variable is used when no directory is set.
+     * Must be called before the 3D plot is created or replotted.
+     * @param dir directory with custom shaders, empty string to use only defaults
+     */
+    void setShadersDir(const std::string& dir);
 
     class OGUI3DCamera
     {
@@ -49,6 +60,10 @@ class OGUI3D : public OGUIArea {
 
     int lastMouseX, lastMouseY;
     bool isBufferCreated;
+
+private:
+    // Protects data and isBufferCreated, replot can be called from any thread
+    std::mutex _mutex;
 };
 
 } /* End of namespace OpenCVGUI */

@@ -8,7 +8,7 @@
 namespace OpenCVGUI{
 
     vector<OGUIWindow*> windows;
-    bool app_is_running= true;
+    std::atomic<bool> app_is_running(true);
 
     OGUICVWindow* namedWindow(const char* title, int width,int height)
     {

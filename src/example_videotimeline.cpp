@@ -101,10 +101,21 @@ int main( int argc, const char* argv[] )
     sizes.push_back(0.2);
     window->getMainLayout()->setLayoutSizes(sizes);
     
+    if(argc < 2){
+        cerr << "Usage: " << argv[0] << " video_file [video_file ...]" << endl;
+        return 1;
+    }
+
+    bool open_failed= false;
     #pragma omp for
     for(int i=1; i<argc; i++){
         VideoCapture* c= new VideoCapture();
         c->open(argv[i]);
+        if(!c->isOpened()){
+            cerr << "Can not open video source: " << argv[i] << endl;
+            open_failed= true;
+            continue;
+        }
         cap.push_back(c);
         fps = c->get(CAP_PROP_FPS);
 
@@ -113,6 +124,9 @@ int main( int argc, const char* argv[] )
         imageAreas.push_back(imageArea);
     }
     
+
+    if(open_failed)
+        return 1;
 
     timeline= new OGUIVideoTimeline(window, "Video Timeline");
     layout2.addArea(timeline);

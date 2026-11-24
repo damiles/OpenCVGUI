@@ -8,6 +8,8 @@
 
 #include <vector>
 #include <string>
+#include <mutex>
+#include <condition_variable>
 
 #include "OGUIWindow.h"
 #include "OGUIFile.h"
@@ -23,8 +25,11 @@ namespace OpenCVGUI {
     public:
         OGUIFileBrowser(OGUIWindow* window);
 
+        // Show the file browser and wait until it is closed, call it from the vision thread
         string open(string path, std::vector<string> filter);
         void draw();
+        // Close the file browser without result, wakes up the thread waiting in open
+        void cancel();
 
     private:
         OGUIWindow* _window;
@@ -36,6 +41,13 @@ namespace OpenCVGUI {
         std::vector <OGUIFile*> _system;
 
         char resolved_path[4096];
+
+        // Synchronization with the thread waiting in open
+        std::mutex _mutex;
+        std::condition_variable _closed;
+        bool _is_open= false;
+        string _result_path;
+        void close(OGUIFile* result);
 
         void readFolder(string path);
         void readSystem();

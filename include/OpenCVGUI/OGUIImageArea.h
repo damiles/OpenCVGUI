@@ -7,6 +7,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <functional>
+#include <mutex>
 
 using namespace std;
 using namespace cv;
@@ -31,6 +32,9 @@ private:
     float dx, dy; // mouse increment if it is moved.
     int last_mouse_x, last_mouse_y;
     bool has_to_update;
+    bool _size_changed;
+    // Protects image data, setImage can be called from any thread
+    std::mutex _mutex;
     string _title;
 
     void updateImage();

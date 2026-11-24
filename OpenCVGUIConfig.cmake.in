@@ -1,8 +1,17 @@
-set(OpenCVGUI_VERSION 1.0.1)
+set(OpenCVGUI_VERSION @PROJECT_VERSION@)
 
 @PACKAGE_INIT@
 
-set_and_check(OPENCVGUI_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
-set(OPENCVGUI_LIBRARY OpenCVGUI glfw)
+include(CMakeFindDependencyMacro)
+find_dependency(OpenCV)
+find_dependency(OpenGL)
+find_dependency(GLEW)
+find_dependency(glfw3)
+
+include("${CMAKE_CURRENT_LIST_DIR}/OpenCVGUITargets.cmake")
+
+# Backwards compatible variables
+set(OPENCVGUI_LIBRARY OpenCVGUI::OpenCVGUI)
+get_target_property(OPENCVGUI_INCLUDE_DIR OpenCVGUI::OpenCVGUI INTERFACE_INCLUDE_DIRECTORIES)
 
 check_required_components(OpenCVGUI)

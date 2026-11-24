@@ -2,6 +2,8 @@
 #include "OGUI3D.h"
 #include <iostream>
 #include <fstream>
+#include <iterator>
+#include <cstdlib>
 #include <nanovg.h>
 #include "OGUIWindow.h"
 
@@ -12,39 +14,64 @@
 
 namespace OpenCVGUI {
 
-    // Read a shader source from a file
-// store the shader source in a std::vector<char>
-    void read_shader_src(const char *fname, std::vector<char> &buffer) {
-        std::ifstream in;
-        in.open(fname, std::ios::binary);
+    // Default shaders embedded in the library (same as resources/shaders)
+    static const char* default_vert_shader = R"(#version 150
 
-        if(in.is_open()) {
-            // Get the number of bytes stored in this file
-            in.seekg(0, std::ios::end);
-            size_t length = (size_t)in.tellg();
+in vec4 position;
+uniform mat4 MVP;
+out float ypos;
 
-            // Go to start of the file
-            in.seekg(0, std::ios::beg);
+void main() {
+    ypos= position[1];
+    gl_Position = MVP*position;
+}
+)";
 
-            // Read the content of the file in a buffer
-            buffer.resize(length + 1);
-            in.read(&buffer[0], length);
-            in.close();
-            // Add a valid C - string end
-            buffer[length] = '\0';
-        }
-        else {
-            std::cerr << "Unable to open " << fname << " I'm out!" << std::endl;
-            exit(-1);
-        }
+    static const char* default_frag_shader = R"(#version 150
+
+out vec4 out_color;
+in float ypos;
+
+void main() {
+    gl_FragColor = vec4(cos(ypos), sin(ypos), ypos*ypos, 1.0);
+}
+)";
+
+    // Directory with user custom shaders, empty to use OPENCVGUI_SHADERS_DIR or defaults
+    static std::string shaders_dir;
+
+    void setShadersDir(const std::string& dir) {
+        shaders_dir= dir;
     }
 
-// Compile a shader
-    GLuint load_and_compile_shader(const char *fname, GLenum shaderType) {
-        // Load a shader from an external file
-        std::vector<char> buffer;
-        read_shader_src(fname, buffer);
-        const char *src = &buffer[0];
+    // Read a shader source from a file, return false if the file can not be read
+    bool read_shader_src(const std::string &fname, std::string &buffer) {
+        std::ifstream in(fname, std::ios::binary);
+        if(!in.is_open())
+            return false;
+        buffer.assign(std::istreambuf_iterator<char>(in), std::istreambuf_iterator<char>());
+        return true;
+    }
+
+    // Get the user custom shader source if exists, if not the default one
+    std::string get_shader_src(const char *fname, const char *default_src, bool &is_custom) {
+        std::string dir= shaders_dir;
+        if(dir.empty()) {
+            const char *env= getenv("OPENCVGUI_SHADERS_DIR");
+            if(env!=NULL)
+                dir= env;
+        }
+
+        std::string src;
+        is_custom= !dir.empty() && read_shader_src(dir + "/" + fname, src);
+        if(!is_custom)
+            src= default_src;
+        return src;
+    }
+
+// Compile a shader, return 0 if fails
+    GLuint load_and_compile_shader(const std::string &source, GLenum shaderType) {
+        const char *src = source.c_str();
 
         // Compile the shader
         GLuint shader = glCreateShader(shaderType);
@@ -58,16 +85,22 @@ namespace OpenCVGUI {
             std::vector<char> compilation_log(512);
             glGetShaderInfoLog(shader, compilation_log.size(), NULL, &compilation_log[0]);
             std::cerr << &compilation_log[0] << std::endl;
-            exit(-1);
+            glDeleteShader(shader);
+            return 0;
         }
         return shader;
     }
 
-// Create a program from two shaders
-    GLuint create_program(const char *path_vert_shader, const char *path_frag_shader) {
-        // Load and compile the vertex and fragment shaders
-        GLuint vertexShader = load_and_compile_shader(path_vert_shader, GL_VERTEX_SHADER);
-        GLuint fragmentShader = load_and_compile_shader(path_frag_shader, GL_FRAGMENT_SHADER);
+// Create a program from two shader sources, return 0 if fails
+    GLuint create_program(const std::string &vert_src, const std::string &frag_src) {
+        // Compile the vertex and fragment shaders
+        GLuint vertexShader = load_and_compile_shader(vert_src, GL_VERTEX_SHADER);
+        GLuint fragmentShader = load_and_compile_shader(frag_src, GL_FRAGMENT_SHADER);
+        if(vertexShader==0 || fragmentShader==0) {
+            glDeleteShader(vertexShader);
+            glDeleteShader(fragmentShader);
+            return 0;
+        }
 
         // Attach the above shader to a program
         GLuint shaderProgram = glCreateProgram();
@@ -78,11 +111,35 @@ namespace OpenCVGUI {
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
 
-        // Link and use the program
+        // Link and check the program
         glLinkProgram(shaderProgram);
+        GLint test;
+        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &test);
+        if(!test) {
+            std::cerr << "Shader program link failed with this message:" << std::endl;
+            std::vector<char> link_log(512);
+            glGetProgramInfoLog(shaderProgram, link_log.size(), NULL, &link_log[0]);
+            std::cerr << &link_log[0] << std::endl;
+            glDeleteProgram(shaderProgram);
+            return 0;
+        }
         glUseProgram(shaderProgram);
 
         return shaderProgram;
+    }
+
+// Create the 3D plot program with user custom shaders, falling back to defaults
+    GLuint create_3d_program() {
+        bool custom_vert, custom_frag;
+        std::string vert_src= get_shader_src("vert.shader", default_vert_shader, custom_vert);
+        std::string frag_src= get_shader_src("frag.shader", default_frag_shader, custom_frag);
+
+        GLuint program= create_program(vert_src, frag_src);
+        if(program==0 && (custom_vert || custom_frag)) {
+            std::cerr << "Custom shaders failed, using default shaders" << std::endl;
+            program= create_program(default_vert_shader, default_frag_shader);
+        }
+        return program;
     }
 
 
@@ -144,6 +201,13 @@ namespace OpenCVGUI {
 
     void OGUI3D::CreateVertexBuffer()
 {
+    // Release previous buffers if it is a replot
+    if(vao!=0) {
+        glDeleteVertexArrays(1, &vao);
+        glDeleteBuffers(1, &vbo);
+        glDeleteBuffers(1, &ibo);
+    }
+
     // Use a Vertex Array Object
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -198,8 +262,12 @@ namespace OpenCVGUI {
 
     // SHADER PROGRAM
 
-   shaderProgram = create_program("shaders/vert.shader", "shaders/frag.shader");
-//
+    if(shaderProgram!=0)
+        glDeleteProgram(shaderProgram);
+    shaderProgram = create_3d_program();
+    if(shaderProgram==0)
+        return;
+
     // Get a handle for our "MVP" uniform
     MatrixID = glGetUniformLocation(shaderProgram, "MVP");
 
@@ -226,11 +294,17 @@ namespace OpenCVGUI {
 
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
-    if(!isBufferCreated)
     {
-        CreateVertexBuffer();
-        isBufferCreated= true;
+        std::lock_guard<std::mutex> lock(_mutex);
+        if(!isBufferCreated)
+        {
+            CreateVertexBuffer();
+            isBufferCreated= true;
+        }
     }
+    // No valid shader program, nothing to draw
+    if(shaderProgram==0)
+        return;
     glEnable(GL_DEPTH_TEST);
     glPointSize(2.f);
     // ToDo Enable GL3 version...
@@ -299,12 +373,18 @@ OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     this->title= title;
     ((Mat*)d)->copyTo(data);
 
+    shaderProgram= 0;
+    vao= vbo= ibo= 0;
     isBufferCreated= false;
 }
 
 void OGUI3D::replot(void *d)
 {
-    ((Mat*)d)->copyTo(data);
+    // Copy outside the lock, the lock only swaps the data
+    Mat new_data;
+    ((Mat*)d)->copyTo(new_data);
+    std::lock_guard<std::mutex> lock(_mutex);
+    data= new_data;
     isBufferCreated= false;
 }
 
