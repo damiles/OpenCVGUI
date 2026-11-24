@@ -96,7 +96,7 @@ target_link_libraries(opencvgui
 
 # Examples
 if(OGUI_BUILD_EXAMPLES)
-    foreach(example example example1 example_2dplot basic_sample)
+    foreach(example example example1 example_2dplot example3d basic_sample)
         add_executable(${example} src/${example}.cpp)
         target_link_libraries(${example} PRIVATE opencvgui)
     endforeach()
