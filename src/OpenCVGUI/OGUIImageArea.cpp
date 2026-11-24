@@ -221,7 +221,7 @@ namespace OpenCVGUI {
             nvgFill(vg);
 
             if(b_hist.data!=NULL) {
-                for (int i = 0; i <= 256; i++) {
+                for (int i = 0; i < 256; i++) {
                     float val = b_hist.at<float>(i);
                     nvgBeginPath(vg);
                     nvgRect(vg, sx+i, sy + 260 - val, 1, val);
