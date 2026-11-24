@@ -108,7 +108,7 @@ int OGUIWindow::init(bool fullScreen)
 
     glfwSetWindowUserPointer((GLFWwindow*)glfw_window, this);
 	glfwMakeContextCurrent((GLFWwindow*)glfw_window);
-    glfwSwapInterval(0);
+    glfwSwapInterval(1); // Enable vsync to avoid drawing more frames than the screen shows
     
     // Init GLew
     glewExperimental = GL_TRUE;
