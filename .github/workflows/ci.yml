@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  linux:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Release
+            build_type: Release
+            options: -DOGUI_BUILD_EXAMPLES=ON
+            flags: ""
+          - name: Static library
+            build_type: Release
+            options: -DOGUI_BUILD_SHARED=OFF -DOGUI_BUILD_EXAMPLES=OFF
+            flags: ""
+          - name: Bundled GLFW
+            build_type: Release
+            options: -DOGUI_SYSTEM_GLFW=OFF -DOGUI_BUILD_EXAMPLES=OFF
+            flags: ""
+          - name: AddressSanitizer
+            build_type: Debug
+            options: -DOGUI_BUILD_EXAMPLES=OFF
+            flags: -fsanitize=address,undefined -fno-omit-frame-pointer
+          - name: ThreadSanitizer
+            build_type: Debug
+            options: -DOGUI_BUILD_EXAMPLES=OFF
+            flags: -fsanitize=thread -fno-omit-frame-pointer
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake g++ libopencv-dev libglew-dev libglfw3-dev \
+            libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
+            xvfb xauth libgl1-mesa-dri
+
+      # The default address randomization of the runners breaks ThreadSanitizer
+      - name: Allow ThreadSanitizer memory mappings
+        if: contains(matrix.flags, 'thread')
+        run: sudo sysctl vm.mmap_rnd_bits=28
+
+      - name: Configure
+        run: >
+          cmake -S . -B build
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/install
+          -DOGUI_BUILD_TESTS=ON
+          ${{ matrix.options }}
+          "-DCMAKE_C_FLAGS=${{ matrix.flags }}"
+          "-DCMAKE_CXX_FLAGS=${{ matrix.flags }}"
+          "-DCMAKE_EXE_LINKER_FLAGS=${{ matrix.flags }}"
+          "-DCMAKE_SHARED_LINKER_FLAGS=${{ matrix.flags }}"
+
+      - name: Build
+        run: cmake --build build -j $(nproc)
+
+      - name: Test
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 1
+          UBSAN_OPTIONS: print_stacktrace=1:halt_on_error=1
+        run: xvfb-run -a -s "-screen 0 1024x768x24" ctest --test-dir build --output-on-failure
+
+      - name: Install and use the CMake package
+        if: matrix.flags == ''
+        env:
+          LIBGL_ALWAYS_SOFTWARE: 1
+        run: |
+          cmake --install build
+          cmake -S tests/consumer -B build-consumer -DCMAKE_PREFIX_PATH=${{ github.workspace }}/install
+          cmake --build build-consumer
+          LD_LIBRARY_PATH=${{ github.workspace }}/install/lib xvfb-run -a build-consumer/consumer

@@ -1,4 +1,6 @@
 # OpenCVGUI
+[![CI](https://github.com/damiles/OpenCVGUI/actions/workflows/ci.yml/badge.svg)](https://github.com/damiles/OpenCVGUI/actions/workflows/ci.yml)
+
 Do you like OpenCV Highui but it's not enough and don't want waste your time
 in a new UI SDK? **This is  your solution!**
 OpenCVGUI is a new graphical user inteface for OpenCV with different 
@@ -21,6 +23,16 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 4. cmake ..
 5. make
 6. sudo make install
+
+# Tests
+Tests open a window, so they need a display. Use `xvfb-run` on machines
+without one.
+
+```bash
+cmake -S . -B build -DOGUI_BUILD_TESTS=ON
+cmake --build build
+ctest --test-dir build --output-on-failure
+```
 
 
 ## Features

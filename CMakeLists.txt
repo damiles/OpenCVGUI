@@ -8,6 +8,7 @@ option(OGUI_BUILD_SHARED   "Build OpenCVGUI as a shared library?" ON)
 option(OGUI_GL3            "Build OpenCVGUI with OpenGL 3 support?" ON)
 option(OGUI_BUILD_EXAMPLES "Build OpenCVGUI examples?" ON)
 option(OGUI_SYSTEM_GLFW    "Use system GLFW if available instead of 3rdparty/glfw?" ON)
+option(OGUI_BUILD_TESTS    "Build OpenCVGUI tests? They need a display, use xvfb-run in CI" OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -111,6 +112,18 @@ if(OGUI_BUILD_EXAMPLES)
 endif()
 
 add_executable(font2c src/font2c.cpp)
+
+# Tests
+if(OGUI_BUILD_TESTS)
+    enable_testing()
+    foreach(test test_render test_dialogs)
+        add_executable(${test} tests/${test}.cpp)
+        target_link_libraries(${test} PRIVATE opencvgui glfw)
+        set_target_properties(${test} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
+        add_test(NAME ${test} COMMAND ${test})
+        set_tests_properties(${test} PROPERTIES TIMEOUT 60)
+    endforeach()
+endif()
 
 # INSTALLATION
 install(TARGETS opencvgui
