@@ -11,6 +11,7 @@ class OGUIWidget {
 
  public:
 
+    virtual ~OGUIWidget() {}
     virtual void draw(int x, int y, int widht);
     virtual void characterCallback(unsigned int key);
     virtual void keyCallback(int key, int scancode, int action, int mods);

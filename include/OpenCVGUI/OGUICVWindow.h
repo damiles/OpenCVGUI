@@ -13,6 +13,7 @@
 #include "OGUI3D.h"
 #include "OGUIPlotArea.h"
 #include <mutex>
+#include <memory>
 
 namespace OpenCVGUI {
 /**
@@ -81,6 +82,7 @@ public:
     [[deprecated("use plot2D(title, const cv::Mat&, labels, ...)")]]
     void plot2D(const string& area_title, const Mat* data, const std::vector<string>& labels, float xstep=1, int plot_type=0);
 
+    // Areas and layouts are owned by the window, these pointers are only for access
     std::vector<OGUIArea*> areas_showing;
     std::vector<OGUILayout*> layout;
     OGUIFormArea *formArea;
@@ -88,6 +90,10 @@ public:
 
 
 private:
+    // Areas created by the window, released when the window is destroyed
+    std::vector<std::unique_ptr<OGUIArea>> _owned_areas;
+    template<typename T> T* own(T* area);
+
     // Protects areas_showing, imshow and plots can be called from any thread
     std::mutex _areas_mutex;
     OGUIArea* findArea(string title);

@@ -8,9 +8,9 @@ namespace OpenCVGUI {
 
     OGUICVWindow::OGUICVWindow(int width,int height,const char* title, int layoutOrientation): OGUIWindow(width, height, title, layoutOrientation)
     {
-        this->formArea= new OGUIFormArea(this);
-        this->layout.push_back(new OGUILayout(this, 1));
-        this->layout.push_back(new OGUILayout(this, 1));
+        this->formArea= own(new OGUIFormArea(this));
+        this->layout.push_back(own(new OGUILayout(this, 1)));
+        this->layout.push_back(own(new OGUILayout(this, 1)));
 
         this->addArea(formArea);
         this->addArea(layout.at(0));
@@ -37,7 +37,7 @@ namespace OpenCVGUI {
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUIImageArea *ia= new OGUIImageArea(this, area_title);
+            OGUIImageArea *ia= own(new OGUIImageArea(this, area_title));
             ia->setImage(img);
             showArea(ia);
         }else{
@@ -61,7 +61,7 @@ namespace OpenCVGUI {
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUI3D *ia= new OGUI3D(this, area_title, data);
+            OGUI3D *ia= own(new OGUI3D(this, area_title, data));
             showArea(ia);
         }else{
             OGUI3D *ia= (OGUI3D*)area;
@@ -81,7 +81,7 @@ namespace OpenCVGUI {
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type);
+            OGUIPlotArea *ia= own(new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type));
             showArea(ia);
         }else{
             OGUIPlotArea *ia= (OGUIPlotArea*)area;
@@ -103,6 +103,12 @@ namespace OpenCVGUI {
                 break;
             }
         }
+        return area;
+    }
+
+    /// Keep ownership of an area created by the window
+    template<typename T> T* OGUICVWindow::own(T* area) {
+        _owned_areas.push_back(std::unique_ptr<OGUIArea>(area));
         return area;
     }
 

@@ -8,6 +8,7 @@
 #include <condition_variable>
 #include <atomic>
 #include <functional>
+#include <memory>
 #include <iostream>
 #include <unistd.h>
 #include "perf.h"
@@ -132,7 +133,7 @@ private:
     /**
      * @element-type OGUIArea
      */
-    OGUILayout* mainLayout;
+    std::unique_ptr<OGUILayout> mainLayout;
     int width, height;
     string title;
     OGUIWidget* key_focus_widget_;
@@ -160,7 +161,7 @@ private:
     int _popup_result=0;
 
     // File Browser
-    OGUIFileBrowser *_fileBrowser;
+    std::unique_ptr<OGUIFileBrowser> _fileBrowser;
 
     // Maxmized Area
     OGUIArea *_maximizedArea;

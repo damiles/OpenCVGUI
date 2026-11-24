@@ -35,7 +35,7 @@ namespace OpenCVGUI {
 
     private:
         int _mouse_state;
-        unsigned char* _preview_data;
+        Mat _preview; // 150x150 RGBA preview
     };
 }
 

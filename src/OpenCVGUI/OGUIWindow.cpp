@@ -66,13 +66,13 @@ OGUIWindow::OGUIWindow(int width, int height,
 
     init(fullScreen);
     
-    this->mainLayout= new OGUILayout(this, layoutOrientation);
+    this->mainLayout.reset(new OGUILayout(this, layoutOrientation));
     this->mainLayout->title="Main  Layout";
     this->actual_cursor_type=0;
     this->key_focus_widget_= NULL;
     this->key_pressed= 0;
     this->_show_graph= false;
-    this->_fileBrowser= new OGUIFileBrowser(this);
+    this->_fileBrowser.reset(new OGUIFileBrowser(this));
     this->_maximizedArea= NULL;
 }
 
@@ -134,9 +134,10 @@ int OGUIWindow::init(bool fullScreen)
         return 0;
     }
 
-    nvgCreateFontMem(vg, "sans", font_roboto, font_roboto_size, 1);
-    nvgCreateFontMem(vg, "sans-bold", font_valera, font_valera_size, 1);
-    nvgCreateFontMem(vg, "icons", font_awesome, font_awesome_size, 1);
+    // Fonts are static embedded data, nanovg must not free them
+    nvgCreateFontMem(vg, "sans", font_roboto, font_roboto_size, 0);
+    nvgCreateFontMem(vg, "sans-bold", font_valera, font_valera_size, 0);
+    nvgCreateFontMem(vg, "icons", font_awesome, font_awesome_size, 0);
 
     // Load all cursors
     mouse_cursors_.push_back(glfwCreateStandardCursor(GLFW_ARROW_CURSOR));
@@ -365,7 +366,7 @@ void OGUIWindow::drawCursor()
 }
 
 OGUILayout* OGUIWindow::getMainLayout(){
-    return mainLayout;
+    return mainLayout.get();
 }
 
 OGUIWidget* OGUIWindow::getKeyFocusWidget()

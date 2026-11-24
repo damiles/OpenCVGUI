@@ -47,8 +47,7 @@ namespace OpenCVGUI {
                 filename= mnt_dir.substr(found+1) ;
                 if(filename.compare("")==0)
                     filename="/";
-                OGUIFile* file= new OGUIFile(_window, filename.c_str(),ent->mnt_dir, 2, "",0);
-                _system.push_back(file);
+                _system.push_back(std::unique_ptr<OGUIFile>(new OGUIFile(_window, filename.c_str(),ent->mnt_dir, 2, "",0)));
             }
         }
         endmntent(aFile);
@@ -71,8 +70,7 @@ namespace OpenCVGUI {
 
             if(strcmp(file.name,".")==0 || (file.name[0]=='.' && file.name[1]!='.'))
                 continue;
-            OGUIFile *oguifile= new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0);
-            _file_list.push_back(oguifile);
+            _file_list.push_back(std::unique_ptr<OGUIFile>(new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0)));
 
             printf("\n");
 
@@ -168,16 +166,13 @@ namespace OpenCVGUI {
             int x=10;
             int y=75;
             for(int i=0; i<_system.size(); i++){
-                OGUIFile *file= _system.at(i);
+                OGUIFile *file= _system.at(i).get();
                 if( file->draw(vg, x, y, _window->mouse_x, _window->mouse_y) ){ // is clicked
                     _file_browser_result= file;
-                    if(_file_browser_result!=NULL) {
-                        if (_file_browser_result->_is_dir
-                            && _actual_folder.compare(_file_browser_result->_path) != 0) {
-                            readFolder(_file_browser_result->_path);
-                            _actual_folder= _file_browser_result->_path;
-                            _file_browser_result = NULL;
-                        }
+                    if (file->_is_dir && _actual_folder.compare(file->_path) != 0) {
+                        _file_browser_result = NULL;
+                        _actual_folder= file->_path;
+                        readFolder(_actual_folder);
                     }
                 }
                 y+=22;
@@ -191,16 +186,15 @@ namespace OpenCVGUI {
             y=50;
             int max_height= _window->getWindowHeight()-80;
             for(int i=0; i<_file_list.size(); i++){
-                OGUIFile *file= _file_list.at(i);
+                OGUIFile *file= _file_list.at(i).get();
                 if( file->draw(vg, x, y, _window->mouse_x, _window->mouse_y) ){ // is clicked
                     _file_browser_result= file;
-                    if(_file_browser_result!=NULL) {
-                        if (_file_browser_result->_is_dir
-                            && _actual_folder.compare(_file_browser_result->_path) != 0) {
-                            readFolder(_file_browser_result->_path);
-                            _actual_folder= _file_browser_result->_path;
-                            _file_browser_result = NULL;
-                        }
+                    if (file->_is_dir && _actual_folder.compare(file->_path) != 0) {
+                        // readFolder releases the current list, file is not valid after it
+                        _file_browser_result = NULL;
+                        _actual_folder= file->_path;
+                        readFolder(_actual_folder);
+                        break;
                     }
                 }
                 y+=22;
@@ -263,18 +257,21 @@ namespace OpenCVGUI {
                         nvgStrokeColor(vg, nvgRGBA(0,0,0,48));
                         nvgStroke(vg);
 
-                        // Image preview
-                        if(_preview_image==-1){
-                            _preview_image= nvgCreateImageRGBA(vg, 150, 150, 0, _file_browser_result->getPreview());
-                        }else{
-                            nvgUpdateImage(vg, _preview_image, _file_browser_result->getPreview());
-                        }
+                        // Image preview, NULL if the image can not be read
+                        unsigned char* preview= _file_browser_result->getPreview();
+                        if(preview!=NULL) {
+                            if(_preview_image==-1){
+                                _preview_image= nvgCreateImageRGBA(vg, 150, 150, 0, preview);
+                            }else{
+                                nvgUpdateImage(vg, _preview_image, preview);
+                            }
 
-                        NVGpaint imgPaint = nvgImagePattern(vg, 25, y+25, 150, 150, 0, _preview_image, 1);
-                        nvgBeginPath(vg);
-                        nvgRect(vg, 25, y+25, 150,150);
-                        nvgFillPaint(vg, imgPaint);
-                        nvgFill(vg);
+                            NVGpaint imgPaint = nvgImagePattern(vg, 25, y+25, 150, 150, 0, _preview_image, 1);
+                            nvgBeginPath(vg);
+                            nvgRect(vg, 25, y+25, 150,150);
+                            nvgFillPaint(vg, imgPaint);
+                            nvgFill(vg);
+                        }
                     }
 
 

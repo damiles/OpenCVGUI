@@ -13,6 +13,7 @@ class OGUIArea {
  public:
     
     OGUIArea(OGUIWindow* window);
+    virtual ~OGUIArea() {}
     
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
