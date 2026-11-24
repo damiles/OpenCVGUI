@@ -21,7 +21,10 @@ class OGUIImageArea : public OGUIArea {
     virtual void draw(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
     OGUIImageArea(OGUIWindow* window, string title="");
-    void setImage(Mat *img);
+    // Set the image to show, it is copied
+    void setImage(const Mat& img);
+    [[deprecated("use setImage(const cv::Mat&)")]]
+    void setImage(const Mat* img);
     void setMouseClickCallBack(std::function<void(int, int)> func);
     void calcHistogram();
 private:

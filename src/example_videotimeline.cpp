@@ -55,9 +55,9 @@ void cv_process() {
                 cap[i]->read(frame);
                 if(frame.empty())
                 {
-                    imageAreas[i]->setImage(&black);
+                    imageAreas[i]->setImage(black);
                 }else{
-                    imageAreas[i]->setImage(&frame);
+                    imageAreas[i]->setImage(frame);
                 }
             }
             
@@ -74,9 +74,9 @@ void cv_process() {
                 cap[i]->read(frame);
                 if(frame.empty())
                 {
-                    imageAreas[i]->setImage(&black);
+                    imageAreas[i]->setImage(black);
                 }else{
-                    imageAreas[i]->setImage(&frame);
+                    imageAreas[i]->setImage(frame);
                 }
             } 
         }
@@ -138,7 +138,7 @@ int main( int argc, const char* argv[] )
         timeline->addTrack(track);
         c->read(src);
 
-        imageAreas[i]->setImage(&src);
+        imageAreas[i]->setImage(src);
 
     }
     // Track* track = new Track("Track test", cap);
@@ -149,9 +149,9 @@ int main( int argc, const char* argv[] )
     
     *cap[0] >> src;
     black = Mat::zeros(src.rows, src.cols, CV_8UC3 );
-    // imageArea1->setImage(&src);
+    // imageArea1->setImage(src);
     // cvtColor( src, gray, COLOR_RGB2GRAY );
-    // imageArea2->setImage(&gray);
+    // imageArea2->setImage(gray);
 
     OpenCVGUI::windows.push_back(window);
     OpenCVGUI::app_run(cv_process);

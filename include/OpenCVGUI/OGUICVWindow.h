@@ -37,9 +37,11 @@ public:
     /**
      * Add new image to window with title
      * @param {string} area_title image are title
-     * @param {Mat} image opencv mat
+     * @param {Mat} image opencv mat, it is copied
      */
-    void imshow(string area_title, void* img);
+    void imshow(const string& area_title, const Mat& img);
+    [[deprecated("use imshow(title, const cv::Mat&)")]]
+    void imshow(const string& area_title, const Mat* img);
 
     /**
      * Add callback for mouse interaction to specific image area
@@ -57,8 +59,27 @@ public:
     OGUIArea* findAreaByTitle(string title);
 
     void addFormWidget(OGUIWidget* widget);
-    void plot3D(string area_title, void* data);
-    void plot2D(string area_title, void* data, std::vector<string> labels, float xstep=1, int plot_type=0);
+
+    /**
+     * Add or update a 3D plot of a CV_32F Mat, values are the height
+     * @param {string} area_title plot area title
+     * @param {Mat} data opencv mat, it is copied
+     */
+    void plot3D(const string& area_title, const Mat& data);
+    [[deprecated("use plot3D(title, const cv::Mat&)")]]
+    void plot3D(const string& area_title, const Mat* data);
+
+    /**
+     * Add or update a 2D plot, each Mat row is a serie
+     * @param {string} area_title plot area title
+     * @param {Mat} data opencv mat, it is copied
+     * @param {vector<string>} labels one label per serie
+     * @param {float} xstep x distance between values
+     * @param {int} plot_type one of PlotTypes
+     */
+    void plot2D(const string& area_title, const Mat& data, const std::vector<string>& labels, float xstep=1, int plot_type=0);
+    [[deprecated("use plot2D(title, const cv::Mat&, labels, ...)")]]
+    void plot2D(const string& area_title, const Mat* data, const std::vector<string>& labels, float xstep=1, int plot_type=0);
 
     std::vector<OGUIArea*> areas_showing;
     std::vector<OGUILayout*> layout;

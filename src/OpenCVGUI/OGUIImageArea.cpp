@@ -319,11 +319,15 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUIImageArea::setImage(Mat *img) {
+    void OGUIImageArea::setImage(const Mat* img) {
+        setImage(*img);
+    }
+
+    void OGUIImageArea::setImage(const Mat& img) {
 
         // Copy and convert img to RGBA outside the lock
         Mat new_img, new_rgba;
-        img->copyTo(new_img);
+        img.copyTo(new_img);
         switch (new_img.channels())
         {
             case 1:
@@ -343,11 +347,11 @@ namespace OpenCVGUI {
         data= imgRGBA.data;
 
         // Reinit image if don't have same size
-        if(img->cols!= image_width || img->rows!= image_height)
+        if(img.cols!= image_width || img.rows!= image_height)
             _size_changed= true;
 
-        image_width = img->cols;
-        image_height = img->rows;
+        image_width = img.cols;
+        image_height = img.rows;
         has_to_update= true;
     }
 

@@ -379,11 +379,11 @@ void OGUI3D::draw(int x, int y, int width, int height)
     nvgResetScissor(vg);
 }
 
-OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
+OGUI3D::OGUI3D(OGUIWindow* window, const std::string& title, const Mat& d): OGUIArea(window)
 {
     this->type= 1; // 3d type window
     this->title= title;
-    ((Mat*)d)->copyTo(data);
+    d.copyTo(data);
 
     shaderProgram= 0;
     vao= vbo= ibo= 0;
@@ -396,11 +396,11 @@ void OGUI3D::setExternalDraw3D(std::function<void(int x, int y, int width, int h
     _externalDraw3D= func;
 }
 
-void OGUI3D::replot(void *d)
+void OGUI3D::replot(const Mat& d)
 {
     // Copy outside the lock, the lock only swaps the data
     Mat new_data;
-    ((Mat*)d)->copyTo(new_data);
+    d.copyTo(new_data);
     std::lock_guard<std::mutex> lock(_mutex);
     data= new_data;
     isBufferCreated= false;

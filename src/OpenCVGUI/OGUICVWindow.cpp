@@ -25,7 +25,11 @@ namespace OpenCVGUI {
     }
 
     /// Show image into layouts
-    void OGUICVWindow::imshow(string area_title, void *img) {
+    void OGUICVWindow::imshow(const string& area_title, const Mat* img) {
+        imshow(area_title, *img);
+    }
+
+    void OGUICVWindow::imshow(const string& area_title, const Mat& img) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);
@@ -34,11 +38,11 @@ namespace OpenCVGUI {
         if(area==NULL){
             // create new area and ad
             OGUIImageArea *ia= new OGUIImageArea(this, area_title);
-            ia->setImage((Mat*)img);
+            ia->setImage(img);
             showArea(ia);
         }else{
             OGUIImageArea *ia= (OGUIImageArea*)area;
-            ia->setImage((Mat*)img);
+            ia->setImage(img);
         }
     }
 
@@ -46,7 +50,11 @@ namespace OpenCVGUI {
         formArea->addWidget(widget);
     }
 
-    void OGUICVWindow::plot3D(string area_title, void *data) {
+    void OGUICVWindow::plot3D(const string& area_title, const Mat* data) {
+        plot3D(area_title, *data);
+    }
+
+    void OGUICVWindow::plot3D(const string& area_title, const Mat& data) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);
@@ -62,7 +70,11 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUICVWindow::plot2D(string area_title, void *data, std::vector<string> labels, float xstep, int plot_type) {
+    void OGUICVWindow::plot2D(const string& area_title, const Mat* data, const std::vector<string>& labels, float xstep, int plot_type) {
+        plot2D(area_title, *data, labels, xstep, plot_type);
+    }
+
+    void OGUICVWindow::plot2D(const string& area_title, const Mat& data, const std::vector<string>& labels, float xstep, int plot_type) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);

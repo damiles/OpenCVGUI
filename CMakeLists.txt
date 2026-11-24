@@ -67,7 +67,7 @@ set_target_properties(opencvgui PROPERTIES
                       EXPORT_NAME OpenCVGUI
                       FOLDER "OpenCVGUI")
 
-target_compile_features(opencvgui PUBLIC cxx_std_11)
+target_compile_features(opencvgui PUBLIC cxx_std_14)
 
 if(OGUI_GL3)
     target_compile_definitions(opencvgui PRIVATE OGUI_GL3)

@@ -46,7 +46,7 @@ class OGUI3D : public OGUIArea {
     virtual void draw(int x, int y, int width, int height);
     virtual void draw3d(int x, int y, int width, int height);
     virtual void updateScrollStatus(double xoffset,double yoffset);
-    void replot(void *data);
+    void replot(const Mat& data);
 
     /**
      * Set a function to draw custom OpenGL content in the 3D area.
@@ -56,7 +56,7 @@ class OGUI3D : public OGUIArea {
      */
     void setExternalDraw3D(std::function<void(int x, int y, int width, int height, const glm::mat4& mvp)> func);
 
-    OGUI3D(OGUIWindow* window, std::string title, void* data);
+    OGUI3D(OGUIWindow* window, const std::string& title, const Mat& data);
 
     // 3d functions
     GLuint vao, vbo, ibo, shaderProgram, MatrixID, position_attribute;
