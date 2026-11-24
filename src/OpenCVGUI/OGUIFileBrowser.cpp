@@ -82,25 +82,45 @@ namespace OpenCVGUI {
     }
 
     string OGUIFileBrowser::open(string path, vector<string> filter) {
-        _filter= filter;
-        _actual_folder= path;
-        if (_window->getStatus() != 0) {
+        // The UI thread draws the file browser, waiting here would block it forever
+        if (_window->isUIThread()) {
+            cerr << "OpenCVGUI: openFileBrowser can not be called from the UI thread" << endl;
+            return "";
+        }
 
+        std::unique_lock<std::mutex> lock(_mutex);
+        if (_window->getStatus() == 0)
+            return "";
+        _is_open= true;
+        _result_path= "";
+
+        // Folder list and browser state are only used in the UI thread
+        _window->runOnUIThread([this, path, filter]() {
+            _filter= filter;
+            _actual_folder= path;
+            _file_browser_result= NULL;
             readFolder(path);
 
             // Now we have the list dir, then we can draw all data.
             _is_file_browser_visible = true;
+        });
 
-            while (_is_file_browser_visible && _window->getStatus()) {
-                usleep(1000);// Wait a milisec
-            }
-        }
-        if (_file_browser_result != NULL){
-            return _file_browser_result->_path;
-        }else{
-            return "";
-        }
+        _closed.wait(lock, [this]() { return !_is_open; });
+        return _result_path;
+    }
 
+    void OGUIFileBrowser::close(OGUIFile* result) {
+        _is_file_browser_visible= false;
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            _result_path= result!=NULL ? result->_path : "";
+            _is_open= false;
+        }
+        _closed.notify_all();
+    }
+
+    void OGUIFileBrowser::cancel() {
+        close(NULL);
     }
 
     void OGUIFileBrowser::draw() {
@@ -133,12 +153,12 @@ namespace OpenCVGUI {
 
             // Draw accept and cancel buttons
             if(drawBasicButton(vg, this->_window, "Accept", _window->getWindowWidth()-100, _window->getWindowHeight()-30, 90, 20, _window->mouse_x, _window->mouse_y)){
-                _is_file_browser_visible=0;
+                close(_file_browser_result);
             }
 
             if(drawBasicButton(vg, this->_window, "Close", _window->getWindowWidth()-200, _window->getWindowHeight()-30, 90, 20, _window->mouse_x, _window->mouse_y)){
                 _file_browser_result= NULL;
-                _is_file_browser_visible=0;
+                close(NULL);
             }
 
             // Draw de devices we found

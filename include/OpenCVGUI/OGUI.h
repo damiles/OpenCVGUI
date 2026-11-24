@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <atomic>
 
 #include <opencv2/core/core.hpp>
 #include "OGUICVWindow.h"
@@ -33,7 +34,7 @@ namespace OpenCVGUI {
     /**
      * variable to check if the UI is running or closed and finished
      */
-    extern bool app_is_running;
+    extern std::atomic<bool> app_is_running;
 
     /**
      * list of windows that are created

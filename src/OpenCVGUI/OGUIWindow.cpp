@@ -57,6 +57,8 @@ OGUIWindow::OGUIWindow(int width, int height,
                        int layoutOrientation,
                        bool fullScreen)
 {
+    this->_ui_thread_id= std::this_thread::get_id();
+    this->_window_status= 1;
     this->width= width;
 	this->height= height;
 	this->title.append(title);
@@ -70,7 +72,6 @@ OGUIWindow::OGUIWindow(int width, int height,
     this->key_focus_widget_= NULL;
     this->key_pressed= 0;
     this->_show_graph= false;
-    this->_window_status= 1;
     this->_fileBrowser= new OGUIFileBrowser(this);
     this->_maximizedArea= NULL;
 }
@@ -224,8 +225,15 @@ bool OGUIWindow::update(){
 
         return true;
     }else{
-        _popup_result= 0;
-        _window_status= 0;
+        {
+            // Release threads waiting for a popup
+            std::lock_guard<std::mutex> lock(_state_mutex);
+            _popup_result= 0;
+            _popup_type= NO_POPUP;
+            _window_status= 0;
+        }
+        _popup_closed.notify_all();
+        _fileBrowser->cancel();
         return false;
     }
 }
@@ -275,11 +283,12 @@ void OGUIWindow::draw()
         _external2dDraw(vg);
 
     // Draw popups if there are one
-    drawPopup();
+    bool popup_visible= drawPopup();
 
     // File browser
     _fileBrowser->draw();
 
+    std::unique_lock<std::mutex> state_lock(_state_mutex);
     if (_show_progress){
         NVGcontext* tvg= (NVGcontext*)(vg);
         nvgResetScissor(tvg);
@@ -295,6 +304,7 @@ void OGUIWindow::draw()
         nvgFill(tvg);
         drawLabel(tvg, _progress_title.c_str(), 5, 7, "sans", 14.0f, 255,255,255,255 );
     }
+    state_lock.unlock();
     
     nvgEndFrame((NVGcontext*)vg);
 
@@ -302,7 +312,7 @@ void OGUIWindow::draw()
         // 3D draw
         _maximizedArea->draw3d(0, 22, width, height-22);
 
-    }else if( _popup_type == NO_POPUP) {
+    }else if(!popup_visible) {
         mainLayout->draw3d(0, 0, width, height);
     }
 
@@ -313,6 +323,7 @@ void OGUIWindow::draw()
 }
 
 void OGUIWindow::show_progress(string title, float percentage) {
+    std::lock_guard<std::mutex> lock(_state_mutex);
     _progress= percentage;
     _show_progress=true;
     _progress_title= title;
@@ -334,6 +345,7 @@ void OGUIWindow::runUITasks() {
 }
 
 void OGUIWindow::hide_progress(){
+    std::lock_guard<std::mutex> lock(_state_mutex);
     _show_progress=false;
 }
 
@@ -379,20 +391,30 @@ void OGUIWindow::close(){
     glfwDestroyWindow((GLFWwindow*)glfw_window);
 }
 
+bool OGUIWindow::isUIThread() {
+    return std::this_thread::get_id() == _ui_thread_id;
+}
+
 int OGUIWindow::popup(string title, string text, int  type) {
+    // The UI thread draws the popup, waiting here would block it forever
+    if(isUIThread()) {
+        cerr << "OpenCVGUI: popup can not be called from the UI thread" << endl;
+        return 0;
+    }
+
+    std::unique_lock<std::mutex> lock(_state_mutex);
+    if(_window_status==0)
+        return 0;
     _popup_title= title;
     _popup_type= type;
     _popup_text= text;
     _popup_result= -1;
-    if(_window_status!=0) {
-        while (_popup_result == -1) {
-            // usleep(1000);// Wait a milisec
-        }
-    }
+    _popup_closed.wait(lock, [this]() { return _popup_result != -1; });
     return _popup_result;
 }
 
-void OGUIWindow::drawPopup(){
+bool OGUIWindow::drawPopup(){
+    std::unique_lock<std::mutex> lock(_state_mutex);
     if(_popup_type != NO_POPUP) {
         NVGcontext *tmp_vg = (NVGcontext *) vg;
         nvgBeginPath(tmp_vg);
@@ -449,9 +471,13 @@ void OGUIWindow::drawPopup(){
 
         // End button
 
-
+        if(_popup_type == NO_POPUP) {
+            lock.unlock();
+            _popup_closed.notify_all();
+        }
+        return true;
     }
-
+    return false;
 }
 
 
