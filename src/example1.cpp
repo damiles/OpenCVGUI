@@ -99,12 +99,19 @@ int main( int argc, const char* argv[] )
     //data= data.reshape(0,1);
     window->plot2D("2D plot", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"});
 
-    cap.open(0);
+    // Start video capture: camera index or video file/device path, 0 by default
+    string source= argc > 1 ? argv[1] : "0";
+    if(source.find_first_not_of("0123456789") == string::npos)
+        cap.open(stoi(source));
+    else
+        cap.open(source);
     if(cap.isOpened()){
         cap >> frame;
         window->imshow("camera", &frame);
     }else{
-        window->imshow("camera", &gray);
+        cerr << "Can not open video source: " << source << endl;
+        cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;
+        return 1;
     }
 
     OpenCVGUI::app_run(cv_process);

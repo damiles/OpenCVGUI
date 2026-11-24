@@ -56,14 +56,20 @@ int main( int argc, const char* argv[] )
     OGUICheckBox checkbox("Title", 1);
     window->addFormWidget(&checkbox);
 
-    // Start video capture
-    cap.open(0);
+    // Start video capture: camera index or video file/device path, 0 by default
+    string source= argc > 1 ? argv[1] : "0";
+    if(source.find_first_not_of("0123456789") == string::npos)
+        cap.open(stoi(source));
+    else
+        cap.open(source);
     if(cap.isOpened()){
         cap >> frame;
         // show image
         window->imshow("camera", &frame);
     }else{
-        return 0;
+        cerr << "Can not open video source: " << source << endl;
+        cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;
+        return 1;
     }
 
     // Convert frame, threshodl and show

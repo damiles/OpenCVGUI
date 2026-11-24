@@ -88,13 +88,19 @@ int main( int argc, const char* argv[] )
     threshold( gray, output, 125, 255, THRESH_BINARY);
     imageArea2->setImage(&output);
 
-    //imageArea3.setImage(gray);
-    cap.open(0);
+    // Start video capture: camera index or video file/device path, 0 by default
+    string source= argc > 1 ? argv[1] : "0";
+    if(source.find_first_not_of("0123456789") == string::npos)
+        cap.open(stoi(source));
+    else
+        cap.open(source);
     if(cap.isOpened()){
         cap >> frame;
         imageArea3->setImage(&frame);
     }else{
-        imageArea3->setImage(&gray);
+        cerr << "Can not open video source: " << source << endl;
+        cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;
+        return 1;
     }
 
     OpenCVGUI::windows.push_back(window);
