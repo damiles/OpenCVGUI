@@ -1,4 +1,4 @@
-#include <opencv2/imgproc/types_c.h>
+#include <opencv2/imgproc.hpp>
 #include "OGUIImageArea.h"
 #include "OGUIWindow.h"
 #include <GLFW/glfw3.h>
@@ -313,11 +313,11 @@ namespace OpenCVGUI {
         switch (img->channels())
         {
             case 1:
-                cvtColor(_img, imgRGBA, CV_GRAY2RGBA);
+                cvtColor(_img, imgRGBA, COLOR_GRAY2RGBA);
                 data = imgRGBA.data;
                 break;
             case 3:
-                cvtColor(_img, imgRGBA, CV_BGR2RGBA);
+                cvtColor(_img, imgRGBA, COLOR_BGR2RGBA);
                 data = imgRGBA.data;
                 break;
             case 4:
