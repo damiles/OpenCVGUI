@@ -36,7 +36,7 @@ namespace OpenCVGUI {
         this->y=y;
         this->width= width;
         this->height= height;
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Mouse click callback is called at the end, without the lock
         bool clicked= false;
@@ -302,7 +302,7 @@ namespace OpenCVGUI {
     void OGUIImageArea::updateImage(){
 
         if(has_to_update){
-            NVGcontext *ctx = (NVGcontext*)(window->vg);
+            NVGcontext *ctx = window->vg;
             if(image!=-1 && _size_changed){
                 nvgDeleteImage(ctx, image);
                 image= -1;

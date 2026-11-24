@@ -10,7 +10,7 @@ using namespace cv;
 
 namespace OpenCVGUI {
 
-    OGUIFile::OGUIFile(void* window,const char* file_name, const char* path, int isdir, const char* ext, double size) {
+    OGUIFile::OGUIFile(OGUIWindow* window,const char* file_name, const char* path, int isdir, const char* ext, double size) {
         _file_name= file_name;
         _path= path;
         _ext= ext;
@@ -21,9 +21,8 @@ namespace OpenCVGUI {
         _preview_data= NULL;
     }
 
-    bool OGUIFile::draw(void *vvg, int x, int y, int mouse_x, int mouse_y) {
-        NVGcontext *vg = (NVGcontext *) vvg;
-        OGUIWindow *window= (OGUIWindow *)_window;
+    bool OGUIFile::draw(NVGcontext* vg, int x, int y, int mouse_x, int mouse_y) {
+        OGUIWindow *window= _window;
         int width=200;
         if(_is_dir==2){
             width=180;

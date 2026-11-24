@@ -17,6 +17,11 @@
 
 using namespace std;
 
+// GLFW and NanoVG types, declared here to not include their headers
+struct GLFWwindow;
+struct GLFWcursor;
+struct NVGcontext;
+
 // Font images
 extern unsigned char font_roboto[];
 extern int font_roboto_size;
@@ -59,10 +64,10 @@ class OGUIWindow {
     void draw();
     bool update(); // Return false if window is closed
 
-    void* glfw_window;//GLFWwindow
+    GLFWwindow* glfw_window;
     static bool isInitGlfw;
     int init(bool fullScreen);
-    void* vg;//NVGcontext
+    NVGcontext* vg;
     void addArea(OGUIArea* area);
     double mouse_x, mouse_y;
     int mouse_state;
@@ -74,20 +79,20 @@ class OGUIWindow {
     int mouse_left_state;
 
     // save pointers to all loaded mouse cursors
-    std::vector<void*> mouse_cursors_;//GLFWcursor
+    std::vector<GLFWcursor*> mouse_cursors_;
     OGUILayout* getMainLayout();
-    static void scroll_callback(void* window, double xoffset, double yoffset);//GLFWwindow
+    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
     void setKeyFocus(OGUIWidget* widget);
-    static void charCallback(void* window, unsigned int key);//GLFWwindow
-    static void keyCallback(void* window, int key, int scancode, int action, int mods);//GLFWwindow
+    static void charCallback(GLFWwindow* window, unsigned int key);
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     OGUIWidget* getKeyFocusWidget();
 
     int getWindowHeight();
     int getWindowWidth();
     void updatePerfGraph();
     void showPerfGraph(bool show);
-    void setExternal2DDraw(std::function<void(void* context)> func);
+    void setExternal2DDraw(std::function<void(NVGcontext* context)> func);
 
     /// Popups, blocks until it is closed, can not be called from the UI thread
     int popup(string title, string text, int type=2);
@@ -145,7 +150,7 @@ private:
     float _progress = 0;
     string _progress_title;
 
-    std::function<void(void* context)> _external2dDraw;
+    std::function<void(NVGcontext* context)> _external2dDraw;
 
     // Popups
     bool drawPopup(); // Return true if a popup is visible

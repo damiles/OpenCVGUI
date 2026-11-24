@@ -57,7 +57,7 @@ void OGUILayout::draw(int x, int y, int width, int height)
     if(areas.size()==0)    
         return;
     
-    //NVGcontext* vg= (window->vg);
+    //NVGcontext* vg= window->vg;
 
     // Draw the areas
     float x0=0;

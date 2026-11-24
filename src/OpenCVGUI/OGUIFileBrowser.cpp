@@ -126,7 +126,7 @@ namespace OpenCVGUI {
     void OGUIFileBrowser::draw() {
         // ToDo (damiles): Create scroll for more files in window
         if (_is_file_browser_visible) {
-            NVGcontext *vg = (NVGcontext *) _window->vg;
+            NVGcontext *vg = _window->vg;
             nvgBeginPath(vg);
             nvgRect(vg, 0, 0, _window->getWindowWidth(), _window->getWindowHeight());
             nvgFillColor(vg, nvgRGBA(28, 30, 34, 255));

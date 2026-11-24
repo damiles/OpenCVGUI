@@ -13,18 +13,22 @@
 using namespace std;
 using namespace cv;
 
+struct NVGcontext;
+
 namespace OpenCVGUI {
+    class OGUIWindow;
+
     class OGUIFile {
     public:
-        OGUIFile(void* window, const char* file_name, const char* path, int isdir, const char* ext, double size);
+        OGUIFile(OGUIWindow* window, const char* file_name, const char* path, int isdir, const char* ext, double size);
         string _file_name;
         string _path;
         string _ext;
         int  _is_dir; //1 is dir 2 is drive
         double _size;
-        void* _window;
+        OGUIWindow* _window;
 
-        bool draw(void *vvg, int x, int y, int mouse_x, int mouse_y);
+        bool draw(NVGcontext* vg, int x, int y, int mouse_x, int mouse_y);
 
         bool isImage();
         unsigned char* getPreview();

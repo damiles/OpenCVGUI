@@ -14,7 +14,7 @@ namespace OpenCVGUI {
         this->y=y;
         this->width= width;
         this->height= height;
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
@@ -73,7 +73,7 @@ namespace OpenCVGUI {
     }
 
     void OGUIPlotArea::drawLegends(){
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
         ///Plot labels box
         nvgBeginPath(vg);
         nvgRect(vg, x + width - 100-20, y + 40, 120, 15 + data.rows*20);
@@ -116,7 +116,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -276,7 +276,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -442,7 +442,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -584,7 +584,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {

@@ -370,7 +370,7 @@ void OGUI3D::draw(int x, int y, int width, int height)
     this->y=y;
     this->width= width;
     this->height= height;
-    NVGcontext* vg= (NVGcontext*)(window->vg);
+    NVGcontext* vg= window->vg;
 
     nvgScissor(vg, x, y, width, height);
     OGUIArea::draw(x,y,width,height);

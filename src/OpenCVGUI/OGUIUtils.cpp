@@ -21,9 +21,8 @@ static float maxf(float a, float b) { return a > b ? a : b; }
 //static float absf(float a) { return a >= 0.0f ? a : -a; }
 static float clampf(float a, float mn, float mx) { return a < mn ? mn : (a > mx ? mx : a); }
 
-void drawParagraph(void* vvg, const char* text, float x, float y, float width, float height, float mx, float my)
+void drawParagraph(NVGcontext* vg, const char* text, float x, float y, float width, float height, float mx, float my)
 {
-    NVGcontext* vg= (NVGcontext*)vvg;
     NVGtextRow rows[3];
     NVGglyphPosition glyphs[100];
     const char* start;
@@ -141,9 +140,8 @@ void drawParagraph(void* vvg, const char* text, float x, float y, float width, f
 
 
 
-bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y, const char* typography, double font_size )
+bool drawBasicButton(NVGcontext* tmp_vg, OGUIWindow* window, const char* title, int x, int y, int width, int height, int mouse_x, int mouse_y, const char* typography, double font_size )
 {
-    NVGcontext* tmp_vg=(NVGcontext*) context;
     bool internal_state= false;
     nvgBeginPath(tmp_vg);
     nvgRoundedRect(tmp_vg, x,y, width,height, 3);
@@ -183,10 +181,9 @@ bool drawBasicButton(void *context, OGUIWindow* window, const char* title, int x
     return internal_state;
 }
 
-void drawHeader(void* vvg, string title, int x, int y, int w){
+void drawHeader(NVGcontext* vg, string title, int x, int y, int w){
     NVGpaint headerPaint;
     float cornerRadius = 3.0f;
-    NVGcontext* vg=(NVGcontext*) vvg;
     // Header
     headerPaint = nvgLinearGradient(vg, x,y,x,y+15, nvgRGBA(255,255,255,8), nvgRGBA(0,0,0,16));
     nvgBeginPath(vg);
@@ -213,9 +210,8 @@ void drawHeader(void* vvg, string title, int x, int y, int w){
 
 }
 
-void drawLabel(void *context, const char* text, int x, int y, const char* typography, double font_size, int r, int g, int b, int a )
+void drawLabel(NVGcontext* tmp_vg, const char* text, int x, int y, const char* typography, double font_size, int r, int g, int b, int a )
 {
-    NVGcontext* tmp_vg=(NVGcontext*) context;
     // Draw text
     nvgFontSize(tmp_vg, font_size);
     nvgFontFace(tmp_vg, typography);

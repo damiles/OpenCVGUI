@@ -29,7 +29,7 @@ namespace OpenCVGUI {
     {
         OGUIWidget::draw(x, y, width);
         OGUIArea* area= (OGUIArea*)(this->area);
-        NVGcontext* vg= (NVGcontext*)(area->window->vg);
+        NVGcontext* vg= area->window->vg;
 
         NVGpaint bg;
 
