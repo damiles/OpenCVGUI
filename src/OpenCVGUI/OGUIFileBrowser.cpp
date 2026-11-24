@@ -27,6 +27,7 @@ namespace OpenCVGUI {
         _window= window;
         _file_browser_result= NULL;
         _actual_folder="";
+        resolved_path[0]= '\0';
         readSystem();
     }
 
@@ -36,8 +37,9 @@ namespace OpenCVGUI {
         // ToDo (damiles): Windows and osx support
         aFile = setmntent("/proc/mounts", "r");
         if (aFile == NULL) {
-            perror("setmntent");
-            exit(1);
+            // Without mount points the browser still works from the given path
+            perror("OpenCVGUI: setmntent");
+            return;
         }
         while (NULL != (ent = getmntent(aFile))) {
             if(ent->mnt_fsname[0]=='/'){
@@ -54,26 +56,27 @@ namespace OpenCVGUI {
     }
 
     void OGUIFileBrowser::readFolder(string path) {
-        realpath(path.c_str(), resolved_path);
         _file_list.clear();
+        if (realpath(path.c_str(), resolved_path) == NULL) {
+            cerr << "OpenCVGUI: can not resolve folder " << path << endl;
+            snprintf(resolved_path, sizeof(resolved_path), "%s", path.c_str());
+            return;
+        }
         tinydir_dir dir;
         if (tinydir_open_sorted(&dir, resolved_path) == -1) {
-            cout << "Error opening file" << endl;
+            cerr << "OpenCVGUI: can not open folder " << resolved_path << endl;
             return;
         }
         for (int i = 0; i < dir.n_files; i++) {
             tinydir_file file;
             if (tinydir_readfile_n(&dir, &file, i) == -1) {
-                cout << "Error getting file" << endl;
-                return;
+                cerr << "OpenCVGUI: can not read file in " << resolved_path << endl;
+                break;
             }
 
             if(strcmp(file.name,".")==0 || (file.name[0]=='.' && file.name[1]!='.'))
                 continue;
             _file_list.push_back(std::unique_ptr<OGUIFile>(new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0)));
-
-            printf("\n");
-
         }
 
         tinydir_close(&dir);
