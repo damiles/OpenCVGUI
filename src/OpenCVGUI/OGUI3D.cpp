@@ -294,23 +294,24 @@ void main() {
 
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
+    bool has_plot;
+    std::function<void(int, int, int, int, const glm::mat4&)> external_draw;
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        if(!isBufferCreated)
+        // Areas without data are only used for external draw
+        if(!isBufferCreated && !data.empty())
         {
             CreateVertexBuffer();
             isBufferCreated= true;
         }
+        has_plot= isBufferCreated && !data.empty();
+        external_draw= _externalDraw3D;
     }
-    // No valid shader program, nothing to draw
-    if(shaderProgram==0)
-        return;
+
     glEnable(GL_DEPTH_TEST);
     glPointSize(2.f);
     // ToDo Enable GL3 version...
     glViewport(x, window->getWindowHeight()-height-y, (GLsizei)(width), (GLsizei)(height));
-
-    glUseProgram(shaderProgram);
 
     if(isMouseIn()) {
         if (window->mouse_state == GLFW_PRESS){
@@ -332,6 +333,17 @@ void OGUI3D::draw3d(int x, int y, int width, int height)
 
     MVP= camera.getMVP();
 
+    // No valid shader program or data, only external draw
+    if(has_plot && shaderProgram!=0)
+        drawPlot();
+
+    if(external_draw!=NULL)
+        external_draw(x, y, width, height, MVP);
+}
+
+void OGUI3D::drawPlot()
+{
+    glUseProgram(shaderProgram);
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
     // Get the location of the attributes that enters in the vertex shader
@@ -376,6 +388,12 @@ OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     shaderProgram= 0;
     vao= vbo= ibo= 0;
     isBufferCreated= false;
+}
+
+void OGUI3D::setExternalDraw3D(std::function<void(int x, int y, int width, int height, const glm::mat4& mvp)> func)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+    _externalDraw3D= func;
 }
 
 void OGUI3D::replot(void *d)

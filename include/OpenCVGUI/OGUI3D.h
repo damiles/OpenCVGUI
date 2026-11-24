@@ -6,6 +6,7 @@
 #include "OGUIArea.h"
 #include <string>
 #include <mutex>
+#include <functional>
 // Include GLM
 #include <glm/glm.hpp>
 
@@ -47,6 +48,14 @@ class OGUI3D : public OGUIArea {
     virtual void updateScrollStatus(double xoffset,double yoffset);
     void replot(void *data);
 
+    /**
+     * Set a function to draw custom OpenGL content in the 3D area.
+     * It is called in the UI thread after the plot is drawn, with the area
+     * viewport set and the camera model view projection matrix.
+     * @param func function receiving area x, y, width, height and the camera MVP
+     */
+    void setExternalDraw3D(std::function<void(int x, int y, int width, int height, const glm::mat4& mvp)> func);
+
     OGUI3D(OGUIWindow* window, std::string title, void* data);
 
     // 3d functions
@@ -62,8 +71,10 @@ class OGUI3D : public OGUIArea {
     bool isBufferCreated;
 
 private:
-    // Protects data and isBufferCreated, replot can be called from any thread
+    // Protects data, isBufferCreated and the external draw, replot can be called from any thread
     std::mutex _mutex;
+    void drawPlot();
+    std::function<void(int x, int y, int width, int height, const glm::mat4& mvp)> _externalDraw3D;
 };
 
 } /* End of namespace OpenCVGUI */
