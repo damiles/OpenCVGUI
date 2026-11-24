@@ -325,6 +325,12 @@ namespace OpenCVGUI {
 
     void OGUIImageArea::setImage(const Mat& img) {
 
+        // Textures are 8 bit RGBA, OpenCV images are gray, BGR or BGRA
+        if (img.depth() != CV_8U || img.channels() == 2 || img.channels() > 4) {
+            cerr << "OpenCVGUI: imshow needs an 8 bit gray, BGR or BGRA image" << endl;
+            return;
+        }
+
         // Copy and convert img to RGBA outside the lock
         Mat new_img, new_rgba;
         img.copyTo(new_img);
@@ -337,7 +343,7 @@ namespace OpenCVGUI {
                 cvtColor(new_img, new_rgba, COLOR_BGR2RGBA);
                 break;
             case 4:
-                new_rgba= new_img;
+                cvtColor(new_img, new_rgba, COLOR_BGRA2RGBA);
                 break;
         }
 
