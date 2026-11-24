@@ -210,6 +210,8 @@ bool OGUIWindow::update(){
     glfwMakeContextCurrent((GLFWwindow *)glfw_window);
     if(!glfwWindowShouldClose((GLFWwindow *)glfw_window)) {
 
+        runUITasks();
+
         glfwGetCursorPos((GLFWwindow *) glfw_window, &mouse_x, &mouse_y);
         mouse_left_state = glfwGetMouseButton((GLFWwindow *) glfw_window, GLFW_MOUSE_BUTTON_LEFT);
         mouse_state = glfwGetMouseButton((GLFWwindow *) glfw_window, GLFW_MOUSE_BUTTON_LEFT);
@@ -314,6 +316,21 @@ void OGUIWindow::show_progress(string title, float percentage) {
     _progress= percentage;
     _show_progress=true;
     _progress_title= title;
+}
+
+void OGUIWindow::runOnUIThread(std::function<void()> func) {
+    std::lock_guard<std::mutex> lock(_ui_tasks_mutex);
+    _ui_tasks.push_back(func);
+}
+
+void OGUIWindow::runUITasks() {
+    std::vector<std::function<void()>> tasks;
+    {
+        std::lock_guard<std::mutex> lock(_ui_tasks_mutex);
+        tasks.swap(_ui_tasks);
+    }
+    for(size_t i=0; i<tasks.size(); i++)
+        tasks[i]();
 }
 
 void OGUIWindow::hide_progress(){

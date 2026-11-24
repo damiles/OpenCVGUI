@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <mutex>
+#include <functional>
 #include <iostream>
 #include <unistd.h>
 #include "perf.h"
@@ -107,7 +109,15 @@ class OGUIWindow {
     void show_progress(string title, float percentage);
     void hide_progress();
 
+    // Queue a function to run in the UI thread before the next frame is drawn
+    void runOnUIThread(std::function<void()> func);
+
 private:
+
+    // Functions queued from other threads to run in the UI thread
+    std::mutex _ui_tasks_mutex;
+    std::vector<std::function<void()>> _ui_tasks;
+    void runUITasks();
 
     /**
      * @element-type OGUIArea

@@ -201,6 +201,13 @@ void main() {
 
     void OGUI3D::CreateVertexBuffer()
 {
+    // Release previous buffers if it is a replot
+    if(vao!=0) {
+        glDeleteVertexArrays(1, &vao);
+        glDeleteBuffers(1, &vbo);
+        glDeleteBuffers(1, &ibo);
+    }
+
     // Use a Vertex Array Object
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -287,10 +294,13 @@ void main() {
 
 void OGUI3D::draw3d(int x, int y, int width, int height)
 {
-    if(!isBufferCreated)
     {
-        CreateVertexBuffer();
-        isBufferCreated= true;
+        std::lock_guard<std::mutex> lock(_mutex);
+        if(!isBufferCreated)
+        {
+            CreateVertexBuffer();
+            isBufferCreated= true;
+        }
     }
     // No valid shader program, nothing to draw
     if(shaderProgram==0)
@@ -364,12 +374,17 @@ OGUI3D::OGUI3D(OGUIWindow* window, std::string title, void* d): OGUIArea(window)
     ((Mat*)d)->copyTo(data);
 
     shaderProgram= 0;
+    vao= vbo= ibo= 0;
     isBufferCreated= false;
 }
 
 void OGUI3D::replot(void *d)
 {
-    ((Mat*)d)->copyTo(data);
+    // Copy outside the lock, the lock only swaps the data
+    Mat new_data;
+    ((Mat*)d)->copyTo(new_data);
+    std::lock_guard<std::mutex> lock(_mutex);
+    data= new_data;
     isBufferCreated= false;
 }
 

@@ -3,6 +3,7 @@
 
 #include "OGUIArea.h"
 #include <opencv2/core/core.hpp>
+#include <mutex>
 
 using namespace cv;
 
@@ -45,7 +46,8 @@ private:
     void drawLegends();
     void drawPlot();
     Mat data;
-    bool data_lock, is_drawing;
+    // Protects plot data, replot can be called from any thread
+    std::mutex _mutex;
     std::vector<std::string> _labels;
     float _x_step;
     int _count_delay;

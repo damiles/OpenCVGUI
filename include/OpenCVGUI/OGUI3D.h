@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 #include "OGUIArea.h"
 #include <string>
+#include <mutex>
 // Include GLM
 #include <glm/glm.hpp>
 
@@ -59,6 +60,10 @@ class OGUI3D : public OGUIArea {
 
     int lastMouseX, lastMouseY;
     bool isBufferCreated;
+
+private:
+    // Protects data and isBufferCreated, replot can be called from any thread
+    std::mutex _mutex;
 };
 
 } /* End of namespace OpenCVGUI */

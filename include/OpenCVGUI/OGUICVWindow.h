@@ -12,6 +12,7 @@
 #include "OGUIWidget.h"
 #include "OGUI3D.h"
 #include "OGUIPlotArea.h"
+#include <mutex>
 
 namespace OpenCVGUI {
 /**
@@ -66,6 +67,10 @@ public:
 
 
 private:
+    // Protects areas_showing, imshow and plots can be called from any thread
+    std::mutex _areas_mutex;
+    OGUIArea* findArea(string title);
+    void showArea(OGUIArea* area);
 
 };
 
