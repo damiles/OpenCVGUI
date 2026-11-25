@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include <mutex>
 #include <condition_variable>
 
@@ -34,11 +35,11 @@ namespace OpenCVGUI {
     private:
         OGUIWindow* _window;
         bool _is_file_browser_visible = false;
-        OGUIFile* _file_browser_result;
-        std::vector<OGUIFile*> _file_list;
+        OGUIFile* _file_browser_result; // Points to a file in _file_list or _system
+        std::vector<std::unique_ptr<OGUIFile>> _file_list;
         string _actual_folder;
         std::vector<string> _filter;
-        std::vector <OGUIFile*> _system;
+        std::vector<std::unique_ptr<OGUIFile>> _system;
 
         char resolved_path[4096];
 

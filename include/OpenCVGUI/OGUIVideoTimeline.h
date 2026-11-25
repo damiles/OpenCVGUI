@@ -18,7 +18,7 @@ namespace OpenCVGUI {
             string title;
             NVGcolor color;
             TimeMarker(string title, int start, int end, NVGcolor color): title(title), start(start), end(end), color(color) {};
-            void draw(void* vvg, int x, int y, int mouse_x, int mouse_y);
+            void draw(NVGcontext* vg, int x, int y, int mouse_x, int mouse_y);
     };
 
     class Track {
@@ -28,7 +28,7 @@ namespace OpenCVGUI {
             VideoCapture* videocap;
             double duration;
             string title;
-            void draw(void* vvg, int x, int y, int width, int height, int mouse_x, int mouse_y);
+            void draw(NVGcontext* vg, int x, int y, int width, int height, int mouse_x, int mouse_y);
             void add_marker(string title, int start, int end, NVGcolor color);
         private:
             vector<TimeMarker> markers;

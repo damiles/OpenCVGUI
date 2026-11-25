@@ -22,8 +22,8 @@ class OGUIPlotArea : public OGUIArea {
 
     virtual void draw(int x, int y, int width, int height);
 
-    OGUIPlotArea(OGUIWindow* window, std::string title, void* data, std::vector<std::string> labels, float xstep=1.f, int plot_type=0);
-    void replot(void *data, std::vector<std::string> labels, float xstep=1.f);
+    OGUIPlotArea(OGUIWindow* window, const std::string& title, const Mat& data, const std::vector<std::string>& labels, float xstep=1.f, int plot_type=0);
+    void replot(const Mat& data, const std::vector<std::string>& labels, float xstep=1.f);
     std::vector<int> color_scheme={
             0,160,192,
             255,51,102,

@@ -16,7 +16,7 @@ namespace OpenCVGUI {
     {
         OGUIWidget::draw(x, y, width);
         OGUIArea* area= (OGUIArea*)(this->area);
-        NVGcontext* vg= (NVGcontext*)(area->window->vg);
+        NVGcontext* vg= area->window->vg;
         // Draw box square
         nvgBeginPath(vg);
         nvgRoundedRect(vg, x+1,y+1, width-2,height-2, 3);

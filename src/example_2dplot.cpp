@@ -88,21 +88,21 @@ void cv_process() {
 
     while(app_is_running) {
         cap >> frame;
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
 
         Mat g_data, data;
         cvtColor(frame, g_data, COLOR_BGR2GRAY);
         g_data.convertTo(data, CV_32F, 1/255.0);
         resize(data, data, Size(50,10));
-        window->plot2D("2D plot Series", &data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"}, 1, OpenCVGUI::PLOT_SERIES);
+        window->plot2D("2D plot Series", data, {"g1","g2","g3","g4","g5","g6","g7","g8","g9", "g10"}, 1, OpenCVGUI::PLOT_SERIES);
 
         // 20 data 4 series (each channel is x and y)
-        window->plot2D("2D plot Scatter", &scatter_data, {"g1","g2","g3","g4"}, 1, OpenCVGUI::PLOT_SCATTER);
+        window->plot2D("2D plot Scatter", scatter_data, {"g1","g2","g3","g4"}, 1, OpenCVGUI::PLOT_SCATTER);
 
-        window->plot2D("2D plot Lines", &lines_data, {"star","circle"}, 1, OpenCVGUI::PLOT_LINE);
+        window->plot2D("2D plot Lines", lines_data, {"star","circle"}, 1, OpenCVGUI::PLOT_LINE);
 
         resize(data, data, Size(20,3));
-        window->plot2D("2D plot Bars", &data, {"g1","g2","g3"}, 1, OpenCVGUI::PLOT_BARS);
+        window->plot2D("2D plot Bars", data, {"g1","g2","g3"}, 1, OpenCVGUI::PLOT_BARS);
 
         if(sayHello) {
             window->popup("2D Plot Demo", "In this sample you can check different 2d plot types", POPUP_ALERT);
@@ -115,7 +115,7 @@ void input_mouse_click(int mouse_x, int mouse_y)
 {
     cout << mouse_x << ", " << mouse_y << endl;
     circle(src, Point(mouse_x, mouse_y), 3, Scalar(0,255,0));
-    window->imshow("input", &src);
+    window->imshow("input", src);
 }
 
 int main( int argc, const char* argv[] )
@@ -137,7 +137,7 @@ int main( int argc, const char* argv[] )
         cap.open(source);
     if(cap.isOpened()){
         cap >> frame;
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
     }else{
         cerr << "Can not open video source: " << source << endl;
         cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;

@@ -115,19 +115,19 @@ int main( int argc, const char* argv[] )
         return 1;
     }
     blur(indata, indata, Size(3,3));
-    window->imshow("3D input data", &indata);
+    window->imshow("3D input data", indata);
 
     // 3D plot of the image with custom axes on top
     Mat data;
     indata.convertTo(data, CV_32F, 1/255.0);
     resize(data, data, Size(100,100));
-    window->plot3D("3D plot", &data);
+    window->plot3D("3D plot", data);
     OGUI3D* plot3d= (OGUI3D*)window->findAreaByTitle("3D plot");
     plot3d->setExternalDraw3D(custom_3d);
 
     // 3D area without data, only custom drawing
     Mat empty_data;
-    window->plot3D("Custom 3D", &empty_data);
+    window->plot3D("Custom 3D", empty_data);
     OGUI3D* custom3d= (OGUI3D*)window->findAreaByTitle("Custom 3D");
     custom3d->setExternalDraw3D(custom_3d);
 

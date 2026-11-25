@@ -19,7 +19,7 @@ void OGUICheckBox::draw(int x, int y, int width)
 {
     OGUIWidget::draw(x, y, width);
     OGUIArea* area= (OGUIArea*)(this->area);
-    NVGcontext* vg= (NVGcontext*)(area->window->vg);
+    NVGcontext* vg= area->window->vg;
 
     // Draw text
     nvgFontSize(vg, 18.0f*area->window->font_scale);

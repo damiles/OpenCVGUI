@@ -27,6 +27,7 @@ namespace OpenCVGUI {
         _window= window;
         _file_browser_result= NULL;
         _actual_folder="";
+        resolved_path[0]= '\0';
         readSystem();
     }
 
@@ -36,8 +37,9 @@ namespace OpenCVGUI {
         // ToDo (damiles): Windows and osx support
         aFile = setmntent("/proc/mounts", "r");
         if (aFile == NULL) {
-            perror("setmntent");
-            exit(1);
+            // Without mount points the browser still works from the given path
+            perror("OpenCVGUI: setmntent");
+            return;
         }
         while (NULL != (ent = getmntent(aFile))) {
             if(ent->mnt_fsname[0]=='/'){
@@ -47,35 +49,34 @@ namespace OpenCVGUI {
                 filename= mnt_dir.substr(found+1) ;
                 if(filename.compare("")==0)
                     filename="/";
-                OGUIFile* file= new OGUIFile(_window, filename.c_str(),ent->mnt_dir, 2, "",0);
-                _system.push_back(file);
+                _system.push_back(std::unique_ptr<OGUIFile>(new OGUIFile(_window, filename.c_str(),ent->mnt_dir, 2, "",0)));
             }
         }
         endmntent(aFile);
     }
 
     void OGUIFileBrowser::readFolder(string path) {
-        realpath(path.c_str(), resolved_path);
         _file_list.clear();
+        if (realpath(path.c_str(), resolved_path) == NULL) {
+            cerr << "OpenCVGUI: can not resolve folder " << path << endl;
+            snprintf(resolved_path, sizeof(resolved_path), "%s", path.c_str());
+            return;
+        }
         tinydir_dir dir;
         if (tinydir_open_sorted(&dir, resolved_path) == -1) {
-            cout << "Error opening file" << endl;
+            cerr << "OpenCVGUI: can not open folder " << resolved_path << endl;
             return;
         }
         for (int i = 0; i < dir.n_files; i++) {
             tinydir_file file;
             if (tinydir_readfile_n(&dir, &file, i) == -1) {
-                cout << "Error getting file" << endl;
-                return;
+                cerr << "OpenCVGUI: can not read file in " << resolved_path << endl;
+                break;
             }
 
             if(strcmp(file.name,".")==0 || (file.name[0]=='.' && file.name[1]!='.'))
                 continue;
-            OGUIFile *oguifile= new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0);
-            _file_list.push_back(oguifile);
-
-            printf("\n");
-
+            _file_list.push_back(std::unique_ptr<OGUIFile>(new OGUIFile(_window, file.name, file.path, file.is_dir, file.extension, 0)));
         }
 
         tinydir_close(&dir);
@@ -126,7 +127,7 @@ namespace OpenCVGUI {
     void OGUIFileBrowser::draw() {
         // ToDo (damiles): Create scroll for more files in window
         if (_is_file_browser_visible) {
-            NVGcontext *vg = (NVGcontext *) _window->vg;
+            NVGcontext *vg = _window->vg;
             nvgBeginPath(vg);
             nvgRect(vg, 0, 0, _window->getWindowWidth(), _window->getWindowHeight());
             nvgFillColor(vg, nvgRGBA(28, 30, 34, 255));
@@ -168,16 +169,13 @@ namespace OpenCVGUI {
             int x=10;
             int y=75;
             for(int i=0; i<_system.size(); i++){
-                OGUIFile *file= _system.at(i);
+                OGUIFile *file= _system.at(i).get();
                 if( file->draw(vg, x, y, _window->mouse_x, _window->mouse_y) ){ // is clicked
                     _file_browser_result= file;
-                    if(_file_browser_result!=NULL) {
-                        if (_file_browser_result->_is_dir
-                            && _actual_folder.compare(_file_browser_result->_path) != 0) {
-                            readFolder(_file_browser_result->_path);
-                            _actual_folder= _file_browser_result->_path;
-                            _file_browser_result = NULL;
-                        }
+                    if (file->_is_dir && _actual_folder.compare(file->_path) != 0) {
+                        _file_browser_result = NULL;
+                        _actual_folder= file->_path;
+                        readFolder(_actual_folder);
                     }
                 }
                 y+=22;
@@ -191,16 +189,15 @@ namespace OpenCVGUI {
             y=50;
             int max_height= _window->getWindowHeight()-80;
             for(int i=0; i<_file_list.size(); i++){
-                OGUIFile *file= _file_list.at(i);
+                OGUIFile *file= _file_list.at(i).get();
                 if( file->draw(vg, x, y, _window->mouse_x, _window->mouse_y) ){ // is clicked
                     _file_browser_result= file;
-                    if(_file_browser_result!=NULL) {
-                        if (_file_browser_result->_is_dir
-                            && _actual_folder.compare(_file_browser_result->_path) != 0) {
-                            readFolder(_file_browser_result->_path);
-                            _actual_folder= _file_browser_result->_path;
-                            _file_browser_result = NULL;
-                        }
+                    if (file->_is_dir && _actual_folder.compare(file->_path) != 0) {
+                        // readFolder releases the current list, file is not valid after it
+                        _file_browser_result = NULL;
+                        _actual_folder= file->_path;
+                        readFolder(_actual_folder);
+                        break;
                     }
                 }
                 y+=22;
@@ -263,18 +260,21 @@ namespace OpenCVGUI {
                         nvgStrokeColor(vg, nvgRGBA(0,0,0,48));
                         nvgStroke(vg);
 
-                        // Image preview
-                        if(_preview_image==-1){
-                            _preview_image= nvgCreateImageRGBA(vg, 150, 150, 0, _file_browser_result->getPreview());
-                        }else{
-                            nvgUpdateImage(vg, _preview_image, _file_browser_result->getPreview());
-                        }
+                        // Image preview, NULL if the image can not be read
+                        unsigned char* preview= _file_browser_result->getPreview();
+                        if(preview!=NULL) {
+                            if(_preview_image==-1){
+                                _preview_image= nvgCreateImageRGBA(vg, 150, 150, 0, preview);
+                            }else{
+                                nvgUpdateImage(vg, _preview_image, preview);
+                            }
 
-                        NVGpaint imgPaint = nvgImagePattern(vg, 25, y+25, 150, 150, 0, _preview_image, 1);
-                        nvgBeginPath(vg);
-                        nvgRect(vg, 25, y+25, 150,150);
-                        nvgFillPaint(vg, imgPaint);
-                        nvgFill(vg);
+                            NVGpaint imgPaint = nvgImagePattern(vg, 25, y+25, 150, 150, 0, _preview_image, 1);
+                            nvgBeginPath(vg);
+                            nvgRect(vg, 25, y+25, 150,150);
+                            nvgFillPaint(vg, imgPaint);
+                            nvgFill(vg);
+                        }
                     }
 
 

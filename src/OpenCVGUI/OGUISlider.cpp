@@ -22,7 +22,7 @@ void OGUISlider::draw(int x, int y, int w)
 {
     OGUIWidget::draw(x, y, w);
     OGUIArea* area= (OGUIArea*)(this->area);
-    NVGcontext* vg= (NVGcontext*)(area->window->vg);
+    NVGcontext* vg= area->window->vg;
 
     NVGpaint bg, knob;
 

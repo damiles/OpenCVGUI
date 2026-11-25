@@ -31,7 +31,7 @@ Mat frame;
 
 void on_change_slider_threshold(double value){
     threshold( gray, output, (int)value, 255, THRESH_BINARY);
-    imageArea2->setImage(&output);
+    imageArea2->setImage(output);
 }
 
 void hello_btn_click(){
@@ -41,7 +41,7 @@ void hello_btn_click(){
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
-        imageArea3->setImage(&frame);
+        imageArea3->setImage(frame);
     }
 }
 
@@ -83,10 +83,10 @@ int main( int argc, const char* argv[] )
     layout1.addArea(imageArea2);
     layout2.addArea(imageArea3);
     
-    imageArea1->setImage(&src);
+    imageArea1->setImage(src);
     cvtColor( src, gray, COLOR_RGB2GRAY );
     threshold( gray, output, 125, 255, THRESH_BINARY);
-    imageArea2->setImage(&output);
+    imageArea2->setImage(output);
 
     // Start video capture: camera index or video file/device path, 0 by default
     string source= argc > 1 ? argv[1] : "0";
@@ -96,7 +96,7 @@ int main( int argc, const char* argv[] )
         cap.open(source);
     if(cap.isOpened()){
         cap >> frame;
-        imageArea3->setImage(&frame);
+        imageArea3->setImage(frame);
     }else{
         cerr << "Can not open video source: " << source << endl;
         cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;

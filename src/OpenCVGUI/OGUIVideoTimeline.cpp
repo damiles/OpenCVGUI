@@ -41,7 +41,7 @@ namespace OpenCVGUI {
         this->y=y;
         this->width= width;
         this->height= height;
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
 
@@ -167,9 +167,8 @@ namespace OpenCVGUI {
         nvg_thumbnail_id=-1;
     }
 
-    void Track::draw(void* vvg, int x, int y, int width, int height, int mouse_x, int mouse_y)
+    void Track::draw(NVGcontext* vg, int x, int y, int width, int height, int mouse_x, int mouse_y)
     {
-        NVGcontext* vg= (NVGcontext*)(vvg);
         const int offset_time=150;
         nvgBeginPath(vg);
         nvgRect(vg, x + offset_time, y, width-offset_time, 38);
@@ -216,9 +215,8 @@ namespace OpenCVGUI {
         markers.push_back(TimeMarker(title, start, end, color));
     }
 
-    void TimeMarker::draw(void* vvg, int x, int y, int mouse_x, int mouse_y)
+    void TimeMarker::draw(NVGcontext* vg, int x, int y, int mouse_x, int mouse_y)
     {
-        NVGcontext* vg= (NVGcontext*)(vvg);
         nvgBeginPath(vg);
         int w= (end-start)/100;
         int s = x + start/100;

@@ -8,9 +8,9 @@ namespace OpenCVGUI {
 
     OGUICVWindow::OGUICVWindow(int width,int height,const char* title, int layoutOrientation): OGUIWindow(width, height, title, layoutOrientation)
     {
-        this->formArea= new OGUIFormArea(this);
-        this->layout.push_back(new OGUILayout(this, 1));
-        this->layout.push_back(new OGUILayout(this, 1));
+        this->formArea= own(new OGUIFormArea(this));
+        this->layout.push_back(own(new OGUILayout(this, 1)));
+        this->layout.push_back(own(new OGUILayout(this, 1)));
 
         this->addArea(formArea);
         this->addArea(layout.at(0));
@@ -25,7 +25,11 @@ namespace OpenCVGUI {
     }
 
     /// Show image into layouts
-    void OGUICVWindow::imshow(string area_title, void *img) {
+    void OGUICVWindow::imshow(const string& area_title, const Mat* img) {
+        imshow(area_title, *img);
+    }
+
+    void OGUICVWindow::imshow(const string& area_title, const Mat& img) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);
@@ -33,12 +37,12 @@ namespace OpenCVGUI {
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUIImageArea *ia= new OGUIImageArea(this, area_title);
-            ia->setImage((Mat*)img);
+            OGUIImageArea *ia= own(new OGUIImageArea(this, area_title));
+            ia->setImage(img);
             showArea(ia);
         }else{
             OGUIImageArea *ia= (OGUIImageArea*)area;
-            ia->setImage((Mat*)img);
+            ia->setImage(img);
         }
     }
 
@@ -46,14 +50,18 @@ namespace OpenCVGUI {
         formArea->addWidget(widget);
     }
 
-    void OGUICVWindow::plot3D(string area_title, void *data) {
+    void OGUICVWindow::plot3D(const string& area_title, const Mat* data) {
+        plot3D(area_title, *data);
+    }
+
+    void OGUICVWindow::plot3D(const string& area_title, const Mat& data) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUI3D *ia= new OGUI3D(this, area_title, data);
+            OGUI3D *ia= own(new OGUI3D(this, area_title, data));
             showArea(ia);
         }else{
             OGUI3D *ia= (OGUI3D*)area;
@@ -62,14 +70,18 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUICVWindow::plot2D(string area_title, void *data, std::vector<string> labels, float xstep, int plot_type) {
+    void OGUICVWindow::plot2D(const string& area_title, const Mat* data, const std::vector<string>& labels, float xstep, int plot_type) {
+        plot2D(area_title, *data, labels, xstep, plot_type);
+    }
+
+    void OGUICVWindow::plot2D(const string& area_title, const Mat& data, const std::vector<string>& labels, float xstep, int plot_type) {
         std::lock_guard<std::mutex> lock(_areas_mutex);
         /// Look for area
         OGUIArea* area=findArea(area_title);
         /// create or redraw
         if(area==NULL){
             // create new area and ad
-            OGUIPlotArea *ia= new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type);
+            OGUIPlotArea *ia= own(new OGUIPlotArea(this, area_title, data, labels, xstep, plot_type));
             showArea(ia);
         }else{
             OGUIPlotArea *ia= (OGUIPlotArea*)area;
@@ -91,6 +103,12 @@ namespace OpenCVGUI {
                 break;
             }
         }
+        return area;
+    }
+
+    /// Keep ownership of an area created by the window
+    template<typename T> T* OGUICVWindow::own(T* area) {
+        _owned_areas.push_back(std::unique_ptr<OGUIArea>(area));
         return area;
     }
 

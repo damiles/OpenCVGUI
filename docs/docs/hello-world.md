@@ -28,11 +28,11 @@ OGUICVWindow *window;
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
         Mat output;
         cvtColor( frame, gray, COLOR_RGB2GRAY );
         threshold( gray, output, (int)thr, 255, CV_THRESH_BINARY);
-        window->imshow("threshold", &output);
+        window->imshow("threshold", output);
     }
 }
 
@@ -58,7 +58,7 @@ int main( int argc, const char* argv[] )
     if(cap.isOpened()){
         cap >> frame;
         // show image
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
     }else{
         return 0;
     }
@@ -67,7 +67,7 @@ int main( int argc, const char* argv[] )
     cvtColor( frame, gray, COLOR_RGB2GRAY );
     Mat output;
     threshold( gray, output, 125, 255, CV_THRESH_BINARY);
-    window->imshow("threshold", &output);
+    window->imshow("threshold", output);
 
     // Start the Comptuer vision process
     OpenCVGUI::app_run(cv_process);

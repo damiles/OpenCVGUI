@@ -1,4 +1,6 @@
 # OpenCVGUI
+[![CI](https://github.com/damiles/OpenCVGUI/actions/workflows/ci.yml/badge.svg)](https://github.com/damiles/OpenCVGUI/actions/workflows/ci.yml)
+
 Do you like OpenCV Highui but it's not enough and don't want waste your time
 in a new UI SDK? **This is  your solution!**
 OpenCVGUI is a new graphical user inteface for OpenCV with different 
@@ -21,6 +23,16 @@ Why OpenCVGUI: more Powerful and exactly so simple than OpenCV Highui.
 4. cmake ..
 5. make
 6. sudo make install
+
+# Tests
+Tests open a window, so they need a display. Use `xvfb-run` on machines
+without one.
+
+```bash
+cmake -S . -B build -DOGUI_BUILD_TESTS=ON
+cmake --build build
+ctest --test-dir build --output-on-failure
+```
 
 
 ## Features
@@ -58,7 +70,7 @@ Create a new window
 Show image in window
 ```C++
     Mat image= imread("./lena.jpg");
-    window->imshow("image title key like highui imshow", &image);
+    window->imshow("image title key like highui imshow", image);
 ```
 
 Custom 3D plot shaders (optional, defaults are embedded in the library).
@@ -88,11 +100,11 @@ OGUICVWindow *window;
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
         Mat output;
         cvtColor( frame, gray, COLOR_RGB2GRAY );
         threshold( gray, output, (int)thr, 255, CV_THRESH_BINARY);
-        window->imshow("threshold", &output);
+        window->imshow("threshold", output);
     }
 }
 
@@ -118,7 +130,7 @@ int main( int argc, const char* argv[] )
     if(cap.isOpened()){
         cap >> frame;
         // show image
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
     }else{
         return 0;
     }
@@ -127,7 +139,7 @@ int main( int argc, const char* argv[] )
     cvtColor( frame, gray, COLOR_RGB2GRAY );
     Mat output;
     threshold( gray, output, 125, 255, CV_THRESH_BINARY);
-    window->imshow("threshold", &output);
+    window->imshow("threshold", output);
 
     // Start the Comptuer vision process
     OpenCVGUI::app_run(cv_process);

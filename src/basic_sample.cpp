@@ -19,11 +19,11 @@ int first_info=0;
 void cv_process() {
     while(app_is_running) {
         cap >> frame;
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
         Mat output;
         cvtColor( frame, gray, COLOR_RGB2GRAY );
         threshold( gray, output, (int)thr, 255, THRESH_BINARY);
-        window->imshow("threshold", &output);
+        window->imshow("threshold", output);
         if(first_info==0) {
             string file_string= window->openFileBrowser(".", {"*"});
             stringstream ss;
@@ -65,7 +65,7 @@ int main( int argc, const char* argv[] )
     if(cap.isOpened()){
         cap >> frame;
         // show image
-        window->imshow("camera", &frame);
+        window->imshow("camera", frame);
     }else{
         cerr << "Can not open video source: " << source << endl;
         cerr << "Usage: " << argv[0] << " [camera index | video file | /dev/videoN]" << endl;
@@ -76,7 +76,7 @@ int main( int argc, const char* argv[] )
     cvtColor( frame, gray, COLOR_RGB2GRAY );
     Mat output;
     threshold( gray, output, 125, 255, THRESH_BINARY);
-    window->imshow("threshold", &output);
+    window->imshow("threshold", output);
 
     // Start the Comptuer vision process
     OpenCVGUI::app_run(cv_process);

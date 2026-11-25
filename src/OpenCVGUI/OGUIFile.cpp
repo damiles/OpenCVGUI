@@ -10,7 +10,7 @@ using namespace cv;
 
 namespace OpenCVGUI {
 
-    OGUIFile::OGUIFile(void* window,const char* file_name, const char* path, int isdir, const char* ext, double size) {
+    OGUIFile::OGUIFile(OGUIWindow* window,const char* file_name, const char* path, int isdir, const char* ext, double size) {
         _file_name= file_name;
         _path= path;
         _ext= ext;
@@ -18,12 +18,10 @@ namespace OpenCVGUI {
         _is_dir= isdir;
         _window= window;
         _mouse_state=0;
-        _preview_data= NULL;
     }
 
-    bool OGUIFile::draw(void *vvg, int x, int y, int mouse_x, int mouse_y) {
-        NVGcontext *vg = (NVGcontext *) vvg;
-        OGUIWindow *window= (OGUIWindow *)_window;
+    bool OGUIFile::draw(NVGcontext* vg, int x, int y, int mouse_x, int mouse_y) {
+        OGUIWindow *window= _window;
         int width=200;
         if(_is_dir==2){
             width=180;
@@ -123,9 +121,11 @@ namespace OpenCVGUI {
 
     unsigned char* OGUIFile::getPreview() {
         // generate data
-        if(_preview_data==NULL){
+        if(_preview.empty()){
             Mat img= imread(_path);
-            Mat imgRGBA, _img;
+            if(img.empty())
+                return NULL;
+            Mat _img;
             int image_width = img.cols;
             int image_height = img.rows;
             if(image_width < image_height)
@@ -138,20 +138,18 @@ namespace OpenCVGUI {
             switch (img.channels())
             {
                 case 1:
-                    cvtColor(_img, imgRGBA, COLOR_GRAY2RGBA);
-                    _preview_data = imgRGBA.data;
+                    cvtColor(_img, _preview, COLOR_GRAY2RGBA);
                     break;
                 case 3:
-                    cvtColor(_img, imgRGBA, COLOR_BGR2RGBA);
-                    _preview_data = imgRGBA.data;
+                    cvtColor(_img, _preview, COLOR_BGR2RGBA);
                     break;
                 case 4:
-                    _preview_data = _img.data;
+                    _preview= _img.clone(); // ROI is not continuous
                     break;
             }
         }
 
-        return _preview_data;
+        return _preview.empty() ? NULL : _preview.data;
 
     }
 

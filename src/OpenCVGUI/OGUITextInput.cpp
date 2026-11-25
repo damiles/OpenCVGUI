@@ -19,7 +19,7 @@ void OGUITextInput::draw(int x, int y, int w)
     int h = this->height;
     OGUIWidget::draw(x, y, w);
     OGUIArea* area= (OGUIArea*)(this->area);
-    NVGcontext* vg= (NVGcontext*)(area->window->vg);
+    NVGcontext* vg= area->window->vg;
 
     NVGpaint bg;
     // Edit

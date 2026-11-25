@@ -36,7 +36,7 @@ namespace OpenCVGUI {
         this->y=y;
         this->width= width;
         this->height= height;
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Mouse click callback is called at the end, without the lock
         bool clicked= false;
@@ -302,7 +302,7 @@ namespace OpenCVGUI {
     void OGUIImageArea::updateImage(){
 
         if(has_to_update){
-            NVGcontext *ctx = (NVGcontext*)(window->vg);
+            NVGcontext *ctx = window->vg;
             if(image!=-1 && _size_changed){
                 nvgDeleteImage(ctx, image);
                 image= -1;
@@ -319,11 +319,21 @@ namespace OpenCVGUI {
         }
     }
 
-    void OGUIImageArea::setImage(Mat *img) {
+    void OGUIImageArea::setImage(const Mat* img) {
+        setImage(*img);
+    }
+
+    void OGUIImageArea::setImage(const Mat& img) {
+
+        // Textures are 8 bit RGBA, OpenCV images are gray, BGR or BGRA
+        if (img.depth() != CV_8U || img.channels() == 2 || img.channels() > 4) {
+            cerr << "OpenCVGUI: imshow needs an 8 bit gray, BGR or BGRA image" << endl;
+            return;
+        }
 
         // Copy and convert img to RGBA outside the lock
         Mat new_img, new_rgba;
-        img->copyTo(new_img);
+        img.copyTo(new_img);
         switch (new_img.channels())
         {
             case 1:
@@ -333,7 +343,7 @@ namespace OpenCVGUI {
                 cvtColor(new_img, new_rgba, COLOR_BGR2RGBA);
                 break;
             case 4:
-                new_rgba= new_img;
+                cvtColor(new_img, new_rgba, COLOR_BGRA2RGBA);
                 break;
         }
 
@@ -343,11 +353,11 @@ namespace OpenCVGUI {
         data= imgRGBA.data;
 
         // Reinit image if don't have same size
-        if(img->cols!= image_width || img->rows!= image_height)
+        if(img.cols!= image_width || img.rows!= image_height)
             _size_changed= true;
 
-        image_width = img->cols;
-        image_height = img->rows;
+        image_width = img.cols;
+        image_height = img.rows;
         has_to_update= true;
     }
 

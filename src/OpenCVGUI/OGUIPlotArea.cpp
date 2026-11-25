@@ -14,7 +14,7 @@ namespace OpenCVGUI {
         this->y=y;
         this->width= width;
         this->height= height;
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         nvgScissor(vg, x, y, width, height);
         OGUIArea::draw(x,y,width,height);
@@ -29,7 +29,7 @@ namespace OpenCVGUI {
         nvgResetScissor(vg);
     }
 
-    OGUIPlotArea::OGUIPlotArea(OGUIWindow* window, std::string title, void* d, std::vector<string> labels, float xstep, int plot_type): OGUIArea(window)
+    OGUIPlotArea::OGUIPlotArea(OGUIWindow* window, const std::string& title, const Mat& d, const std::vector<string>& labels, float xstep, int plot_type): OGUIArea(window)
     {
         _plot_type= plot_type;
         color_scheme={
@@ -45,17 +45,17 @@ namespace OpenCVGUI {
                 99,176,99
         };
         this->title= title;
-        ((Mat*)d)->copyTo(data);
+        d.copyTo(data);
         //data= data.reshape(0,1);
         _labels= labels;
         _x_step= xstep;
         _auto_scale= true;
     }
 
-    void OGUIPlotArea::replot(void *d, std::vector<string> labels, float xstep) {
+    void OGUIPlotArea::replot(const Mat& d, const std::vector<string>& labels, float xstep) {
         // Copy outside the lock, the lock only swaps the data
         Mat new_data;
-        ((Mat*)d)->copyTo(new_data);
+        d.copyTo(new_data);
         //data= data.reshape(0,1);
         std::lock_guard<std::mutex> lock(_mutex);
         data= new_data;
@@ -73,7 +73,7 @@ namespace OpenCVGUI {
     }
 
     void OGUIPlotArea::drawLegends(){
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
         ///Plot labels box
         nvgBeginPath(vg);
         nvgRect(vg, x + width - 100-20, y + 40, 120, 15 + data.rows*20);
@@ -116,7 +116,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -276,7 +276,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -442,7 +442,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
@@ -584,7 +584,7 @@ namespace OpenCVGUI {
         float dy= (height-margin);
 
 
-        NVGcontext* vg= (NVGcontext*)(window->vg);
+        NVGcontext* vg= window->vg;
 
         // Plot each graph
         for(int p=0; p<data.rows; p++) {
